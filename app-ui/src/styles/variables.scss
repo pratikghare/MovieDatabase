@@ -1,0 +1,27 @@
+
+$dark-primary-color: #222222;
+$dark-secondary-color: #000000;
+$dark-app-color: #ED7B7B;
+
+$light-primary-color: #11280F;
+$light-app-color: #D4FA94;
+
+$app-transition: all 300ms ease-in-out;
+
+// .dark{
+    $primary-color: $dark-primary-color;
+    $app-color: $dark-app-color;
+    $secondary-color: $dark-secondary-color;
+    $text-color: rgba($color: #fff, $alpha: 0.8);
+// }
+.light{
+    $primary-color: $dark-secondary-color;
+    $secondary-color: $light-app-color;
+    $app-color: $light-app-color;
+    $text-color: rgba($color: $light-primary-color, $alpha: 1);
+}
+
+.color-app{
+    color: $dark-app-color;
+}
+$logo-transparent: '../assets/logo_transparent.png';
