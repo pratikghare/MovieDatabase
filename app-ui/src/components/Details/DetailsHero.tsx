@@ -14,7 +14,7 @@ export default function DetailsHero({ details, photos, videos, mediaType }: any)
     
     return(
         <div className="hero-section mt-2">
-            <div className="poster" style={{ background: `url('${getPhotoUrl(details)}') center/cover` }}></div>
+            <div className="poster" style={{ background: `url('${getPhotoUrl(details, false)}') center/cover` }}></div>
             {
                 video ?
                 <div className="video-player">

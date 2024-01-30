@@ -8,6 +8,7 @@ export default function Credits({ heading, allCredits, mediaType, allText, detai
     const cast = allCredits.cast.slice(0, 15);
 
     return (
+        cast && cast?.length ?
         <div className="credits cursor-default">
             <h1 className="text-white text-xl flex border-l-4 pl-3 border-app">
                 { heading }
@@ -45,6 +46,6 @@ export default function Credits({ heading, allCredits, mediaType, allText, detai
                 </NavLink>
                 : <></>
             }
-        </div>
+        </div> :<></>
     );
 }

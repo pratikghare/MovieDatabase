@@ -1,6 +1,6 @@
 import { db } from "../environment/environment";
 import { fetchDbApi } from "./ApiService";
-import { sortMoviesListBy, getPhotoUrl, getName, getOriginalName, getYear, getRunTime, genres, getGenreNamesByIds, getSubText, getRelevanceSearchBarResults, getVotes, detailsSubText, getOfficialVideo, getVideoUrl, getPhotosList, getRottenTomatoesRating, getOverview, getBirthDay, storeRecents, parseString, clearRecents, getDirectors, getProducers, getWriters, setValue, filterListByEqualPropertyValue, filterListByIncludesPropertyValue, getMediaAndIdInfoFromUrl, streamingDimensions, getStreamingDimensionsUrl } from "./DataUtils";
+import { sortMoviesListBy, getPhotoUrl, getName, getOriginalName, getYear, getRunTime, genres, getGenreNamesByIds, getSubText, getRelevanceSearchBarResults, getVotes, detailsSubText, getOfficialVideo, getVideoUrl, getPhotosList, getRottenTomatoesRating, getOverview, getBirthDay, storeRecents, parseString, clearRecents, getDirectors, getProducers, getWriters, setValue, filterListByEqualPropertyValue, filterListByIncludesPropertyValue, getMediaAndIdInfoFromUrl, streamingDimensions, getStreamingDimensionsUrl, getMoreDetails, getStreamingPageUrl } from "./DataUtils";
 import { getTrendingMovies, getNowPlayingMovies, getPopularMovies, getTopRatedMovies, getUpCommingMovies, getMoviesBySearch, getMovieDetailsById, getMovieDetailsByImdbId, getCreditsByMovieId, getPhotosByMovieId, getVideosByMovieId, getSimilarMoviesById, getStreamingDetailsByMovieId } from "./MovieService";
 import { getTrendingPeople, getPopularPeople, getPeopleBySearch, getPersonDetailsById, getPhotosByPersonId, getCreditsByPersonId, getMovieCreditsByPersonId, getTVCreditsByPersonId } from "./PersonService";
 import { getTrendingTV, getPopularTV, getTopRatedTV, getTVsBySearch, getTVDetailsById, getTVDetailsByImdbId, getVideosByTvId, getCreditsByTvId, getPhotosByTvId, getExternalIdsByTvId, getStreamingDetailsByTvId } from "./TvService";
@@ -26,7 +26,7 @@ export {
     getBirthDay, storeRecents, parseString, clearRecents,
 
     getProducers, getDirectors,  getWriters, setValue, filterListByEqualPropertyValue, filterListByIncludesPropertyValue, getMediaAndIdInfoFromUrl,
-    streamingDimensions, getStreamingDimensionsUrl,
+    streamingDimensions, getStreamingDimensionsUrl, getMoreDetails, getStreamingPageUrl,
 }
 
 export interface Recent{

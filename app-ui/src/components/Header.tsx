@@ -1,9 +1,9 @@
 import { HeaderMenu } from "./HeaderMenu";
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
 import { BookmarkSquareIcon } from '@heroicons/react/24/outline';
-// import {  } from '@heroicons/react/20/outline';
 import SearchBar from "./SearchBar/SearchBar";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 export function Header(){
     const [isMenuActive, setIsMenuActive] = useState(false);
@@ -11,7 +11,7 @@ export function Header(){
     return (
         <header className={ isMenuActive ? "app-header dark active" : "app-header dark" }>
             <div className={"header-content"}>
-                <div className="app-logo"></div>
+                <NavLink to={"/"} className="app-logo"></NavLink>
                 <SearchBar></SearchBar>
                 <div className="button-container">
                     <button className="flex justify-center items-center">

@@ -70,9 +70,9 @@ export default function Overview({ details, credits, ratings, mediaType }: any){
                 <p className="plot">
                     { getOverview(details).length > 500 && !showBio ? 
                     <>
-                        { getOverview(details).substring(0, 450) }..<span 
+                        { getOverview(details).length > 500 ? getOverview(details).substring(0, 450)+'...' : getOverview(details) }<span 
                             onClick={() => setShowBio(true)}
-                            className="text-blue-500 text-xs hover:underline cursor-pointer">Read More.</span>
+                            className="text-blue-500 text-sm hover:underline cursor-pointer">Read More</span>
                     </> : getOverview(details)}
                 </p>
                 {
@@ -105,8 +105,8 @@ export default function Overview({ details, credits, ratings, mediaType }: any){
                         streamingPlatform && streamingPlatform?.url ?
                         <div className="streaming">
                             <p className="text-gray-400">STREAMING</p>
-                            <div className="streaming-image" style={{ background: streamingPlatform ? `url('${streamingPlatform.url}') center/cover no-repeat`: `url('/src/assets/not_found.jpg') center/cover` }}>
-                            </div>
+                            <a href={streamingPlatform.urlPath} target="_blank" className="streaming-image" style={{ background: streamingPlatform ? `url('${streamingPlatform.url}') center/cover no-repeat`: `url('/src/assets/not_found.jpg') center/cover` }}>
+                            </a>
                         </div> : <></>
                     }
                     <button className="text-xs bg-app w-full p-1 mb-5 text-black rounded-sm flex items-center">

@@ -51,12 +51,13 @@ export default function Pagination({ totalPages, paginate, setCurrentPageCallbac
     }
 
     useEffect(() => {
-        console.log(pageChange, currentPage, pageChange > currentPage);
-        
+        console.log('pgchange', pageChange, currentPage, pageChange > currentPage);
+        if(currentPage != pageChange)
         updateArray(pageChange > currentPage);
     }, [pageChange])
     
     useEffect(() => {
+        console.log('curr', pageChange, currentPage, pageChange > currentPage);
         if(paginate) paginate(currentPage);
         if(setCurrentPageCallback && ((pageChange && pageChange != currentPage) || pageChange == null) ) setCurrentPageCallback(currentPage);
     }, [currentPage])

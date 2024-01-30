@@ -33,6 +33,7 @@ export default function PhotoGallery(){
 
     useEffect(() => {
         paginatePhotos(currentPage);
+        
     }, [photos])
 
     const getActualIndex = (index: number): number => {
@@ -102,7 +103,7 @@ export default function PhotoGallery(){
                             <div className="photo-gallery mb-5">
                                 {
                                     paginatedPhotos.map((photo: any, index: number) => (
-                                        <div onClick={() => showFullSizePhotos(index)} className="image hover:scale-110" key={'photo'+index} style={{ background: `url(${getPhotoUrl(photo, true)}) center/cover` }} ></div>
+                                        <div onClick={() => showFullSizePhotos(index)} className="image hover:scale-110" key={'photo'+index} style={{ background: `url(${getPhotoUrl(photo)}) center/cover` }} ></div>
                                     ))
                                 }
                             </div>

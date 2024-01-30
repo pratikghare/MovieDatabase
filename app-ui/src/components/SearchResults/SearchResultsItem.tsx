@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { getName, getPhotoUrl, getSubText, getYear } from "../../services/ServicesExport";
 
 export function SearchResultsItem({ mediaType, item }: any){
+    item['media_type'] = mediaType;
     const subText: string = getSubText(item);
 
     return (
@@ -15,14 +16,14 @@ export function SearchResultsItem({ mediaType, item }: any){
             >
             </div>
             <div className="ml-4 flex flex-col">
-                <span className="text-white hover:underline cursor-pointer mb-1">
+                <span className="text-white hover:underline cursor-pointer">
                     <NavLink to={`/${mediaType}/${item.id}`}>{ getName(item) } { getYear(item, true)  }</NavLink>
                 </span>
                 {
                     item?.character && item.character.length &&
-                    <p className="color-app text-xs" style={{ marginTop: '-3px' }}>as { item?.character }</p>
+                    <p className="color-app text-xs" style={{ marginTop: '-2px' }}>as { item?.character }</p>
                 }
-                <p className="text-gray-500 text-xs">{ subText }</p>
+                <p className="text-gray-500 text-xs" style={{ marginTop: '-2px' }}>{ subText }</p>
             </div>
         </div>
     );

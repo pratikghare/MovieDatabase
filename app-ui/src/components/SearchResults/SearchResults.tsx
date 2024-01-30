@@ -42,8 +42,6 @@ export default function SearchResults(){
                 result.results = [...results[1].results, ...result.results];
                 setResults((prev: Array<any>) => [prev[0], result, prev[2]]);
                 setDataCallback(result.results);
-                console.log('here');
-                
             })
         }
         if(mediaType === 'tv' && query.length){

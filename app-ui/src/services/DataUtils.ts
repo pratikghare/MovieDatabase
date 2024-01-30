@@ -8,7 +8,7 @@ export function sortMoviesListBy(list: Array<any>, property: string, ascendingOr
     return data;
 }
 
-export function getPhotoUrl(item: any, shortPhoto: boolean = false): string{
+export function getPhotoUrl(item: any, shortPhoto: boolean = true): string{
     let imageUrl: string = shortPhoto ? db.shortImageUrl : db.imageUrl;
     if(item.hasOwnProperty('poster_path') && item['poster_path']) imageUrl = imageUrl + item['poster_path'];
     else if(item.hasOwnProperty('profile_path') && item['profile_path']) imageUrl = imageUrl + item['profile_path'];
@@ -89,14 +89,14 @@ export function getGenreNamesByIds(genreIds: Array<number>): Array<string>{
 export function getSubText(item: any, showCharacter: boolean = false): string{
     const subText: Array<string> = [];
 
-    if(item['media_type'] !== 'person'){
+    if(item.hasOwnProperty('media_type') && item['media_type'] !== 'person'){
         if(item?.genre_ids) subText.push(...getGenreNamesByIds(item['genre_ids']));
         else if(item?.genres) subText.push(...getGenreNamesByIds(item['genres']));
     }
     else{
         if(item['known_for_department']) subText.push(item['known_for_department']);
         if(item['known_for'] && item['known_for'].length)
-            subText.push(`${getName(item['known_for'][0])} ${getYear(item['known_for'][0])}`)
+            subText.push(`${getName(item['known_for'][0])} ${getYear(item['known_for'][0], true)}`);
     }
     if(showCharacter && item.hasOwnProperty('character') && item['character']) subText.push(item['character']);
 
@@ -141,18 +141,10 @@ export function detailsSubText(details: any, ratings: any): Array<string>{
     if(ratings && ratings.hasOwnProperty('Rated') && ratings?.Rated != 'N/A') arr.push(ratings.Rated);
 
     if(details?.known_for_department) arr.push(details.known_for_department);
-    // if(details?.birthday){
-    //     const bday: string = getBirthDay(details) + ' ' +new Date(details.birthday).getFullYear();
-    //     arr.push(`${bday}`);
-    // }
     if(details?.deathday){
         const died: string = getBirthDay(details, 'deathday') + ' ' +new Date(details.deathday).getFullYear();
         arr.push(`Died - ${died}`);
     }
-    // if(details?.birthday){
-    //     const age: number = new Date().getFullYear() - new Date(details.birthday).getFullYear();
-    //     arr.push(age+'Y');
-    // }
     return arr;
 }
 
@@ -298,6 +290,26 @@ export function getStreamingDimensionsUrl(stream: any, short: boolean = false): 
     return short ? data?.shortUrl : data?.url;
 }
 
+export function getStreamingPageUrl(stream: any): string{
+    const data = streamingDimensions?.find((s: any) => s.platform.includes(stream.provider_name));
+    
+    return data?.urlPath ? data.urlPath : '';
+}
+
+export function getMoreDetails(ratings: any): Array<any>{
+    const arr: Array<any> = [];
+    if(ratings){
+        if(ratings.BoxOffice != 'N/A') arr.push({ id: 'Box Office Collection', value: ratings.BoxOffice });
+        if(ratings.Country != 'N/A') arr.push({ id: 'Country', value: ratings.Country });
+        if(ratings.DVD != 'N/A') arr.push({ id: 'DVD', value: ratings.DVD });
+        if(ratings.Production != 'N/A') arr.push({ id: 'Production', value: ratings.Production });
+        if(ratings.Language != 'N/A') arr.push({ id: 'Language', value: ratings.Language });
+    }
+    if(arr.length < 2) console.log(arr);
+    
+    return arr.length > 1 ? arr : [];
+}
+
 export const genres = [
     {
         "id": 10759,
@@ -409,52 +421,59 @@ export const genres = [
     }
 ]
 
-
-
 export const streamingDimensions: Array<any> = [
     {
         platform: "Hotstar",
         url: "/src/assets/disney_hotstar.avif",
-        shortUrl: "/src/assets/disney_hotstar_square.jpeg"
+        shortUrl: "/src/assets/disney_hotstar_square.jpeg",
+        urlPath: '//www.hotstar.com/in/'
     },
     {
         platform: "Lionsgate Play",
         url: "/src/assets/lionsgate_play.webp",
         shortUrl: "/src/assets/lionsgate_square.png",
+        urlPath: '//www.lionsgateplay.com/',
     },
     {
         platform: "Netflix",
         url: "/src/assets/netflix.jpeg",
         shortUrl: "/src/assets/netflix_square.jpeg",
+        urlPath: '//www.netflix.com/in/'
     },
     {
         platform: "Amazon Prime Video",
         url: "/src/assets/prime_video.webp",
-        shortUrl: "/src/assets/prime_video_square.png"
+        shortUrl: "/src/assets/prime_video_square.png",
+        urlPath: '//www.primevideo.com/'
     },
     {
         platform: "Amazon Video",
         url: "/src/assets/prime_video.webp",
-        shortUrl: "/src/assets/prime_video_square.png"
+        shortUrl: "/src/assets/prime_video_square.png",
+        urlPath: '//www.primevideo.com/'
     },
     {
         platform: "Apple TV Plus",
         url: "/src/assets/apple_tv_plus.jpg",
-        shortUrl: "/src/assets/apple_tv.png"
+        shortUrl: "/src/assets/apple_tv.png",
+        urlPath: '//tv.apple.com/in/'
     },
     {
         platform: "Zee5",
         url: "/src/assets/zee-5.jpg",
-        shortUrl: "/src/assets/zee-5.jpg"
+        shortUrl: "/src/assets/zee-5.jpg",
+        urlPath: '//www.zee5.com/'
     },
     {
-        platform: "Jio Cinema",
+        platform: "Jio Cinema, Voot",
         url: "/src/assets/jio_cinema.avif",
-        shortUrl: "/src/assets/jio_cinema.avif"
+        shortUrl: "/src/assets/jio_cinema.avif",
+        urlPath: '//www.jiocinema.com/'
     },
     {
         platform: "Sony Liv",
         url: "/src/assets/sony_liv.jpeg",
-        shortUrl: "/src/assets/sony_liv.jpeg"
+        shortUrl: "/src/assets/sony_liv.jpeg",
+        urlPath: '//www.sonyliv.com/'
     }
 ];

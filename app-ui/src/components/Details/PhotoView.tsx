@@ -25,7 +25,7 @@ export function PhotoView({ photos, currentIndex, setShowFullViewCallback, items
 
             <div className="image text-white"
                 style={{
-                    background: `url('${getPhotoUrl(photos[index])}') center/contain no-repeat`
+                    background: `url('${getPhotoUrl(photos[index], false)}') center/contain no-repeat`
                 }}
             >
                 <button className={ index === 0 ? "btn-photo cursor-not-allowed text-gray-600" : "btn-photo" } onClick={() => changeImage(false)} > <ChevronLeftIcon className="w-14 h-14" /> </button>
