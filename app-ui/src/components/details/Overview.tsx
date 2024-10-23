@@ -55,7 +55,7 @@ export default function Overview(props: OverviewProps) {
                 {
                     details.credits.cast.length > 0 ?
                     <div className="backdrop-blur-lg rounded-b-2xl max-h-[215px] self-end" >  
-                        <Slider className="!bg-transparent rounded-b-2xl rounded-t-none px-3 py-3" 
+                        <Slider className="!bg-transparent rounded-b-2xl rounded-t-none px-4 py-3" 
                             showAll showAllTitle={ details.mediaType === MediaType.PERSON ? "All Filmography" : "All Cast and Crew" }
                             onItemClick={(data: Credit) => { navigate(getDetailsNavigationURL(data)) }}
                             height={150} list={details.credits.cast} 
