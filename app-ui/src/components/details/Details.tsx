@@ -21,6 +21,7 @@ export default function Details() {
 
     const dispatch = useDispatch<AppDispatch>();
     const details = useSelector((state: RootState) => state.details);
+    const [colorsCalled, setColorsCalled] = useState(false);
 
     const [background, setBackground] = useState("");
 
@@ -37,7 +38,9 @@ export default function Details() {
             const colorThief = new ColorThief();
             const palette = colorThief.getPalette(img, 10);
             const result = _.uniq(palette);
-            result.forEach(item => console.log(rgbToHex(...item)))
+            // result.forEach(item => console.log(rgbToHex(...item)))
+            console.log(result);
+            setColorsCalled(true);
 
             if(!details.backdrop && result.length) setBackground(rgbToHex(...result[1]));
             setLoader(false);
@@ -47,6 +50,7 @@ export default function Details() {
     useEffect(() => {
         const params: string = loaderData?.params?.hasOwnProperty("*") ? loaderData?.params['*'] : "";
         const data: BaseSearch | null = getNavigatedData(params);
+        setColorsCalled(false);
         // return;
         if(data) {
             setLoader(true);
@@ -65,7 +69,7 @@ export default function Details() {
     useEffect(() => {
         // console.log(details);
         setBackground(details.backdrop ? `url('${details.backdrop}') center/cover` : `url('${DEFAULT_BG_IMAGE}') center/cover`)
-        if(!details.poster.includes(IMAGE_NOT_FOUND)) setRGBColorsFromImageURL();
+        if(!details.poster.includes(IMAGE_NOT_FOUND) && !colorsCalled) setRGBColorsFromImageURL();
         else if(details.id) setLoader(false);
         if(details.imdbId !== null && details.mediaType !== MediaType.PERSON && loader && omLoader) {
             dispatch(getOMDetails(details.imdbId));

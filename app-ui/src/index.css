@@ -29,6 +29,7 @@
     }
     h2 {
         @apply text-xl;
+        @apply font-bold;
     }
 }
 

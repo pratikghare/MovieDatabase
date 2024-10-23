@@ -1,3 +1,4 @@
+import React from "react";
 import { POSTER_RATIO } from "../../environment/environment";
 import { calculateHeightAndWidth } from "../../services/Utilities";
 
@@ -10,6 +11,7 @@ export interface ImageProps {
     aspectRatio?: number;
 
     className?: string
+    children?: any;
 }
 
 
@@ -25,6 +27,8 @@ export default function AppImage(props: ImageProps) {
     const className: string = props.className ? props.className : "";
 
     return (
-        <div className={"h-full w-full "+className} style={{ background, height, width }}></div>
+        <div className={"h-full w-full rounded-lg "+className} style={{ background, height, width, minWidth: width }}>
+            { ...React.Children.toArray(props.children) }
+        </div>
     );
 }
