@@ -1,65 +1,40 @@
-import { Link } from "react-router-dom";
+import React from "react";
 import { POSTER_RATIO } from "../../environment/environment";
+import { calculateHeightAndWidth } from "../../services/Utilities";
+import { useNavigate } from "react-router-dom";
 
 export interface ImageProps {
-    id?: number;
     url: string;
+    to?:string;
+
     height?: number;
     width?: number;
-    maxHeight?: number;
-    maxWidth?: number;
-    minHeight?: number;
-    minWidth?: number;
-    className?: string;
-    unit?: string;
-    onClick?: Function;
-    onMouseOver?: Function;
-    onMouseOut?: Function;
-    // height would be multiplied by factor to get width, should be in fraction (i.e. less than 1 if height is greater)
+    unit?: string;  // By Default will be in pixels
     aspectRatio?: number;
 
-    // To Navigate to external site
-    href?: string;
-    navigateTo?: string;
+    className?: string
+    children?: any;
 }
 
-export default function Image({ id, url, height, width, maxHeight, maxWidth, onMouseOver, onMouseOut, minHeight, minWidth, className, unit, aspectRatio, onClick, href, navigateTo }: ImageProps) {
-    const ratio = aspectRatio ? aspectRatio : POSTER_RATIO;
-    
-    const background = `url('${url}') center/cover no-repeat`;
-    let [calHeight, calWidth] = calculateHeightAndWidth(ratio, height, width, unit ? unit : "px");
-    let [calMinHeight, calMinWidth] = getMinHeightAndwidth(minHeight, minWidth, unit ? unit : "px");
-    let [calMaxHeight, calMaxWidth] = getMinHeightAndwidth(maxHeight, maxWidth, unit ? unit : "px");
 
+export default function Image(props: ImageProps) {
+    const navigate = useNavigate();
 
-    const styles = {
-        background, width: calWidth, height: calHeight, minHeight: calMinHeight, minWidth: calMinWidth,
-        maxHeight: calMaxHeight, maxWidth: calMaxWidth
-    }
+    const background: string = `url('${props.url}') center/cover`;
 
-    const div = <div onMouseOut={() => { onMouseOut ? onMouseOut(id) : "" }} onMouseOver={(event) => { onMouseOver ? onMouseOver(id) : event}} onClick={() => { if(onClick) onClick() }} className={"image-transition "+className} style={styles}></div>;
-    const externalLink = <a target="_blank" href={href} onMouseOut={() => { onMouseOut ? onMouseOut(id) : "" }} onMouseOver={(event) => { onMouseOver ? onMouseOver(id) : event}} onClick={() => { if(onClick) onClick() }} className={"image-transition "+className} style={styles}></a>;
-    const internalLink = <Link to={navigateTo ? navigateTo : "/"} onMouseOut={() => { onMouseOut ? onMouseOut(id) : "" }} onMouseOver={(event) => { onMouseOver ? onMouseOver(id) : event}} onClick={() => { if(onClick) onClick() }} className={"image-transition "+className} style={styles}></Link>;
+    const aspectRatio: number = props.aspectRatio ? props.aspectRatio : POSTER_RATIO;
+    const [cal_height, cal_width] = calculateHeightAndWidth(aspectRatio, props.height, props.width);
+    const unit: string = props.unit ? props.unit : "px";
+    const height = cal_height < 0 || cal_width < 0 ? "auto" : cal_height + unit;
+    const width = cal_height < 0 || cal_width < 0 ? "auto" : cal_width + unit;
+
+    const className: string = props.className ? props.className : "";
+    const cursor: string = props.to ? "cursor-pointer" : "cursor-default";
 
     return (
-       navigateTo ? internalLink : href ? externalLink : div
+        <div onClick={() => { props.to ? navigate(props.to) : null }} className={`h-full w-full rounded-lg ${cursor} `+className} 
+        style={{ background, height, width, minWidth: width }}>
+            { ...React.Children.toArray(props.children) }
+        </div>
     );
-}
-
-const calculateHeightAndWidth = (ratio: number, height?: number, width?: number, unit?: string) => {
-    if(height === -1 || width === -1) return ["auto", "auto"];
-    if(!unit) unit = "";
-    if(height && width) return [ height + unit, width + unit ];
-    else if(height) return [ height + unit, (height * ratio) + unit ];
-    else if(width) return [ (width / ratio) + unit, width + unit ]
-    return [ "auto", "auto" ];
-}
-
-const getMinHeightAndwidth = (height?: number, width?: number, unit?: string) => {
-    if(height === -1 || width === -1) return ["auto", "auto"];
-    if(!unit) unit = "";
-    if(height && width) return [ height + unit, width + unit ];
-    else if(height) return [ height + unit,  "auto" ];
-    else if(width) return [ "auto", width + unit ]
-    return [ "auto", "auto" ];
 }

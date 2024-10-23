@@ -1,7 +1,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import AppImage from "./Image";
 import { MediaDetails } from "../../Model/Model";
+import Image from "./Image";
 
 export interface AutoCompleteProps {
     autoFocus?: boolean;
@@ -39,7 +39,7 @@ export default function AppAutoComplete({ autoFocus, placeholder, onSelectionCha
                 <AutocompleteItem key={item.id} textValue={item.name}>
                     <div className="flex items-start">
                         <div className="rounded mr-3">
-                            <AppImage className="rounded" width={width} unit="px" url={item.thumbnail} />
+                            <Image className="rounded" width={width} unit="px" url={item.thumbnail} />
                         </div>
                         <div className="search-content grid gap-1">
                             { item.name.length ? <span className="font-bold text-xs">{ item.name }</span> : <></> }

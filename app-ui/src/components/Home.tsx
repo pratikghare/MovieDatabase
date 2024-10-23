@@ -3,9 +3,9 @@ import { AppDispatch, RootState } from "../store/store";
 import { useEffect, useState } from "react";
 import { getNowPlaying, getPopularPeople, getTopRatedMovies, getTopRatedTV, getTrendingTV } from "../reducers/homeSlice";
 import { Credit, MediaHome, MediaType } from "../Model/Model";
-import Slider from "./common/Slider";
 import { useNavigate } from "react-router-dom";
 import { getDetailsNavigationURL } from "../services/Utilities";
+import Slider from "./common/Slider";
 
 export default function Home() {
     const dispatch = useDispatch<AppDispatch>();
@@ -35,12 +35,8 @@ export default function Home() {
     
 
     return (
-        list.map((media: MediaHome) => (
-            <Slider 
-                onButtonClick={addToWatchList}
-                hideButton={media.type === MediaType.PERSON}
-                onFooterClick={getDetails}
-                key={"home" + media.title} credits={media.list} title={media.title} baseClass={""}            />
+        list.map((media: MediaHome, index: number) => (
+            <Slider showSaveButton={media.type !== MediaType.PERSON} onButtonClick={addToWatchList} onItemClick={getDetails} key={media.title + index} className="m-4" title={media.title} list={media.list} />
         ))
     );
 }

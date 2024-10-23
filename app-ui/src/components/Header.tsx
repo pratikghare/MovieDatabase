@@ -8,8 +8,8 @@ import { getSearchResults } from "../reducers/searchSlice";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import AppAutoComplete from "./common/AppAutoComplete";
-import Image from "./common/Image";
 import { getDetailsNavigationURL } from "../services/Utilities";
+import Image from "./common/Image";
 
 export default function Header() {
     const dispatch = useDispatch<AppDispatch>();
@@ -51,7 +51,7 @@ export default function Header() {
             {
                 (toggleSearch && dimensions.width <= 640) ? <></> :
                 <NavbarBrand>
-                    <Image url={"/logo.png"} navigateTo="/" width={65} height={50} unit="px" />
+                    <Image to="/" url={"/logo.png"} width={65} height={50} unit="px" />
                 </NavbarBrand>
             }
             <NavbarContent>

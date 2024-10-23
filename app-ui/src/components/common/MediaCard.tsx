@@ -1,18 +1,17 @@
 import { Button, Card, CardFooter, CardHeader, Tooltip } from "@nextui-org/react";
-import Image from "./Image";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
-import { APP_IMAGE_PATH, IMAGE_NOT_FOUND, POSTER_RATIO } from "../../environment/environment";
+import { IMAGE_NOT_FOUND, POSTER_RATIO } from "../../environment/environment";
 import { Credit } from "../../Model/Model";
-import { calculateHeightAndWidth } from "../../services/Utilities";
+import { calculateHeightAndWidth, callFunction, getBaseClassNames, getImageURL } from "../../services/Utilities";
+import Image from "./Image";
 
 export interface MediaCardClassNames {
+    wrapper?: string;
     base?: string;
     header?: string;
-    save?: string;
     image?: string;
     footer?: string;
-    footerMain?: string;
-    footerSub?: string;
+    tootipContent?: string;
 }
 export interface MediaCardConfig {
     height?: number;
@@ -24,77 +23,68 @@ export interface MediaCardProps {
     url?: string;
     data?: Credit;
 
-    classNames?: any;
-    hideFooter?: boolean;
-    hideButton?: boolean;
-    showFullName?: boolean;
+    className?: string;
+    classNames?: MediaCardClassNames;
+
+    rounded?: boolean;
+
     onBaseClick?: Function;
+    showSaveButton?: boolean;
     onButtonClick?: Function;
-    onFooterClick?: Function;
+    onItemClick?: Function;
+    
 }
 
 
-export function MediaCard({ config, data, url, classNames, hideFooter, onButtonClick, onBaseClick, showFullName, onFooterClick, hideButton }: MediaCardProps) {
-    const ratio = config?.aspectRatio ? config.aspectRatio : POSTER_RATIO;
-    let [height, width] = calculateHeightAndWidth(ratio, config?.height, config?.width);
-
-    const character: string | null = data?.character ? (
-        data.character.length > 10 && data.character.length <= 13 ? 
-            data.character.substring(0, 8) + "..." : 
-                data.character.length > 13 ? data.character.substring(0, 10)+"..." : data.character
-    ) : null;
-    const name: string | null = data?.name ? (
-        data.name.length > 10 && data.name.length <= 13 ? 
-            data.name.substring(0, 8) + "..." : 
-                data.name.length > 13 ? data.name.substring(0, 10)+"..." : data.name
-    ) : null;
+export function MediaCard(props: MediaCardProps) {
+    const ratio = props.config?.aspectRatio ? props.config.aspectRatio : POSTER_RATIO;
+    let [height, width] = calculateHeightAndWidth(ratio, props.config?.height, props.config?.width);
+    const rounded = props.rounded ? "!rounded-2xl" : "!rounded-lg";
 
     return (
-        <div className="rounded-lg">
+        <div className={`${rounded}` + getBaseClassNames(props.classNames?.wrapper, props.className)}>
             <Card
                 isFooterBlurred
                 radius="lg"
-                className={`border-none relative ${classNames?.base}`}
+                className={`border-none relative ${rounded} ${getBaseClassNames(props?.classNames?.base)}`}
                 fullWidth={true}
                 style={{ height: height+"px", width: width+"px" }}
-                onClick={() => { onBaseClick ? onBaseClick() : "" }}
+                onClick={() => callFunction(props.data, props.onBaseClick)}
                 >
                 {
-                    data && onButtonClick && !hideButton ? 
-                    <CardHeader className={`absolute z-10 top-0 left-0 flex-col items-start p-0  !bg-transparent ${classNames?.header}`}>
+                    props.onButtonClick && props.showSaveButton ? 
+                    <CardHeader className={`absolute z-10 top-0 left-0 flex-col items-start p-0  !bg-transparent ${getBaseClassNames(props.classNames?.header)}`}>
                         <Tooltip color="default" placement="bottom" content="Add to watchlist">
-                            <Button onClick={() => { onButtonClick(data) }} variant="flat" className="p-0 min-w-1 h-auto">
+                            <Button onClick={() => callFunction(props.data, props.onButtonClick)} variant="light" className="p-1 min-w-1 h-auto backdrop-blur-lg bg-black/20">
                                 <BookmarkIcon className="h-6 w-6" />
                             </Button>
                         </Tooltip>
                     </CardHeader> : <></>
                 }
-                <Image className={`${classNames?.image}`} url={data?.poster ? data.poster : url ? url : APP_IMAGE_PATH+IMAGE_NOT_FOUND} height={height} width={width} />
+                <Image className={`${rounded} `+getBaseClassNames(props.classNames?.image)} url={props.url ? props.url : getImageURL(props.data)} height={height} width={width} />
                 {
-                    hideFooter || !data ? <></> :
-                    <CardFooter className={`grid cursor-pointer text-center hover:underline before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] ${data.poster.includes(IMAGE_NOT_FOUND) ? "h-[calc(100%_-_8px)]" : ""} shadow-small ml-1 z-10 ${classNames?.footer}`}
-                        onClick={() => { onFooterClick ? onFooterClick(data) : "" }}
-                    >
+                    !props.data ? <></> :
+                    <CardFooter className={`${rounded} grid cursor-pointer text-center hover:underline before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl bottom-1 w-[calc(100%_-_8px)] ${props.data.poster.includes(IMAGE_NOT_FOUND) ? "h-[calc(100%_-_8px)]" : ""} shadow-small ml-1 z-10 ${getBaseClassNames(props.classNames?.footer)}`}>
                         {
-                            !data.poster.includes(IMAGE_NOT_FOUND) ?
-                            <Tooltip
-                            showArrow
-                                placement="bottom"
-                                content={
-                                    <div className="px-1 py-2">
-                                        <p className={`text-xs text-gray-50 font-bold`}>{ data.name }</p>
-                                        <p className={`text-xxs text-gray-200`}>{ data.character }</p>
-                                    </div>
-                                }
-                                >
-                                <button>
-                                    <p className={`text-xs text-gray-50 font-bold ${classNames?.footerMain}`}>{ showFullName ? data.name : name }</p>
-                                    <p className={`text-xxs text-gray-200 ${classNames?.footerSub}`}>{ character }</p>
-                                </button>
-                            </Tooltip> :
-                            <div className="grid ">
-                                <p className={`text-xs text-gray-50 font-bold ${classNames?.footerMain}`}>{ data.name }</p>
-                                <p className={`text-xxs text-gray-200 ${classNames?.footerSub}`}>{ data.character }</p>
+                            !props.data.poster.includes(IMAGE_NOT_FOUND) ?
+                                <Tooltip
+                                    showArrow
+                                    placement="bottom"
+                                    content={
+                                        <div className={`px-1 py-2 ${getBaseClassNames(props.classNames?.tootipContent)}`}>
+                                            <p className={`text-xs text-gray-50 font-bold`}>{ props.data.name }</p>
+                                            { props.data.character ? <p className={`text-xxs text-gray-200`}>({ props.data.character })</p> : <></> }
+                                        </div>
+                                    }
+                                    >
+                                    <button onClick={() => callFunction(props.data, props.onItemClick)}>
+                                        <p className={`text-xxs text-gray-50 font-bold`}>{ getSubstring(props.data.name) }</p>
+                                        <p className={`text-xxs text-gray-200`}>{ getSubstring(props.data.character) }</p>
+                                    </button>
+                                </Tooltip> :
+                            <div className="grid" onClick={() => callFunction(props.data, props.onItemClick)}>
+                                <p className={`text-xxs text-gray-50 font-bold`}>{ props.data.name }</p>
+                                <p className={`text-xxs text-gray-200`}>{ props.data.character }</p>
                             </div>
                         }
                     </CardFooter>
@@ -102,4 +92,8 @@ export function MediaCard({ config, data, url, classNames, hideFooter, onButtonC
             </Card>
         </div>
     );
+}
+
+function getSubstring(item: string | null | undefined = ""): string {
+    return item ? item.length > 13 ? item.substring(0, 11)+"..." : item : "";
 }

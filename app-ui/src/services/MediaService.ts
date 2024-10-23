@@ -34,18 +34,18 @@ export function searchByQuery(query: string): Promise<any> {
 }
 
 export function fetchDetails(id: number, type: MediaType): Promise<any> {
-    // return get(getURL(LinksProps.details, id, type));
+    return get(getURL(LinksProps.details, id, type));
     return new Promise((resolve) => setTimeout(() => {resolve(details)}, 500));
 }
 export function fetchExternalIds(id: number): Promise<any> {
     return get(getURL(LinksProps.externalIds, id, MediaType.TV));
 }
 export function fetcOMDBDetails(id: string): Promise<any> {
-    // return get(OMDB_URL+id);
+    return get(OMDB_URL+id);
     return new Promise((resolve) => setTimeout(() => {resolve(omdb)}, 500));
 }
 export function fetchCredits(id: number, type: MediaType): Promise<any> {
-    // return get(getURL(LinksProps.credits, id, type));
+    return get(getURL(LinksProps.credits, id, type));
     return new Promise((resolve) => setTimeout(() => {resolve(credits)}, 500));
 }
 export function fetchVideos(id: number, type: MediaType): Promise<any>  {

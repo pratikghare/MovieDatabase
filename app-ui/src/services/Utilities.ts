@@ -14,14 +14,16 @@ export function getMediaType(item: any): MediaType {
 
 
 
-
+// BASE CLASSNAMES
 export function getBaseClassNames(className?: string, base?: string): string {
     const classNames: string = className && base ? className + " " + base :
     (className ? className : (base ? base : ""));
     return classNames;
 }
-
-
+// CALL BASE CLASS FUNCTIONS
+export function callFunction(data?: Credit, callback?: Function | null | undefined) {
+    if(callback && data) callback(data);
+}
 
 
 
@@ -169,7 +171,7 @@ export function getGenres(item: any): Array<Genre> {
 
 
 // CREDITS
-export function getCredits(item: any, state?: MediaDetails): Credits {
+export function getCredits(item: any): Credits {
     const credits: Credits = { directors: [], writers: [], producers: [], cast: [] };
     if(item?.cast) {
         const cast: Array<Credit> = item.cast ? getMassagedCreditsList(item.cast) : [];
@@ -186,7 +188,7 @@ export function getCredits(item: any, state?: MediaDetails): Credits {
         credits.producers = producers;
         credits.writers = writers;
     }
-    return (state?.credits && !item?.cast && !item?.crew) ? state.credits : credits;
+    return credits;
 }
 export function getMassagedCreditObject(item: any): Credit | null {
     if(!item) return null;
@@ -227,8 +229,9 @@ export function getMassagedCreditsList(list: Array<any>, media_type?: MediaType)
         if(credit) credits.push({...credit, mediaType});
     });
     if(credits.length) {
-        if(credits[0].mediaType !== MediaType.PERSON) credits.sort((p, c) => p.popularity < c.popularity ? 1 : -1);
-        else credits.sort((p, c) => p.order > c.order ? 1 : -1);
+        // NOT SORTING FOR NOW ---------------------
+        // if(credits[0].mediaType !== MediaType.PERSON) credits.sort((p, c) => !p.rating || !c.rating ? 1 : p.rating < c.rating ? 1 : -1);
+        // else credits.sort((p, c) => p.order > c.order ? 1 : -1);
     }
     return credits;
 }
@@ -306,6 +309,7 @@ export function getImageURL(item: any) {
     else if(item?.profile_path != undefined) return SHORT_IMAGE_URL + item.profile_path;
     else if(item?.still_path != undefined) return SHORT_IMAGE_URL + item.still_path;
     else if(item?.file_path != undefined) return SHORT_IMAGE_URL + item.file_path;
+    else if(item?.poster != undefined) return item.poster;
     return IMAGE_NOT_FOUND;
 }
 export function getHDImageURL(item: any) {
@@ -353,13 +357,18 @@ export function calculateHeightAndWidth(ratio: number, height?: number, width?: 
     else if(width) return [ width / ratio, width ]
     return [ -1, -1 ];
 }
+// GET BACKGROUND 
+export function getBackground(url?: string | null, pos?: string, size?: string): string {
+    let background: string = url ? `url('${url}') ${pos ? pos : "center"}/${size ? size : "cover"}` : "";
+    return background;
+}
 
 
 
 
 
 // MASSAGED DATA
-export function getMassagedData(item: any, state?: MediaDetails): MediaDetails {
+export function getMassagedData(item: any): MediaDetails {
     const data: MediaDetails = {
         // ALL
         id: item?.id ? item.id : 0,
@@ -370,7 +379,7 @@ export function getMassagedData(item: any, state?: MediaDetails): MediaDetails {
         thumbnail: getImageURL(item),
         overview: getOverview(item),
         popularity: item ? item.popularity : 0,
-        credits: getCredits(item, state),
+        credits: getCredits(item),
         country: getCountry(item),
         mediaType: getMediaType(item),
         // Person

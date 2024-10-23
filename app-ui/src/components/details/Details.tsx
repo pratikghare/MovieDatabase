@@ -12,8 +12,8 @@ import ColorThief from "colorthief";
 import _ from 'lodash';
 
 import Overview from "./Overview";
-import AppImage from "../common/AppImage";
 import Ratings from "./Rating";
+import { MediaCard } from "../common/MediaCard";
 
 
 export default function Details() {
@@ -39,10 +39,11 @@ export default function Details() {
             const palette = colorThief.getPalette(img, 10);
             const result = _.uniq(palette);
             // result.forEach(item => console.log(rgbToHex(...item)))
-            console.log(result);
+            // console.log(result);
             setColorsCalled(true);
 
             if(!details.backdrop && result.length) setBackground(rgbToHex(...result[1]));
+            else setBackground(details.backdrop ? `url('${details.backdrop}') center/cover` : `url('${DEFAULT_BG_IMAGE}') center/cover`);
             setLoader(false);
         }
     }
@@ -53,13 +54,11 @@ export default function Details() {
         setColorsCalled(false);
         // return;
         if(data) {
+            // console.log(data);
             setLoader(true);
             setOMLoader(true);
             window.scrollTo({top: 0});
-            // console.log(data);
             dispatch(getDetails(data));
-            dispatch(getFullCredits(data));
-            // dispatch(getImages(data));
         }
         else{
             // navigate to page not found
@@ -67,23 +66,33 @@ export default function Details() {
     }, [loaderData]);
 
     useEffect(() => {
-        // console.log(details);
-        setBackground(details.backdrop ? `url('${details.backdrop}') center/cover` : `url('${DEFAULT_BG_IMAGE}') center/cover`)
+        // if(details.id) console.log(details);
+
         if(!details.poster.includes(IMAGE_NOT_FOUND) && !colorsCalled) setRGBColorsFromImageURL();
         else if(details.id) setLoader(false);
-        if(details.imdbId !== null && details.mediaType !== MediaType.PERSON && loader && omLoader) {
+        // Load all other details
+        if(details.id && loader) {
+            const base: BaseSearch = { id: details.id, mediaType: details.mediaType }
+            dispatch(getFullCredits(base));
+            // dispatch(getImages(data));
+        }
+        if(details.imdbId !== null && details.mediaType !== MediaType.PERSON && omLoader) {
             dispatch(getOMDetails(details.imdbId));
             setOMLoader(false);
         }
-    }, [details]);
+    }, [details.id]);
+
+    const addToWatchList = () => {
+        console.log("CALLED WATCHLIST");
+    }
 
     return (
         <div style={{ background }}>
             {
                 loader ? <div className="absolute flex justify-center items-center h-1/2 w-full"><InfinitySpin width="200" color="#ed7b7b" /></div> :
-                <div className="details-wrapper min-h-[calc(100vh_-_64px)] backdrop-blur-xl p-3">
-                    <div className="flex flex-wrap gap-3 justify-evenly sm:justify-start">
-                        <AppImage className="shrink-0 rounded-2xl" width={270} url={details.thumbnail} />
+                <div className="details-wrapper min-h-[calc(100vh_-_64px)] backdrop-blur-xl p-3 sm:p-6 xl:p-10">
+                    <div className="flex flex-wrap gap-5 justify-evenly sm:justify-start">
+                        <MediaCard rounded onButtonClick={addToWatchList} showSaveButton={details.mediaType !== MediaType.PERSON} config={{ height: 430 }} url={details.poster} />
                         <Overview className="flex-1" />
                         { 
                             details.mediaType !== MediaType.PERSON && (details.userRating || details.ratings.length > 0) ?
