@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hide-scrollbar {
+    /*FireFox*/
+    scrollbar-width: none;
+    /*IE10+*/
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.hide-scrollbar::-webkit-scrollbar {
+    /*Chrome, Safari, Edge*/
+    display: none;
+}
+.text-xxs{
+    font-size: 10px;
+}
+
+
+/* AUTO COMPLETE */
+.popover-app, .popover-app > div{
+    max-height: 400px;
+}
+
+@layer base {
+    h1 {
+        @apply text-2xl;
+        @apply font-bold;
+    }
+    h2 {
+        @apply text-xl;
+    }
+}
+
+
+.details-wrapper {
+}
+
+
+
+/* IMPROVING THE CODE -- BACKUP */
+/*
+.details{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1em;
+    margin: 0;
+}
+.details-header-1{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fit, minmax(auto, 1fr));
+    grid-row-gap: 1em;
+    padding: 1em;
+}
+.details-header-1 .overview-details{
+    
+}
+.details-header-3{
+    display: grid;
+    grid-template-columns: 270px minmax(440px, 1fr) auto !important;
+    grid-template-rows: 405px auto !important;
+    gap: 1em;
+    padding: 1em;
+}
+.details-header-2{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: 405px auto;
+    gap: 1em;
+    padding: 1em;
+}
+.details-header-2 .details-ratings{
+    grid-column: 2;
+    grid-row: 1;
+}
+.details-header-2 .overview-details {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+}
+
+
+.image-transition{
+    transition: all ease-in-out 400ms;
+}
+*/
+
