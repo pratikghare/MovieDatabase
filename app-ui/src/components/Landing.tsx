@@ -5,7 +5,7 @@ import { Footer } from "./Footer";
 
 export default function Landing() {
     return (
-        <section className="h-[100vh] flex flex-col justify-between">
+        <section className="h-[100vh] flex flex-col">
             <Header />
             <Outlet />
             <Footer />

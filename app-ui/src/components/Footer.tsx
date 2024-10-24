@@ -3,7 +3,7 @@ import Image from "./common/Image";
 
 export function Footer() {
     return (
-        <footer className="h-[120px] w-full flex justify-between items-end p-5 gap-5 bg-black">
+        <footer className="h-[120px] w-full flex justify-between items-end p-5 gap-5 bg-black flex-1">
             <p className="text-xs self-end font-bold cursor-default">Copyrights &copy; Pratik Ghare</p>
             <div >
                 <Image className="rounded-none flex " url={APP_IMAGE_PATH + "tmdb.svg"} height={50} width={70}>
