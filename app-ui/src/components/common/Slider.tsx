@@ -41,7 +41,7 @@ export default function Slider(props: SliderProps) {
         <div className={`bg-[#18181b] rounded-lg p-4 grid gap-3 ${classNames}`}>
             <div className="flex justify-between">
                 { title && <h2>{title}</h2> }
-                { props.showAll && props.showAllTitle ? <Button onClick={() => { props.showAllUrl ? navigate(props.showAllUrl) : "" }} variant="flat" className="text-xs h-auto"> { props.showAllTitle } </Button> : <></> }
+                { props.showAll && props.showAllTitle ? <Button onClick={() => { props.showAllUrl ? navigate(props.showAllUrl) : "" }} variant="flat" className="text-xs h-auto border border-white/10"> { props.showAllTitle } </Button> : <></> }
             </div>
             
             <div className="flex gap-4 overflow-x-auto scroll-smooth hide-scrollbar" >

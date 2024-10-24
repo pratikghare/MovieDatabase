@@ -19,10 +19,10 @@ export default function DetailsCard(props: DetailsCardProps) {
     const background: string = getBackground(details.backdrop)
     
     return (
-        <section className={"rounded-2xl "} style={{ background }}>
-            <div className={"p-5 w-full h-full rounded-2xl flex flex-col " + classNames}>
+        <div className="flex-1 rounded-2xl " style={{ background }}>
+            <div className={"backdrop-blur-md rounded-2xl flex min-w-[270px] " + classNames}>
                 { ...React.Children.toArray(props.children) }
             </div>
-        </section>
+        </div>
     );
 }

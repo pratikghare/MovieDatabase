@@ -131,6 +131,7 @@ export interface MediaDetails {
     production: string | null;
     language: string | null;
     similar: Array<Credit>;
+    recommendations: Array<Credit>;
     // TV
     episodeCount: number | null;
     seasonCount: number | null;
@@ -184,5 +185,5 @@ export enum LinksProps {
     upComing = ("upComing"), search = ("search"), details = ("details"), images = ("images"), credits = ("credits"), 
     videos = ("videos"), similar = ("similar"), watchProviders = ("watchProviders"), 
     movieCredits = ("movieCredits"), tvCredits = ("tvCredits"), 
-    season = ("season"), onAir = ("onAir"), externalIds = ("externalIds")
+    season = ("season"), onAir = ("onAir"), externalIds = ("externalIds"), recommendations= ("recommendations")
 }

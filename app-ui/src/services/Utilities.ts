@@ -406,6 +406,7 @@ export function getMassagedData(item: any): MediaDetails {
         production: null,
         language: null,
         similar: [],
+        recommendations: [],
         // TV
         episodeCount: null,
         seasonCount: null,

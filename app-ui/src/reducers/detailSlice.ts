@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BaseSearch, MediaDetails } from "../Model/Model";
 import { getCredits, getMassagedCreditsList, getMassagedData, getMassagedImagesList, updateOMDBDetails } from "../services/Utilities";
-import { fetchCredits, fetchDetails, fetchExternalIds, fetchImages, fetchSimilar, fetchVideos, fetchWatchProviders, fetcOMDBDetails } from "../services/MediaService";
+import { fetchCredits, fetchDetails, fetchExternalIds, fetchImages, fetchRecommendations, fetchSimilar, fetchVideos, fetchWatchProviders, fetcOMDBDetails } from "../services/MediaService";
 
 const initialState: MediaDetails = getMassagedData(null);
 
@@ -15,6 +15,7 @@ const detailSlice = createSlice({
         .addCase(getExternalIds.fulfilled, (state, action: PayloadAction<any>) => ({ ...state, imdbId: action?.payload?.imdb_id }))
         .addCase(getOMDetails.fulfilled, (state, action: PayloadAction<any>) => updateOMDBDetails(action.payload, state))
         .addCase(getFullCredits.fulfilled, (state, action: PayloadAction<any>) => ({...state, credits: getCredits(action.payload)}))
+        .addCase(getRecommendations.fulfilled, (state, action: PayloadAction<any>) => ({...state, recommendations: getMassagedCreditsList(action.payload?.results)}))
         // .addCase(getVideos.fulfilled, (state, action: PayloadAction<any>) => ({...state, credits: getCredits(action.payload)}))
         .addCase(getImages.fulfilled, (state, action: PayloadAction<any>) => ({...state, images: getMassagedImagesList(action.payload)}))
         // .addCase(getWatchProviders.fulfilled, (state, action: PayloadAction<any>) => ({...state, credits: getCredits(action.payload)}))
@@ -54,6 +55,17 @@ export const getFullCredits = createAsyncThunk(
     async (item: BaseSearch) => {
         if(item && item.mediaType !== null){
             const data = await fetchCredits(item.id, item.mediaType);
+            if(!data || (data.success !== undefined && data.success === false)) return null;
+            return {...data, media_type: item.mediaType};
+        }
+        return null;
+    }
+);
+export const getRecommendations = createAsyncThunk(
+    "detailSlice/getRecommendations",
+    async (item: BaseSearch) => {
+        if(item && item.mediaType !== null){
+            const data = await fetchRecommendations(item.id, item.mediaType);
             if(!data || (data.success !== undefined && data.success === false)) return null;
             return {...data, media_type: item.mediaType};
         }

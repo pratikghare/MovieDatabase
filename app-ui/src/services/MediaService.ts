@@ -41,11 +41,15 @@ export function fetchExternalIds(id: number): Promise<any> {
     return get(getURL(LinksProps.externalIds, id, MediaType.TV));
 }
 export function fetcOMDBDetails(id: string): Promise<any> {
-    return get(OMDB_URL+id);
+    return get(OMDB_URL+id, false);
     return new Promise((resolve) => setTimeout(() => {resolve(omdb)}, 500));
 }
 export function fetchCredits(id: number, type: MediaType): Promise<any> {
     return get(getURL(LinksProps.credits, id, type));
+    return new Promise((resolve) => setTimeout(() => {resolve(credits)}, 500));
+}
+export function fetchRecommendations(id: number, type: MediaType): Promise<any> {
+    return get(getURL(LinksProps.recommendations, id, type));
     return new Promise((resolve) => setTimeout(() => {resolve(credits)}, 500));
 }
 export function fetchVideos(id: number, type: MediaType): Promise<any>  {

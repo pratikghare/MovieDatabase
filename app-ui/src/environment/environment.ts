@@ -20,7 +20,7 @@ export const YOUTUBE_URL = `www.youtube.com/watch?v=`;
 export const VIMEO_URL = `https://vimeo.com/`
 
 // MULTI SEARCH
-export const MULTI_SEARCH = `https://api.themoviedb.org/3/search/multi?${API_KEY}&query=`;
+export const MULTI_SEARCH = `https://api.themoviedb.org/3/search/multi?query=`;
 
 // DELIMETERS
 export const MOVIE_DEL = `{movie_id}`;
@@ -29,53 +29,55 @@ export const PERSON_DEL = `{person_id}`;
 
 // URLS
 export const MOVIE = {
-    trending: `https://api.themoviedb.org/3/trending/movie/week?${API_KEY}`,
-    nowPlaying: `https://api.themoviedb.org/3/movie/now_playing?${API_KEY}`,
-    popular: `https://api.themoviedb.org/3/movie/popular?${API_KEY}`,
-    topRated: `https://api.themoviedb.org/3/movie/top_rated?${API_KEY}`,
-    upComing: `https://api.themoviedb.org/3/movie/upcoming?${API_KEY}`,
+    trending: `https://api.themoviedb.org/3/trending/movie/week`,
+    nowPlaying: `https://api.themoviedb.org/3/movie/now_playing`,
+    popular: `https://api.themoviedb.org/3/movie/popular`,
+    topRated: `https://api.themoviedb.org/3/movie/top_rated`,
+    upComing: `https://api.themoviedb.org/3/movie/upcoming`,
 
-    search: `https://api.themoviedb.org/3/search/movie?${API_KEY}`,
-    details: `https://api.themoviedb.org/3/movie/{movie_id}?${API_KEY}`,
-    images: `https://api.themoviedb.org/3/movie/{movie_id}/images?${API_KEY}`,
-    credits: `https://api.themoviedb.org/3/movie/{movie_id}/credits?${API_KEY}`,
-    videos: `https://api.themoviedb.org/3/movie/{movie_id}/videos?${API_KEY}`,
-    similar: `https://api.themoviedb.org/3/movie/{movie_id}/similar?${API_KEY}`,
-    watchProviders: `https://api.themoviedb.org/3/movie/{movie_id}/watch/providers?${API_KEY}`,
+    search: `https://api.themoviedb.org/3/search/movie`,
+    details: `https://api.themoviedb.org/3/movie/{movie_id}`,
+    images: `https://api.themoviedb.org/3/movie/{movie_id}/images`,
+    credits: `https://api.themoviedb.org/3/movie/{movie_id}/credits`,
+    videos: `https://api.themoviedb.org/3/movie/{movie_id}/videos`,
+    similar: `https://api.themoviedb.org/3/movie/{movie_id}/similar`,
+    recommendations: `https://api.themoviedb.org/3/movie/{movie_id}/recommendations`,
+    watchProviders: `https://api.themoviedb.org/3/movie/{movie_id}/watch/providers`,
 }
 
 export const PERSON = {
-    trending: `https://api.themoviedb.org/3/trending/person/week?${API_KEY}`,
-    popular: `https://api.themoviedb.org/3/person/popular?${API_KEY}`,
+    trending: `https://api.themoviedb.org/3/trending/person/week`,
+    popular: `https://api.themoviedb.org/3/person/popular`,
 
-    search: `https://api.themoviedb.org/3/search/person?${API_KEY}`,
-    details: `https://api.themoviedb.org/3/person/{person_id}?${API_KEY}`,
-    images: `https://api.themoviedb.org/3/person/{person_id}/images?${API_KEY}`,
-    credits: `https://api.themoviedb.org/3/person/{person_id}/combined_credits?${API_KEY}`,
-    movieCredits: `https://api.themoviedb.org/3/person/{person_id}/movie_credits?${API_KEY}`,
-    tvCredits: `https://api.themoviedb.org/3/person/{person_id}/tv_credits?${API_KEY}`,
+    search: `https://api.themoviedb.org/3/search/person`,
+    details: `https://api.themoviedb.org/3/person/{person_id}`,
+    images: `https://api.themoviedb.org/3/person/{person_id}/images`,
+    credits: `https://api.themoviedb.org/3/person/{person_id}/combined_credits`,
+    movieCredits: `https://api.themoviedb.org/3/person/{person_id}/movie_credits`,
+    tvCredits: `https://api.themoviedb.org/3/person/{person_id}/tv_credits`,
 }
 
 export const TV = {
-    trending: `https://api.themoviedb.org/3/trending/tv/week?${API_KEY}`,
-    topRated: `https://api.themoviedb.org/3/tv/top_rated?${API_KEY}`,
-    popular: `https://api.themoviedb.org/3/tv/popular?${API_KEY}`,
+    trending: `https://api.themoviedb.org/3/trending/tv/week`,
+    topRated: `https://api.themoviedb.org/3/tv/top_rated`,
+    popular: `https://api.themoviedb.org/3/tv/popular`,
     
-    search: `https://api.themoviedb.org/3/search/tv?${API_KEY}`,
-    details: `https://api.themoviedb.org/3/tv/{series_id}?${API_KEY}`,
-    similar: `https://api.themoviedb.org/3/tv/{series_id}/similar?${API_KEY}`,
-    videos: `https://api.themoviedb.org/3/tv/{series_id}/videos?${API_KEY}`,
-    images: `https://api.themoviedb.org/3/tv/{series_id}/images?${API_KEY}`,
-    credits: `https://api.themoviedb.org/3/tv/{series_id}/credits?${API_KEY}`,
-    season: `https://api.themoviedb.org/3/tv/{series_id}/season/{season_no}?${API_KEY}`,
-    onAir: `https://api.themoviedb.org/3/tv/on_the_air?${API_KEY}`,
-    externalIds: `https://api.themoviedb.org/3/tv/{series_id}/external_ids?${API_KEY}`,
-    watchProviders: `https://api.themoviedb.org/3/tv/{series_id}/watch/providers?${API_KEY}`
+    search: `https://api.themoviedb.org/3/search/tv`,
+    details: `https://api.themoviedb.org/3/tv/{series_id}`,
+    similar: `https://api.themoviedb.org/3/tv/{series_id}/similar`,
+    recommendations: `https://api.themoviedb.org/3/tv/{series_id}/recommendations`,
+    videos: `https://api.themoviedb.org/3/tv/{series_id}/videos`,
+    images: `https://api.themoviedb.org/3/tv/{series_id}/images`,
+    credits: `https://api.themoviedb.org/3/tv/{series_id}/credits`,
+    season: `https://api.themoviedb.org/3/tv/{series_id}/season/{season_no}`,
+    onAir: `https://api.themoviedb.org/3/tv/on_the_air`,
+    externalIds: `https://api.themoviedb.org/3/tv/{series_id}/external_ids`,
+    watchProviders: `https://api.themoviedb.org/3/tv/{series_id}/watch/providers`
 }
 
 // GENRES
-export const MOVIE_GENRES = `https://api.themoviedb.org/3/genre/movie/list?${API_KEY}`;
-export const TV_GENRES = `https://api.themoviedb.org/3/genre/tv/list?${API_KEY}`;
+export const MOVIE_GENRES = `https://api.themoviedb.org/3/genre/movie/list`;
+export const TV_GENRES = `https://api.themoviedb.org/3/genre/tv/list`;
 
 
 // ENCRYPTED
