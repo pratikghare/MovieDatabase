@@ -11,7 +11,7 @@ const detailSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-        .addCase(getDetails.fulfilled, (state, action: PayloadAction<any>) => getMassagedData(action.payload))
+        .addCase(getDetails.fulfilled, (state, action: PayloadAction<any>) => ({...state, ...getMassagedData(action.payload)}))
         .addCase(getExternalIds.fulfilled, (state, action: PayloadAction<any>) => ({ ...state, imdbId: action?.payload?.imdb_id }))
         .addCase(getOMDetails.fulfilled, (state, action: PayloadAction<any>) => updateOMDBDetails(action.payload, state))
         .addCase(getFullCredits.fulfilled, (state, action: PayloadAction<any>) => ({...state, credits: getCredits(action.payload)}))

@@ -1,5 +1,5 @@
 export const SECRET_KEY = `MOVIE_DATABASE_KEY_PUBLIC`;
-const API_KEY = `api_key=70d4fecc6bb44c331e68ff7d257fa365`;
+export const API_KEY = `api_key=70d4fecc6bb44c331e68ff7d257fa365`;
 export const QUERY_API = `http://localhost:3500`;
 const OMDB_KEY = `apikey=df39e1ba`;
 export const OMDB_URL = `https://www.omdbapi.com/?${OMDB_KEY}&i=`;
