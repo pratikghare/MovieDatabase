@@ -6,7 +6,7 @@ import { getDetailsNavigationURL, getNavigatedData, rgbToHex } from "../../servi
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { BaseSearch, Credit, MediaType } from "../../Model/Model";
 import { InfinitySpin } from "react-loader-spinner";
-import { DEFAULT_BG_IMAGE, IMAGE_NOT_FOUND } from "../../environment/environment";
+import { DEFAULT_BG_IMAGE, IMAGE_NOT_FOUND, WINDOW_TITLE } from "../../environment/environment";
 
 import ColorThief from "colorthief";
 import _ from 'lodash';
@@ -70,8 +70,9 @@ export default function Details() {
     }, [loaderData]);
 
     useEffect(() => {
-        console.log(details);
-    }, [details])
+        document.title = (details.name && details.name.length) ? (details.name + " | " + WINDOW_TITLE) : WINDOW_TITLE;
+        // console.log(details);
+    }, [details.name])
 
     useEffect(() => {
 

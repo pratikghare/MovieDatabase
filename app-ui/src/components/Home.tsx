@@ -6,6 +6,7 @@ import { Credit, MediaHome, MediaType } from "../Model/Model";
 import { useNavigate } from "react-router-dom";
 import { getDetailsNavigationURL } from "../services/Utilities";
 import Slider from "./common/Slider";
+import { WINDOW_TITLE } from "../environment/environment";
 
 export default function Home() {
     const dispatch = useDispatch<AppDispatch>();
@@ -15,6 +16,7 @@ export default function Home() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = WINDOW_TITLE + " | Home";
         if(!list.length && loader) {
             setLoader(false);
             dispatch(getNowPlaying());

@@ -1,7 +1,6 @@
 import React from "react";
 import { POSTER_RATIO } from "../../environment/environment";
 import { calculateHeightAndWidth } from "../../services/Utilities";
-import { useNavigate } from "react-router-dom";
 
 export interface ImageProps {
     url: string;
@@ -18,8 +17,6 @@ export interface ImageProps {
 
 
 export default function Image(props: ImageProps) {
-    const navigate = useNavigate();
-
     const background: string = `url('${props.url}') center/cover`;
 
     const aspectRatio: number = props.aspectRatio ? props.aspectRatio : POSTER_RATIO;

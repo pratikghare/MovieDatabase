@@ -4,6 +4,10 @@ export const QUERY_API = `http://localhost:3500`;
 const OMDB_KEY = `apikey=df39e1ba`;
 export const OMDB_URL = `https://www.omdbapi.com/?${OMDB_KEY}&i=`;
 
+
+// Window
+export const WINDOW_TITLE = "Movie Database"
+
 // REGION
 export const DEFAULT_REGION = "IN";
 
