@@ -32,8 +32,13 @@ export default function Image(props: ImageProps) {
     const cursor: string = props.to ? "cursor-pointer" : "cursor-default";
 
     return (
-        <div onClick={() => { props.to ? navigate(props.to) : null }} className={`h-full w-full rounded-lg ${cursor} `+className} 
-        style={{ background, height, width, minWidth: width }}>
+        props?.to ? 
+        <a href={props.to} className={`h-full w-full rounded-lg ${cursor} `+className} 
+            style={{ background, height, width, minWidth: width }}>
+            { ...React.Children.toArray(props.children) }
+        </a> :
+        <div className={`h-full w-full rounded-lg ${cursor} `+className} 
+            style={{ background, height, width, minWidth: width }}>
             { ...React.Children.toArray(props.children) }
         </div>
     );
