@@ -9,12 +9,12 @@ export default function Ratings() {
     
     return (
         <section className="bg-[#18181b] border border-white/10 rounded-2xl p-4 flex flex-col gap-5 ">
-            <h1>Reviews</h1>
+            <h2>Ratings</h2>
             <div className="flex justify-evenly gap-3 sm:mt-5">
                 <div>
                     <CircularProgress
                         classNames={{
-                            svg: "w-[85px] h-[85px] drop-shadow-md",
+                            svg: "w-[90px] h-[90px] drop-shadow-md",
                             indicator: "stroke-white",
                             track: "stroke-white/10",
                             value: "text-xl font-semibold text-white",
@@ -23,8 +23,7 @@ export default function Ratings() {
                         strokeWidth={4}
                         aria-label="Rating"
                         showValueLabel={true}
-                    /> 
-                    <p className="text-xxs text-center">User Score</p>
+                    />
                 </div>
                 {
                     details.ratings.map((rating: Rating) => (

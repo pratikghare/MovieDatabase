@@ -73,12 +73,13 @@ export function MediaCard(props: MediaCardProps) {
                                     content={
                                         <div className={`px-1 py-2 ${getBaseClassNames(props.classNames?.tootipContent)}`}>
                                             <p className={`text-xs text-gray-50 font-bold`}>{ props.data.name }</p>
-                                            { props.data.character ? <p className={`text-xxs text-gray-200`}>({ props.data.character })</p> : <></> }
+                                            { props.data.character ? <p className={`text-xxs text-gray-200`}>..as { props.data.character }</p> : <></> }
+                                            { props.data.rating ? <p className={`text-sm font-bold text-gray-200`}>{ props.data.rating }% <span className="text-xxs font-normal">(score)</span></p> : <></>  }
                                         </div>
                                     }
                                     >
                                     <button onClick={() => callFunction(props.data, props.onItemClick)}>
-                                        <p className={`text-xxs text-gray-50 font-bold`}>{ getSubstring(props.data.name) }</p>
+                                        <p className={`text-xxs text-gray-50 font-bold`}>{ props.data.name }</p>
                                         <p className={`text-xxs text-gray-200`}>{ getSubstring(props.data.character) }</p>
                                     </button>
                                 </Tooltip> :

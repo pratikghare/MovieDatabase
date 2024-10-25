@@ -10,7 +10,7 @@ import { routes } from './router/router';
 
 
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
+  <StrictMode>
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="app-dark">
         <Provider store={store}>
@@ -18,5 +18,5 @@ createRoot(document.getElementById('root')!).render(
         </Provider>
       </NextThemesProvider>
     </NextUIProvider>
-  // </StrictMode>,
+  </StrictMode>,
 )
