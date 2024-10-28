@@ -40,7 +40,7 @@ To run this project locally, follow these steps:
 2. Navigate into the project directory:
 
     ```bash
-    cd movies-database-application
+    cd app-ui
     ```
 
 3. Install the dependencies:
