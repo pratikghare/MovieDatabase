@@ -49,16 +49,16 @@ To run this project locally, follow these steps:
     npm install
     ```
 
-4. Get an API key from [TMDb](https://www.themoviedb.org/) and create a `.env` file in the root of the project with the following content:
+4. Get an API key from [TMDb](https://www.themoviedb.org/) and update the environment file in the root of the project with the following content:
 
     ```bash
-    REACT_APP_TMDB_API_KEY=your_api_key_here
+    api_key=your_api_key_here
     ```
 
 5. Run the app in development mode:
 
     ```bash
-    npm start
+    npm run dev
     ```
 
 6. Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
