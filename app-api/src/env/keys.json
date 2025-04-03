@@ -1,0 +1,70 @@
+[
+    {
+        "type": "TMDB",
+        "expiry": "MONTHLY",
+        "limit": 2000,
+        "keys": [
+            {
+                "email": "pratikghare9@gmail.com",
+                "userId": "pghare",
+                "key": "ce0d4fa34408bad06652ad5eae9d9d17",
+                "count": 0,
+                "date": "3 April 2025",
+                "createdDate": null
+            },
+            {
+                "email": "babyjohnwick3@gmail.com",
+                "userId": "babyjohnwick3",
+                "key": "197a0acab03805b5b50517890e09e7cd",
+                "count": 1,
+                "date": "3 April 2025",
+                "createdDate": "3 April 2025"
+            },
+            {
+                "email": "abhishekksingh748@gmail.com",
+                "userId": "abhishekksingh",
+                "key": "3a84ef84a5fae467933d8f01421ba7c9",
+                "count": 0,
+                "date": "3 April 2025",
+                "createdDate": "3 April 2025"
+            },
+            {
+                "email": "pratikghare888@gmail.com",
+                "userId": "pratikghare",
+                "key": "ce0d4fa34408bad06652ad5eae9d9d17",
+                "count": 500,
+                "date": "3 April 2025",
+                "createdDate": null
+            }
+        ]
+    },
+    {
+
+        "type": "OMDB",
+        "expiry": "DAILY",
+        "limit": 1000,
+        "keys": [
+            {
+                "email": "pratikghare9@gmail.com",
+                "key": "ced0d66c",
+                "count": 1,
+                "date": "3 April 2025",
+                "createdDate": "3 April 2025"
+            },
+            {
+                "email": "babyjohnwick3@gmail.com",
+                "key": "8d8e301e",
+                "count": 1,
+                "date": "3 April 2025",
+                "createdDate": "3 April 2025"
+            },
+            {
+                "email": "pratikghare9071@gmail.com",
+                "key": "c80b2188",
+                "count": 1,
+                "date": "3 April 2025",
+                "createdDate": "3 April 2025"
+            }
+        ]
+    }
+]
