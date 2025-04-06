@@ -1,15 +1,15 @@
-// import { ApolloServer } from "apollo-server";
-// import { makeExecutableSchema } from "@graphql-tools/schema";
-// import { resolvers } from "./resolvers/resolvers.export";
-// import { typeDefs } from "./schema/schema.export";
-// import env from "./env/env";
+import { ApolloServer } from "apollo-server";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+// import { env } from "process";
+import { resolvers } from "./resolvers/resolvers";
+import { typeDefs } from "./schema/schema";
+const PORT = 1234;
 
-// // Create schema
-// const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 
-// // Start Apollo Server
-// const server = new ApolloServer({ schema, cors: { origin: "*", credentials: true } });
+// Start Apollo Server
+const server = new ApolloServer({ schema, cors: { origin: "*", credentials: true } });
 
-// server.listen({ port: env.PORT, host: "0.0.0.0" }).then(({ url }) => {
-//   console.log(`🚀 Server running on ${url}`);
-// });
+server.listen({ port: PORT }).then(({ url }) => {
+  console.log(`🚀 Server running on ${url}`);
+});
