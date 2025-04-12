@@ -139,7 +139,7 @@ query {
 
 > Replace the following link with your live Netlify link later:
 
-Visit the live UI at: [Your Netlify URL here](https://your-netlify-url.netlify.app)
+Visit the live UI at: [Movie Database](https://imoviesdatabase.vercel.app)
 
 ---
 
