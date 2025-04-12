@@ -20,7 +20,7 @@ export default function Loader(props: LoaderProps) {
     }, [timer])
 
     return (
-        <div className={"w-full h-lvh relative overflow-hidden transition-ease p-2"}>
+        <div className={"w-full h-svh relative overflow-hidden transition-ease p-2"}>
             <div className='flex flex-col items-center justify-center w-full h-full'>
                 <div className={"body ml-[-150px] absolute -mt-20 !text-default"}>
                     <span>

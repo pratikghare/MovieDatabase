@@ -122,6 +122,27 @@ query {
 
 ---
 
+## 🚀 Deployment
+
+### 🌐 API Deployment (Render)
+
+1. Go to [Render](https://render.com/).
+2. Create a new web service and link your GitHub repository.
+3. Set the environment variables (`TMDB_API_KEY`, `OMDB_API_KEY`, and `PORT`).
+4. Deploy your service. Render will automatically handle your build process and provide you with a URL to access your GraphQL API.
+
+### 🌍 UI Deployment (Vercel)
+
+1. Go to [Vercel](https://vercel.com/).
+2. Import your frontend project from GitHub.
+3. Vercel will automatically deploy the project and provide you with a URL.
+
+> Replace the following link with your live Netlify link later:
+
+Visit the live UI at: [Your Netlify URL here](https://your-netlify-url.netlify.app)
+
+---
+
 ## 📄 License
 
 MIT License © 2025 [Pratik Pramod Ghare](mailto:pratikghare888@gmail.com)
