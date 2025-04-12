@@ -1,73 +1,135 @@
-# Movies Database Application
+# 🎬 GraphQL Media API
 
-Welcome to the Movies Database Application! This app is designed to provide users with access to a rich collection of movies, featuring key details about each title. Whether you're looking to explore new films or revisit old favorites, this platform is a one-stop destination for movie enthusiasts.
+A modular Apollo GraphQL API built with TypeScript for unified movie, TV show, and person data powered by TMDB and OMDB.
 
-## Demo
+This API provides a clean, consistent schema with standardized fields like `name`, `poster`, `overview`, and `mediaType`, making it easy to integrate across clients and platforms.
 
-Check out the live application here: <a href="https://movies-database-application.netlify.app/" target="_blank">Movies Database Application</a>
+---
 
-## Repository
+## 🚀 Features
 
-You can find the source code on GitHub: <a href="https://github.com/pratikghare/MovieDatabase.git" target="_blank">MovieDatabase Repository</a>
+- 🎞 Unified schema for **Movies**, **TV Shows**, and **People**
+- 🧱 Modular GraphQL schemas and resolvers
+- 🔧 Strongly typed with TypeScript
+- 🌐 Integrates with **TMDB** and **OMDB**
+- 🧠 Smart transformations to normalize fields and structure
+- 🧑‍🤝‍🧑 Credits system with cast, crew, writers, and directors
+- 📸 Support for images, videos, recommendations, and similar content
 
-## Features
+---
 
-- **Browse Movies:** Explore a wide range of movies from various genres.
-- **Search Functionality:** Search for specific movies by title.
-- **Movie Details:** View detailed information about each movie, including:
-  - Title
-  - Release date
-  - Genre
-  - Overview
-  - Ratings
-- **Responsive Design:** The app is fully responsive and accessible on all devices.
+## 📁 Project Structure
 
-## Tech Stack
+```
+📦 src
+├── graphql
+│   ├── schemas/
+│   │   ├── media.schema.graphql
+│   │   └── user.schema.graphql
+│   ├── resolvers/
+│   │   ├── media.resolver.ts
+│   │   └── user.resolver.ts
+├── utils/
+│   └── media_utils.ts
+├── types/
+│   └── media.types.ts
+├── server.ts
+└── index.ts
+```
 
-This project was built using the following technologies:
+---
 
-- **React**: Frontend framework for building the user interface.
-- **Tailwind CSS**: Utility-first CSS framework for styling the components.
-- **TMDb API**: The Movie Database API is used to fetch movie data.
-- **Netlify**: The application is deployed on Netlify for fast and reliable hosting.
+## 📦 Installation
 
-## Installation
+```bash
+git clone https://github.com/your-username/graphql-media-api.git
+cd graphql-media-api
+npm install
+```
 
-To run this project locally, follow these steps:
+---
 
-1. Clone the repository:
+## 🔐 Environment Variables
 
-    ```bash
-    git clone https://github.com/pratikghare/MovieDatabase.git
-    ```
+Create a `.env` file in the root directory:
 
-2. Navigate into the project directory:
+```
+TMDB_API_KEY=your_tmdb_api_key
+OMDB_API_KEY=your_omdb_api_key
+PORT=4000
+```
 
-    ```bash
-    cd MovieDatabase
-    ```
+---
 
-3. Install the dependencies:
+## 🧪 Run the Server
 
-    ```bash
-    npm install
-    ```
+```bash
+npm run dev
+```
 
-4. Get an API key from [TMDb](https://www.themoviedb.org/) and create a `.env` file in the root of the project with the following content:
+Visit GraphQL Playground at: [http://localhost:4000/graphql](http://localhost:4000/graphql)
 
-    ```bash
-    REACT_APP_TMDB_API_KEY=your_api_key_here
-    ```
+---
 
-5. Run the app in development mode:
+## 🧩 Sample Queries
 
-    ```bash
-    npm start
-    ```
+```graphql
+query {
+  searchMedia(query: "Oppenheimer") {
+    id
+    name
+    mediaType
+    poster
+    subtext
+  }
+}
 
-6. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+query {
+  mediaDetails(id: "872585", mediaType: "MOVIE") {
+    name
+    overview
+    genres
+    credits {
+      cast { name }
+      directors { name }
+    }
+    recommendations {
+      name
+      poster
+    }
+  }
+}
+```
 
-## Contributing
+---
 
-Contributions are welcome! If you'd like to contribute to the project, feel free to open an issue or submit a pull request.
+## 🧠 Schema Highlights
 
+- ✅ `CompactMedia` for results, credits, recommendations, and similar
+- ✅ `MediaDetails` for detailed view with OMDB fields merged
+- ✅ `Credits` includes cast, crew, directors, and writers
+- ✅ `Image` and `Video` support
+- ✅ Normalized field names (`name`, `overview`, `poster`, `thumbnail`, etc.)
+
+---
+
+## 🛠 Built With
+
+- Apollo Server
+- TypeScript
+- GraphQL SDL Modules
+- TMDB + OMDB APIs
+
+---
+
+## 📄 License
+
+MIT License © 2025 [Pratik Pramod Ghare](mailto:pratikghare888@gmail.com)
+
+---
+
+## 🙋‍♂️ Author
+
+Pratik Pramod Ghare  
+📧 pratikghare888@gmail.com  
+🏠 Pune, India
