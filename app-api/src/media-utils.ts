@@ -12,6 +12,7 @@ import {
     Genre,
     Credits,
     Ratings,
+    ImageData,
     ProductionCompany
 } from "./context/context";
 
@@ -144,14 +145,16 @@ export function calculateHeightAndWidth(ratio: number, height?: number, width?: 
     return height && width ? [height, width] : height ? [height, height * ratio] : width ? [width / ratio, width] : [-1, -1];
 }
 
-export function getMassagedImagesList(item: any): Array<Image> {
-    if (!item?.backdrops && !item?.logos && !item?.posters && !item?.profiles) return [];
-    const images: Array<Image> = [];
-    if (item.backdrops?.length) setImageListByList(item.backdrops, images);
-    if (item.posters?.length) setImageListByList(item.posters, images);
-    if (item.profiles?.length) setImageListByList(item.profiles, images);
-    if (item.logos?.length) setImageListByList(item.logos, images);
-    return images;
+export function getMassagedImagesList(item: any): ImageData {
+    if (!item?.backdrops && !item?.logos && !item?.posters && !item?.profiles) return { backdrops: [], list: []};
+    const backdrops: Array<Image> = [];
+    if(item.backdrops?.length) setImageListByList(item.backdrops, backdrops);
+    const list: Array<Image> = [...backdrops];
+    if (item.backdrops?.length) setImageListByList(item.backdrops, list);
+    if (item.posters?.length) setImageListByList(item.posters, list);
+    if (item.profiles?.length) setImageListByList(item.profiles, list);
+    if (item.logos?.length) setImageListByList(item.logos, list);
+    return { backdrops, list };
 }
 function setImageListByList(list: Array<any>, images: Array<Image>) {
     list.forEach((item: any) => {
@@ -195,7 +198,7 @@ function getCompactMediaSubText(item: any): Array<string> {
 }
 export function getSubtext(item: any, omdb?: any): string[] {
     const subText: string[] = [];
-    if (getYear(item)) subText.push(getYear(item)!);
+    // if (getYear(item)) subText.push(getYear(item)!);
     if (getDepartment(item)) subText.push(getDepartment(item)!);
     if (getRuntime(item)) subText.push(getRuntime(item)!);
     if (item?.deathday) subText.push("Died - " + getDateString(item.deathday));
@@ -203,7 +206,7 @@ export function getSubtext(item: any, omdb?: any): string[] {
     if (getCountry(item)) subText.push(getCountry(item)!);
     if (omdb?.Rate && omdb.Rated !== "N/A")  subText.push(omdb.Rated);
     const age = calculateAge(item.birthday);
-    if (item.birthday && age) subText.push(age);
+    if (item.birthday && age && !item.deathday) subText.push(age);
     return subText;
 }
 
@@ -225,7 +228,10 @@ export function getMassagedCompactMedia(item: any): CompactMedia {
         voteAverage: item?.vote_average || 0,
         voteCount: item?.vote_count || 0,
         subtext: getCompactMediaSubText(item),
-        rating: item?.rating ? item.rating : undefined
+        rating: getTMRating(item),
+        character: item.roles ? item.roles.map((role: any) => role.character).join(", ") : item?.character,
+        department: getDepartment(item)
+
     };
 }
 
@@ -300,8 +306,9 @@ export function getRatings(array: Array<any>): Array<Ratings> {
     })
     return ratings;
 }
-
-
+export function getTMRating(details: any): number | undefined {
+    return details.vote_average ? Math.round(details.vote_average * 10) : undefined;
+}
 
 
 
@@ -353,7 +360,9 @@ export function getMovieDetails(details: any, credits: any, images: any, videos:
         recommendations: getMassagedCompactMediaList(recommendations?.results || []),
         subtext: getSubtext(details, omdb),
         ratings: getRatings(omdb?.Ratings || []),
-        tagline: details.tagline
+        tagline: details.tagline,
+        year: getYear(details) ? `(${getYear(details)})` : undefined,
+        rating: getTMRating(details)
     };
 }
 
@@ -386,7 +395,9 @@ export function getTvShowDetails(details: any, credits: any, images: any, videos
         recommendations: getMassagedCompactMediaList(recommendations?.results || []),
         subtext: getSubtext(details, omdb),
         ratings: getRatings(omdb?.Ratings || []),
-        tagline: details.tagline
+        tagline: details.tagline,
+        year: getYear(details) ? `(${getYear(details)})` : undefined,
+        rating: getTMRating(details)
     };
 }
 

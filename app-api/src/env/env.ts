@@ -9,12 +9,19 @@ export const SEARCH_DEL = `{query}`;
 
 // DEFAULT IMAGE PATH
 export const APP_IMAGE_PATH = "/";
-export const IMAGE_NOT_FOUND = `${APP_IMAGE_PATH}not_found.jpg`;
+export const IMAGE_NOT_FOUND = `${APP_IMAGE_PATH}not_found.png`;
 export const DEFAULT_BG_IMAGE = `${APP_IMAGE_PATH}bg-default.jpg`;
 
 // IMAGES
+export const IMAGE_URLS = [
+    'https://image.tmdb.org/t/p/w92',
+    'https://image.tmdb.org/t/p/w154',
+    'https://image.tmdb.org/t/p/w185',
+    'https://image.tmdb.org/t/p/w342',
+    'https://image.tmdb.org/t/p/w500'
+]
 export const IMAGE_URL = `https://image.tmdb.org/t/p/original`;
-export const SHORT_IMAGE_URL = `https://image.tmdb.org/t/p/w500`;
+export const SHORT_IMAGE_URL = IMAGE_URLS[4];
 
 // VIDEO
 export const VIDEOS = [

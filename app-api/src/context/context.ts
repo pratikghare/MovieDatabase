@@ -14,6 +14,8 @@ export interface CompactMedia {
     voteCount?: number;
     subtext: string[];
     rating?: number;
+    character?: string;
+    department?: string;
 }
 
 export interface CompactMediaResults {
@@ -49,9 +51,8 @@ export interface Image {
 }
 
 export interface ImageData {
-    total: number;
     backdrops: Image[];
-    posters: Image[];
+    list: Image[];
 }
 
 export interface Video {
@@ -90,11 +91,13 @@ export interface Media {
     voteCount?: number;
     genres?: Genre[];
     credits?: Credits;
-    images: Image[];
-    subtext: String[];
+    images: ImageData;
+    subtext: string[];
+    year?: string;
 }
 
 export interface Movie extends Media {
+    rating?: number;
     tagline: string;
     videos: Video[];
     similar: CompactMedia[];
@@ -104,7 +107,7 @@ export interface Movie extends Media {
     budget?: number;
     revenue?: number;
     productionCompanies?: ProductionCompany[];
-    productionCountries?: String[];
+    productionCountries?: string[];
     spokenLanguages?: SpokenLanguage[];
 
     rated?: string;
@@ -118,6 +121,7 @@ export interface Movie extends Media {
 }
 
 export interface TvShow extends Media {
+    rating?: number;
     tagline: string;
     videos: Video[];
     similar: CompactMedia[];
@@ -128,7 +132,7 @@ export interface TvShow extends Media {
     numberOfEpisodes?: number;
     numberOfSeasons?: number;
     productionCompanies?: ProductionCompany[];
-    productionCountries?: String[];
+    productionCountries?: string[];
     spokenLanguages?: SpokenLanguage[];
 
     rated?: string;

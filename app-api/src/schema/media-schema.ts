@@ -12,7 +12,7 @@ const MediaFields = `
     voteAverage: Float
     voteCount: Int
     credits: Credits
-    images: [Image!]!
+    images: ImageData!
     subtext: [String!]!
 `
 
@@ -23,6 +23,8 @@ const mediaSchema = gql`
 
     type Movie implements Media {
         ${MediaFields}
+        rating: Int
+        year: String
         tagline: String
         videos: [Video!]!
         genres: [Genre!]
@@ -49,6 +51,8 @@ const mediaSchema = gql`
     }
     type TvShow implements Media {
         ${MediaFields}
+        rating: Int
+        year: String
         tagline: String
         videos: [Video!]!
         genres: [Genre!]
@@ -110,6 +114,11 @@ const mediaSchema = gql`
         aspectRatio: Float!
     }
 
+    type ImageData {
+        backdrops: [Image!]!
+        list: [Image!]!
+    }
+
     type Video {
         url: String!
         site: String!
@@ -135,6 +144,9 @@ const mediaSchema = gql`
         voteCount: Int
         subtext: [String!]!
         rating: Int
+        character: String
+        department: String
+        year: String
     }
 
     type CompactMediaResults {
