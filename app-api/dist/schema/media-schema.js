@@ -33,8 +33,8 @@ const mediaSchema = (0, apollo_server_1.gql) `
 
         released: String
         runtime: String
-        budget: Int
-        revenue: Int
+        budget: String
+        revenue: String
 
         productionCompanies: [ProductionCompany!]
         productionCountries: [String!]
