@@ -12,7 +12,10 @@ export default function MediaList(props: { list: Array<CompactMedia>, mediaType:
             {/* <h1 className={'font-bold my-1 '+ (config.theme.current === 'light' ? 'text-primary' : 'text-secondary')}>{ mediaType === MediaType.PERSON ? 'All filmography' : 'Known for' }</h1> */}
             <div className='flex justify-between'>
                 <h1 className='font-bold my-1 '>{ title }</h1>
-                <Link className='text-xs cursor-pointer'>See All</Link>
+                {
+                    props.list.length >= 10 &&
+                    <Link className='text-xs cursor-pointer hover:underline'>See All</Link>
+                }
             </div>
             <RenderWithScrollShadow className='flex space-x-3 bg-transparent scroll-items md:space-x-4'>
                 {

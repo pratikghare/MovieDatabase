@@ -13,7 +13,7 @@ export default function RenderWithScrollShadow(props: { className?: string, chil
         if (debounceRef.current) clearTimeout(debounceRef.current);
 
         debounceRef.current = setTimeout(() => {
-            console.log("dimensions changed", dimensions)
+            // console.log("dimensions changed", dimensions)
             const width: number = props.width ? props.width : (dimensions.width > DEFAULT_MAX_W ? DEFAULT_MAX_W : dimensions.width);
             setMaxWidth(width - (props.offset ? props.offset : 0));
 
@@ -24,7 +24,7 @@ export default function RenderWithScrollShadow(props: { className?: string, chil
     }, [props.offset, dimensions]);
 
     useEffect(() => {
-        console.log('width: ', width, 'maxWidth', maxWidth);
+        // console.log('width: ', width, 'maxWidth', maxWidth);
     }, [width, maxWidth])
 
     return (

@@ -22,12 +22,14 @@ const MEDIA_DETAILS = gql`
                     width
                     height
                     aspectRatio
+                    thumbnail
                 }
                 list {
                     path
                     width
                     height
                     aspectRatio
+                    thumbnail
                 }
             }
             ... on Movie {

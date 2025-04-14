@@ -109,6 +109,7 @@ const mediaSchema = gql`
 
     type Image {
         path: String!
+        thumbnail: String!
         width: Int!
         height: Int!
         aspectRatio: Float!

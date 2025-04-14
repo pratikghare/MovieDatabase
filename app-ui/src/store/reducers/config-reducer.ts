@@ -15,8 +15,8 @@ const initialState: Config = {
     loader: true,
     tab: NavigationTabKeys.home,
     theme: {
-        theme: "dark",
-        current: "dark"
+        theme: "light",
+        current: "light"
     }
 }
 

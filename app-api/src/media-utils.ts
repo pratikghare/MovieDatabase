@@ -149,11 +149,11 @@ export function getMassagedImagesList(item: any): ImageData {
     if (!item?.backdrops && !item?.logos && !item?.posters && !item?.profiles) return { backdrops: [], list: []};
     const backdrops: Array<Image> = [];
     if(item.backdrops?.length) setImageListByList(item.backdrops, backdrops);
-    const list: Array<Image> = [...backdrops];
-    if (item.backdrops?.length) setImageListByList(item.backdrops, list);
+    let list: Array<Image> = [];
     if (item.posters?.length) setImageListByList(item.posters, list);
     if (item.profiles?.length) setImageListByList(item.profiles, list);
     if (item.logos?.length) setImageListByList(item.logos, list);
+    list = [...list, ...backdrops];
     return { backdrops, list };
 }
 function setImageListByList(list: Array<any>, images: Array<Image>) {
@@ -164,11 +164,12 @@ function setImageListByList(list: Array<any>, images: Array<Image>) {
 }
 export function getMassagedImageObject(item: any): Image | null {
     const path: string | undefined = getImage(item.file_path);
+    const thumbnail: string | undefined = getImage(item.file_path, true);
     const image: Image = {
         aspectRatio: item.aspect_ratio,
         height: item.height,
         width: item.width,
-        path: path ? path : ""
+        path: path ? path : "", thumbnail: thumbnail ? thumbnail : ''
     }
     return image;
 }
@@ -207,6 +208,7 @@ export function getSubtext(item: any, omdb?: any): string[] {
     if (omdb?.Rate && omdb.Rated !== "N/A")  subText.push(omdb.Rated);
     const age = calculateAge(item.birthday);
     if (item.birthday && age && !item.deathday) subText.push(age);
+    if (omdb?.Rated) subText.push(omdb.Rated);
     return subText;
 }
 

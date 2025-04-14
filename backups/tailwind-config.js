@@ -237,7 +237,8 @@ export default {
             "layout": {
                 "disabledOpacity": "0.4",
                 "radius": {
-                    "small": "5px"
+                    "small": "5px",
+                    "medium": "0.5rem"
                 },
             }
         }

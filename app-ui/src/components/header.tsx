@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
 
 export default function Header() {
     return (
-        <Navbar shouldHideOnScroll classNames={{ wrapper: 'px-3', base: 'bg-background/20 backdrop-blur-none' }}>
+        <Navbar shouldHideOnScroll classNames={{ wrapper: 'px-3', base: 'bg-background/20 backdrop-blur-md' }}>
             <NavbarBrand className='hidden flex-grow-0'>
                 <p className='font-bold text-inherit'>🎬 MDB</p>
             </NavbarBrand>
@@ -44,19 +44,20 @@ export function AutoCompleteSearch() {
     }
 
     useEffect(() => {
-        console.log(media.search.list)
+        // console.log(media.search.list)
     }, [media.search])
 
     return (
         <Autocomplete
             aria-label='Search'
             defaultItems={[]}
+            variant='bordered'
             items={media.search.list}
             placeholder='Search for movie, tv, more...'
             radius='sm'
-            inputProps={{ classNames: { input: 'text-xs' } }}
+            inputProps={{ classNames: { input: 'text-xs font-bold text-foreground placeholder:text-foreground/50', inputWrapper: 'border-foreground/40 hover:!border-foreground' } }}
             onInput={onValueChange}
-            classNames={{ popoverContent: 'rounded-md text-xs popover-app' }}
+            classNames={{ popoverContent: 'rounded-md text-xs popover-app border-foreground' }}
         >
             {
                 (item: CompactMedia) => (

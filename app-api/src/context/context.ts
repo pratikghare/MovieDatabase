@@ -48,6 +48,7 @@ export interface Image {
     width: number;
     height: number;
     aspectRatio: number;
+    thumbnail: string;
 }
 
 export interface ImageData {

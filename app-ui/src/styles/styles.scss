@@ -1,3 +1,9 @@
+.outlet-container{
+    min-height: calc(100svh - 64px);
+}
+
+
+
 .auto-complete-item {
     >span:last-child {
         display: none;
@@ -20,11 +26,12 @@
     transition: all 300ms linear;
 }
 
+
+// Overview
 .overview-grid {
     display: grid;
     grid-template-columns: auto 1fr;
 }
-
 .star-rating {
     position: relative;
     display: inline-block;
@@ -37,4 +44,11 @@
     overflow: hidden;
     white-space: nowrap;
     pointer-events: none;
+}
+
+
+// Images
+.images-grid {
+    display: flex;
+    
 }

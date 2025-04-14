@@ -45,6 +45,7 @@ export interface SpokenLanguage {
 
 export interface Image {
     path: string;
+    thumbnail: string;
     width: number;
     height: number;
     aspectRatio: number;
