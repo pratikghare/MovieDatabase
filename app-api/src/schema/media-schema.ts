@@ -33,8 +33,8 @@ const mediaSchema = gql`
 
         released: String
         runtime: String
-        budget: Int
-        revenue: Int
+        budget: String
+        revenue: String
 
         productionCompanies: [ProductionCompany!]
         productionCountries: [String!]
