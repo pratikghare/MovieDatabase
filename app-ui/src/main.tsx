@@ -3,14 +3,19 @@ import './styles/styles.scss';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
 import { HeroUIProvider } from '@heroui/react';
+import { Provider } from 'react-redux';
+import store from './store/store.ts';
+import { RouterProvider } from 'react-router';
+import router from './routes/routes.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <HeroUIProvider>
-            <App />
-        </HeroUIProvider>
+        <Provider store={store}>
+            <HeroUIProvider>
+                <RouterProvider router={router} />
+            </HeroUIProvider>
+        </Provider>
     </StrictMode>,
 );

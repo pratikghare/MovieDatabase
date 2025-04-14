@@ -17,6 +17,8 @@ export const SEARCH_QUERY = gql`
                 voteCount
                 subtext
                 rating
+                character
+                department
             }
         }
     }

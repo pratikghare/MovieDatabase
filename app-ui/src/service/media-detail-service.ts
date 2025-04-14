@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { MediaType, Movie, Person, TvShow } from '../context/context';
+import { MediaType, Movie, Person, TvShow } from '../context/media-context';
 import { query } from './graphql-service';
 
 const MEDIA_DETAILS = gql`
@@ -17,13 +17,23 @@ const MEDIA_DETAILS = gql`
             voteCount
             subtext
             images {
-                path
-                width
-                height
-                aspectRatio
+                backdrops {
+                    path
+                    width
+                    height
+                    aspectRatio
+                }
+                list {
+                    path
+                    width
+                    height
+                    aspectRatio
+                }
             }
             ... on Movie {
+                rating
                 tagline
+                year
                 credits {
                     ...CreditsFields
                 }
@@ -74,7 +84,9 @@ const MEDIA_DETAILS = gql`
                 dvd
             }
             ... on TvShow {
+                rating
                 tagline
+                year
                 credits {
                     ...CreditsFields
                 }
@@ -165,6 +177,9 @@ const MEDIA_DETAILS = gql`
         voteAverage
         voteCount
         subtext
+        character
+        department
+        year
     }
 `;
 

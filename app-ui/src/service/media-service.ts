@@ -1,4 +1,4 @@
-import { CompactMediaResults } from '../context/context';
+import { CompactMediaResults } from '../context/media-context';
 import { query } from './graphql-service';
 import { SEARCH_QUERY } from './media-schema';
 

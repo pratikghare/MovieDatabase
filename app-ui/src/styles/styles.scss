@@ -1,0 +1,40 @@
+.auto-complete-item {
+    >span:last-child {
+        display: none;
+    }
+}
+
+.popover-app,
+.popover-app>div {
+    max-height: 50svh !important;
+}
+
+.text-xxs {
+    font-size: 10px;
+}
+
+.transition-ease {
+    transition: all 200ms ease-in-out;
+}
+.transition-linear{
+    transition: all 300ms linear;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.star-rating {
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+}
+.star-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    pointer-events: none;
+}

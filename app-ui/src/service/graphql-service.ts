@@ -1,5 +1,5 @@
 import { ApolloClient, DocumentNode, InMemoryCache } from '@apollo/client';
-const uri = import.meta.env.VITE_API_URL
+const uri = import.meta.env.VITE_API_URL;
 
 const client = new ApolloClient({
     uri, cache: new InMemoryCache()

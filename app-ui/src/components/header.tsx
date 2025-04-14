@@ -1,38 +1,96 @@
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from '@heroui/react';
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Autocomplete, AutocompleteItem, Image, CircularProgress } from '@heroui/react';
+import { mediaSelector, useAppDispatch } from '../store/selectors';
+import { searchQuery } from '../store/reducers/media-reducer';
+import { useSelector } from 'react-redux';
+import { CompactMedia, MediaReducer } from '../context/media-context';
+import { useNavigate } from 'react-router';
+import { useEffect, useRef } from 'react';
 
 export default function Header() {
     return (
-        <Navbar shouldHideOnScroll>
-            <NavbarBrand>
-                <p className='font-bold text-inherit'>ACME</p>
+        <Navbar shouldHideOnScroll classNames={{ wrapper: 'px-3', base: 'bg-background/20 backdrop-blur-none' }}>
+            <NavbarBrand className='hidden flex-grow-0'>
+                <p className='font-bold text-inherit'>🎬 MDB</p>
             </NavbarBrand>
-            <NavbarContent className='hidden sm:flex gap-4' justify='center'>
-                <NavbarItem>
-                    <Link color='foreground' href='#'>
-                        Features
-                    </Link>
-                </NavbarItem>
-                <NavbarItem isActive>
-                    <Link aria-current='page' href='#'>
-                        Customers
-                    </Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Link color='foreground' href='#'>
-                        Integrations
-                    </Link>
-                </NavbarItem>
+            <NavbarContent className='flex-1' justify='center'>
+                <AutoCompleteSearch />
             </NavbarContent>
-            <NavbarContent justify='end'>
-                <NavbarItem className='hidden lg:flex'>
-                    <Link href='#'>Login</Link>
-                </NavbarItem>
+            <NavbarContent justify='end' className='hidden !flex-grow-0'>
                 <NavbarItem>
-                    <Button as={Link} color='primary' href='#' variant='flat'>
-                        Sign Up
-                    </Button>
+                    <Link href='#' className='text-xs'>Login</Link>
                 </NavbarItem>
             </NavbarContent>
         </Navbar>
+    );
+}
+
+
+export function AutoCompleteSearch() {
+    const dispatch = useAppDispatch();
+    const media: MediaReducer = useSelector(mediaSelector);
+    const navigate = useNavigate();
+    const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+    const onValueChange = (event: any) => {
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+
+        const query: string = event.target.value ? event.target.value : '';
+
+        debounceRef.current = setTimeout(() => dispatch(searchQuery(query)), 500);   
+    }
+
+    const onSelect = (selected: CompactMedia) => {
+        navigate(`/${selected.mediaType}/${selected.id}`);
+    }
+
+    useEffect(() => {
+        console.log(media.search.list)
+    }, [media.search])
+
+    return (
+        <Autocomplete
+            aria-label='Search'
+            defaultItems={[]}
+            items={media.search.list}
+            placeholder='Search for movie, tv, more...'
+            radius='sm'
+            inputProps={{ classNames: { input: 'text-xs' } }}
+            onInput={onValueChange}
+            classNames={{ popoverContent: 'rounded-md text-xs popover-app' }}
+        >
+            {
+                (item: CompactMedia) => (
+                    <AutocompleteItem textValue={item.name} className='auto-complete-item' key={item.id} onPress={() => onSelect(item)}>
+                        <div className='flex space-x-4'>
+                            <div className='w-[60px]'>
+                                <Image src={item.thumbnail} radius='none' alt={item.name} className='w-[60px] h-[90px] rounded-[3px]' />
+                            </div>
+                            <div className='flex flex-col justify-center space-y-2 text-xs flex-1'>
+                                <h1 className='font-bold text-xs'>{item.name}</h1>
+                                {
+                                    item.subtext.map((text: string, index) => (
+                                        <p key={item.id + '-subtext-' + index}>{text}</p>
+                                    ))
+                                }
+                            </div>
+                            {
+                                !!item.rating &&
+                                <CircularProgress
+                                    classNames={{
+                                        svg: "w-12 h-12 drop-shadow-md",
+                                        value: "text-xxs font-semibold text-white",
+                                    }}
+                                    value={item.rating}
+                                    strokeWidth={4}
+                                    aria-label="Rating"
+                                    color={ item.rating >= 60 ? 'success' : item.rating >= 35 ? 'warning' : 'danger'}
+                                    showValueLabel={true}
+                                />
+                            }
+                        </div>
+                    </AutocompleteItem>
+                )
+            }
+        </Autocomplete>
     );
 }
