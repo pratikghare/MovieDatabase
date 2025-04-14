@@ -42,7 +42,7 @@ export function getName(item: any): string {
 }
 
 export function getOverview(item: any): string {
-    return item?.biography || item?.overview || "";
+    return item?.biography || item?.overview || `We don't have a ${ getMediaType(item) === MediaType.PERSON ? 'biography' : 'overview' } for ${getName(item)}.`;
 }
 
 export function getCountry(item: any): string | undefined {
