@@ -63,7 +63,7 @@ function getName(item) {
     return (item === null || item === void 0 ? void 0 : item.name) || (item === null || item === void 0 ? void 0 : item.title) || (item === null || item === void 0 ? void 0 : item.original_name) || (item === null || item === void 0 ? void 0 : item.original_title) || "";
 }
 function getOverview(item) {
-    return (item === null || item === void 0 ? void 0 : item.biography) || (item === null || item === void 0 ? void 0 : item.overview) || "";
+    return (item === null || item === void 0 ? void 0 : item.biography) || (item === null || item === void 0 ? void 0 : item.overview) || `We don't have a ${getMediaType(item) === context_1.MediaType.PERSON ? 'biography' : 'overview'} for ${getName(item)}.`;
 }
 function getCountry(item) {
     var _a;
