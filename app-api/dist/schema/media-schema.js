@@ -109,6 +109,7 @@ const mediaSchema = (0, apollo_server_1.gql) `
 
     type Image {
         path: String!
+        thumbnail: String!
         width: Int!
         height: Int!
         aspectRatio: Float!

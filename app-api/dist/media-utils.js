@@ -150,21 +150,20 @@ function calculateHeightAndWidth(ratio, height, width) {
     return height && width ? [height, width] : height ? [height, height * ratio] : width ? [width / ratio, width] : [-1, -1];
 }
 function getMassagedImagesList(item) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d;
     if (!(item === null || item === void 0 ? void 0 : item.backdrops) && !(item === null || item === void 0 ? void 0 : item.logos) && !(item === null || item === void 0 ? void 0 : item.posters) && !(item === null || item === void 0 ? void 0 : item.profiles))
         return { backdrops: [], list: [] };
     const backdrops = [];
     if ((_a = item.backdrops) === null || _a === void 0 ? void 0 : _a.length)
         setImageListByList(item.backdrops, backdrops);
-    const list = [...backdrops];
-    if ((_b = item.backdrops) === null || _b === void 0 ? void 0 : _b.length)
-        setImageListByList(item.backdrops, list);
-    if ((_c = item.posters) === null || _c === void 0 ? void 0 : _c.length)
+    let list = [];
+    if ((_b = item.posters) === null || _b === void 0 ? void 0 : _b.length)
         setImageListByList(item.posters, list);
-    if ((_d = item.profiles) === null || _d === void 0 ? void 0 : _d.length)
+    if ((_c = item.profiles) === null || _c === void 0 ? void 0 : _c.length)
         setImageListByList(item.profiles, list);
-    if ((_e = item.logos) === null || _e === void 0 ? void 0 : _e.length)
+    if ((_d = item.logos) === null || _d === void 0 ? void 0 : _d.length)
         setImageListByList(item.logos, list);
+    list = [...list, ...backdrops];
     return { backdrops, list };
 }
 function setImageListByList(list, images) {
@@ -176,11 +175,12 @@ function setImageListByList(list, images) {
 }
 function getMassagedImageObject(item) {
     const path = getImage(item.file_path);
+    const thumbnail = getImage(item.file_path, true);
     const image = {
         aspectRatio: item.aspect_ratio,
         height: item.height,
         width: item.width,
-        path: path ? path : ""
+        path: path ? path : "", thumbnail: thumbnail ? thumbnail : ''
     };
     return image;
 }
@@ -224,6 +224,8 @@ function getSubtext(item, omdb) {
     const age = calculateAge(item.birthday);
     if (item.birthday && age && !item.deathday)
         subText.push(age);
+    if (omdb === null || omdb === void 0 ? void 0 : omdb.Rated)
+        subText.push(omdb.Rated);
     return subText;
 }
 function getMassagedCompactMedia(item) {
