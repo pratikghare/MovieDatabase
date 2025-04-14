@@ -19,7 +19,7 @@ export function ImagesSection({ images }: { images: ImageData }) {
     }, [images]);
 
     const imageClick = (image: ImageType) => {
-
+        console.log(image);
     }
 
     return (
