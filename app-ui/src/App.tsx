@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from 'react-router';
 import Header from './components/header';
-import NavigationTabs from './components/navigation-tabs';
 import { useEffect } from 'react';
 import { useTheme } from "@heroui/use-theme";
 import { useSelector } from 'react-redux';

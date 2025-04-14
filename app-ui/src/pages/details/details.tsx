@@ -1,4 +1,4 @@
-import { image, ScrollShadow } from '@heroui/react';
+import { ScrollShadow } from '@heroui/react';
 import { useSelector } from 'react-redux';
 import { configSelector, mediaSelector, useAppDispatch } from '../../store/selectors';
 import { useEffect, useRef, useState } from 'react';

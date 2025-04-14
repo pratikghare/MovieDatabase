@@ -1,5 +1,9 @@
 
-export const GalleryIcon = (props: any) => {
+interface IconProps {
+    className?: string;
+}
+
+export const GalleryIcon = (props: IconProps) => {
     return (
         <svg
             aria-hidden='true'
@@ -26,7 +30,7 @@ export const GalleryIcon = (props: any) => {
     );
 };
 
-export const MusicIcon = (props: any) => {
+export const MusicIcon = (props: IconProps) => {
     return (
         <svg
             aria-hidden='true'
@@ -49,7 +53,7 @@ export const MusicIcon = (props: any) => {
     );
 };
 
-export const VideoIcon = (props: any) => {
+export const VideoIcon = (props: IconProps) => {
     return (
         <svg
             aria-hidden='true'
@@ -72,8 +76,8 @@ export const VideoIcon = (props: any) => {
 };
 
 
-export const DotIcon = (props: any) => {
+export const DotIcon = (props: IconProps) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-dot-icon lucide-dot"><circle cx="12.1" cy="12.1" r="1"/></svg>
+        <svg xmlns='http://www.w3.org/2000/svg' className={'lucide lucide-dot-icon lucide-dot '+ props.className ? props.className : ''} width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><circle cx='12.1' cy='12.1' r='1'/></svg>
     );
 }
