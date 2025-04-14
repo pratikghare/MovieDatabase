@@ -14,7 +14,7 @@ export const getShortString = (text: string, length: number = 29): string => {
 
 export const getBackdrops = (images: ImageData, backdrop?: string): Array<string> => {
     const list: Array<string> = images.backdrops.filter((img: Image) => img.width >= 1920).map((img: Image) => img.path);
-    return !list.length ? backdrop ? [backdrop] : [] : list;
+    return !list.length ? backdrop ? [backdrop] : [''] : list;
 }
 
 export const getImageDimensions = (img: Image): { width: number, height: number, minWidth: number, minHeight: number } => {

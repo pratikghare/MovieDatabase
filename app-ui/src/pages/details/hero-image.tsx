@@ -10,31 +10,32 @@ const lightGradients = `linear-gradient(to bottom, ${array.map((i) => `rgba(255,
 const darkGradients = `linear-gradient(to bottom, ${array.map((i) => `rgba(0, 0, 0, ${i})`).join(', ')}), `;
 
 export default function HeroImage({ backdrop, images }: { backdrop?: string, images: ImageData }) {
-    const [background, setBackground] = useState<string>('');
     const config = useSelector(configSelector);
-    const [current, setCurrent] = useState<string | undefined>(backdrop);
-    const [timer, setTimer] = useState<number>(0);
-    const [backdrops, setBackdrops] = useState<Array<string>>([]);
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
     const [classes, setClasses] = useState<{ base: string, wrapper: string, content: string }>({ base: '', wrapper: '', content: '' });
+    const [backdrops, setBackdrops] = useState<Array<string>>([]);
+    const [timer, setTimer] = useState<number>(0);
 
-    useEffect(() => {
-        if (current) {
-            setBackground(config.theme.current === 'light' ?
-                current.includes('rgb(') ? `${current}` : `${lightGradients} url('${current}') center/cover` :
-                current.includes('rgb(') ? `${current}` : `${darkGradients} url('${current}') center/cover`
-            )
-        }
-        else setBackground('');
-    }, [current, config.theme.current]);
+    const [background, setBackground] = useState<string>('');
 
-    useEffect(() => {
-        setBackdrops(getBackdrops(images, backdrop));
-    }, [backdrop, images])
+    const [current, setCurrent] = useState<string | undefined>(backdrop);
+
+    const setComputedBackground = (stateFunction: Function, url?: string) => {
+        stateFunction(
+            url ? config.theme.current === 'light' ?
+                url.includes('rgb(') ? `${url}` : `${lightGradients} url('${url}') center/cover` :
+                url.includes('rgb(') ? `${url}` : `${darkGradients} url('${url}') center/cover` : ''
+        );
+    }
+
+    useEffect(() => setComputedBackground(setBackground, current), [current, config.theme.current]);
+
+    useEffect(() => setBackdrops(getBackdrops(images, backdrop)), [backdrop, images]);
 
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
-        setCurrent(backdrops.length ? timer >= backdrops.length ? backdrops[0] : backdrops[timer] : backdrop);
+        setCurrent(timer < backdrops.length ? backdrops[timer] : backdrops[0]);
         if (backdrops.length <= 1) return;
 
         debounceRef.current = setTimeout(() => {
