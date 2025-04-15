@@ -19,7 +19,7 @@ export default function App() {
     }, [location.pathname])
 
     return (
-        <section className='px-0 flex flex-col items-center justify-center cursor-default'>
+        <section className='px-0 flex flex-col items-center cursor-default bg-black/10 min-h-svh'>
             <Header></Header>
             <div className='max-w-[1024px] w-full'>
                 <Outlet />

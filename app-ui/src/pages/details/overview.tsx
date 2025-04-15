@@ -74,7 +74,7 @@ export default function Overview({ details, setBackdrop }: { details: Movie | Pe
                 <div>
                     {('rating' in details) && !!details.rating && <StarRating percentage={details.rating} />}
 
-                    <div className='font-bold flex space-x-1 items-end'>
+                    <div className={'font-bold flex space-x-1 items-end ' + (('rating' in details) && !!details.rating ? '' : 'mt-2')}>
                         <h1 className='text-lg sm:text-xl md:text-2xl !leading-none'>
                             { details.name }
                             { details.year && <span className='text-sm sm:text-md md:text-lg ml-1'>{ details.year }</span> }
@@ -108,7 +108,7 @@ export default function Overview({ details, setBackdrop }: { details: Movie | Pe
                 {
                     <div className='flex space-x-4'>
                         <div className='min-w-[120px] max-w-[120px] sm:max-w-[200px] md:min-w-[200px]'>
-                            <HeroImage radius='md' ref={imgRef} className='obect w-fit' src={details.poster} alt={details.name} />
+                            <HeroImage radius='sm' ref={imgRef} className='obect w-fit md:rounded-xl' src={details.poster} alt={details.name} />
                         </div>
                         <div className='flex flex-col gap-2'>
                             <RenderOverview />

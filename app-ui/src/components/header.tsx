@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
 
 export default function Header() {
     return (
-        <Navbar shouldHideOnScroll classNames={{ wrapper: 'px-3', base: 'bg-background/20 backdrop-blur-md' }}>
+        <Navbar shouldHideOnScroll classNames={{ wrapper: 'px-2', base: 'bg-background/20 backdrop-blur-md' }}>
             <NavbarBrand className='hidden flex-grow-0'>
                 <p className='font-bold text-inherit'>🎬 MDB</p>
             </NavbarBrand>
@@ -57,7 +57,7 @@ export function AutoCompleteSearch() {
             radius='sm'
             inputProps={{ classNames: { input: 'text-xs font-bold text-foreground placeholder:text-foreground/50', inputWrapper: 'border-foreground/40 hover:!border-foreground' } }}
             onInput={onValueChange}
-            classNames={{ popoverContent: 'rounded-md text-xs popover-app border-foreground' }}
+            classNames={{ popoverContent: 'rounded-md text-xs popover-app border-foreground ml-[-4px] lg:ml-0' }}
         >
             {
                 (item: CompactMedia) => (
@@ -79,7 +79,7 @@ export function AutoCompleteSearch() {
                                 <CircularProgress
                                     classNames={{
                                         svg: "w-12 h-12 drop-shadow-md",
-                                        value: "text-xxs font-semibold text-white",
+                                        value: "text-xxs font-semibold",
                                     }}
                                     value={item.rating}
                                     strokeWidth={4}

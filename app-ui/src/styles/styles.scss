@@ -1,7 +1,14 @@
-.outlet-container{
+.outlet-container {
     min-height: calc(100svh - 64px);
 }
 
+img, button {
+    user-select: none;
+    -webkit-user-select: none;
+    /* For Safari */
+    -ms-user-select: none;
+    /* For IE/Edge */
+}
 
 
 .auto-complete-item {
@@ -16,13 +23,14 @@
 }
 
 .text-xxs {
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .transition-ease {
     transition: all 200ms ease-in-out;
 }
-.transition-linear{
+
+.transition-linear {
     transition: all 300ms linear;
 }
 
@@ -32,11 +40,13 @@
     display: grid;
     grid-template-columns: auto 1fr;
 }
+
 .star-rating {
     position: relative;
     display: inline-block;
     line-height: 1;
 }
+
 .star-front {
     position: absolute;
     top: 0;
@@ -50,5 +60,5 @@
 // Images
 .images-grid {
     display: flex;
-    
+
 }

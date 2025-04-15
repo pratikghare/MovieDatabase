@@ -24,8 +24,8 @@ export default function HeroImage({ backdrop, images }: { backdrop?: string, ima
     const setComputedBackground = (stateFunction: Function, url?: string) => {
         stateFunction(
             url ? config.theme.current === 'light' ?
-                url.includes('rgb(') ? `${url}` : `${lightGradients} url('${url}') center/cover` :
-                url.includes('rgb(') ? `${url}` : `${darkGradients} url('${url}') center/cover` : ''
+                url.includes('rgb(') ? `${url}` : `${lightGradients} url('${url}')  center / cover no-repeat` :
+                url.includes('rgb(') ? `${url}` : `${darkGradients} url('${url}')  center / cover no-repeat` : ''
         );
     }
 
@@ -36,6 +36,11 @@ export default function HeroImage({ backdrop, images }: { backdrop?: string, ima
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
         setCurrent(timer < backdrops.length ? backdrops[timer] : backdrops[0]);
+        if(timer < backdrops.length - 1) {
+            const image = new Image();
+            image.crossOrigin = 'Anonymous';
+            image.src = backdrops[timer+1];
+        }
         if (backdrops.length <= 1) return;
 
         debounceRef.current = setTimeout(() => {
@@ -46,7 +51,7 @@ export default function HeroImage({ backdrop, images }: { backdrop?: string, ima
     useEffect(() => {
         let base: string = 'h-[100vh] fixed';
         let wrapper: string = '';
-        let content: string = 'bg-background/20';
+        let content: string = '';
         const isColor: boolean = !current || current?.includes('rgb(');
         // const isLight: boolean = config.theme.current === 'light';
 

@@ -3,7 +3,7 @@ import RenderWithScrollShadow from './scroll-shadow-render';
 import MediaListCard from './media-list-item';
 import { Link } from '@heroui/react';
 
-export default function MediaList(props: { list: Array<CompactMedia>, mediaType: MediaType, title?: string }) {
+export default function MediaList(props: { list: Array<CompactMedia>, mediaType: MediaType, title?: string, isRounded?: boolean }) {
     const title: string = props.title ? props.title : (props.mediaType === MediaType.PERSON ? 'Known for' : 'Top Cast');
 
     return (
@@ -20,7 +20,7 @@ export default function MediaList(props: { list: Array<CompactMedia>, mediaType:
             <RenderWithScrollShadow className='flex space-x-3 bg-transparent scroll-items md:space-x-4'>
                 {
                     props.list.slice(0,60).map((media: CompactMedia, index: number) => (
-                        <MediaListCard key={title + '_' + media.id + '-' + index} media={media} className={''} isRounded={props.mediaType !== MediaType.PERSON} />
+                        <MediaListCard key={title + '_' + media.id + '-' + index} media={media} className={''} isRounded={props.isRounded !== undefined && props.isRounded !== null ? props.isRounded : props.mediaType !== MediaType.PERSON} />
                     ))
                 }
             </RenderWithScrollShadow>

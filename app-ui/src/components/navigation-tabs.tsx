@@ -19,7 +19,7 @@ export default function NavigationTabs() {
     }
     return(
         <div className='fixed flex w-full bottom-1 justify-center'>
-            <Tabs className='backdrop-blur-md rounded-2xl' classNames={{ tabList: 'h-12 px-0.5', tab: 'h-10' }}
+            <Tabs className='backdrop-blur-md rounded-2xl bg-background/50' classNames={{ tabList: 'h-12 px-0.5', tab: 'h-10' }}
                 aria-label='Tabs radius' size='lg' variant='bordered' color='primary' radius='sm'
                 onSelectionChange={changeTab} selectedKey={config.tab}>
                 {

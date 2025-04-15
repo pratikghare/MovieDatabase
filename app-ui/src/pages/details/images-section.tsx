@@ -1,10 +1,10 @@
-import { Image, Link } from '@heroui/react';
-import { ImageData, Image as ImageType } from '../../context/media-context';
+import { image, Image, Link } from '@heroui/react';
+import { ImageData, Image as ImageType, Video } from '../../context/media-context';
 import RenderWithScrollShadow from './scroll-shadow-render';
 import { getImageDimensions, getImagesList } from '../../utils/utils';
 import { useEffect, useState } from 'react';
 
-export function ImagesSection({ images }: { images: ImageData }) {
+export function ImagesSection({ images, videos = [] }: { images: ImageData, videos: Array<Video> }) {
     const [data, setData] = useState(getImagesList(images));
 
     useEffect(() => {
@@ -13,10 +13,10 @@ export function ImagesSection({ images }: { images: ImageData }) {
             for (let i = 0; i < horizontalScrollItems.length; i++) {
                 horizontalScrollItems[i].scrollLeft = 50;
             }
-        }, 200);
+        }, 100);
         
         setData(getImagesList(images));
-    }, [images]);
+    }, [images.backdrops, images.list]);
 
     const imageClick = (image: ImageType) => {
         console.log(image);
@@ -26,7 +26,7 @@ export function ImagesSection({ images }: { images: ImageData }) {
         images.list.length > 1 &&
         <section>
             <div className='flex justify-between'>
-                <h1 className='font-bold my-1 '>Pictures</h1>
+                <h1 className='font-bold my-1 '>Pictures { videos.length ? ' & Videos' : '' } ({ images.list.length + videos.length })</h1>
                 <Link className='text-xs cursor-pointer'>See All</Link>
             </div>
             <RenderWithScrollShadow className='overflow-hidden relative flex flex-col gap-3 scroll-right-1'>

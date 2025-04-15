@@ -30,15 +30,21 @@ export default function Details() {
             horizontalScrollItems[i].scrollTop = 0;
         }
         setBackDrop(media.details?.backdrop);
+        if(media.details?.name) document.title = media.details.name + ' | Movie Database';
+        else document.title = 'Movie Database';
     }, [media.details])
 
     return (
         media.details ?
-            <section className={'transition-ease min-h-full bg-background/50 rounded-xl '+ (media.details.backdrop ? 'mt-[15svh]' : 'bg-background/20 rounded-t-none ')}>
-                <div id='details' className={'transition-ease z-10 backdrop-blur-sm flex flex-col space-y-4 p-3 sm:p-5 rounded-xl'}>
+            <section className={'transition-ease min-h-full border-1 border-foreground/10 bg-background/50 rounded-t-xl sm:rounded-b-xl' + 
+            (media.details.backdrop ? ' mt-[15svh] ' : ' bg-background/20 !rounded-t-none ') +
+            (!!media.details.credits?.cast.length && (media.details.images.list.length > 1 || !!media.details.images.backdrops.length) ? ' !rounded-b-none ' : '')}>
+                <div id='details' className={'transition-ease z-10 backdrop-blur-md flex flex-col space-y-6 p-3 sm:p-5 rounded-xl'}>
                     <Overview setBackdrop={setBackDrop} details={media.details} />
                     <MediaList list={media.details.credits?.cast ? media.details.credits?.cast : []} mediaType={media.details.mediaType}></MediaList>
-                    <ImagesSection images={media.details.images} />
+                    <ImagesSection images={media.details.images} videos={('videos' in media.details) ? media.details.videos : []} />
+                    <MediaList list={('similar' in media.details) && media.details.similar ? media.details?.similar : []} title='More like this' isRounded={false} mediaType={media.details.mediaType}></MediaList>
+                    <MediaList list={('recommendations' in media.details) && media.details.recommendations ? media.details?.recommendations : []} title='You may also like' isRounded={false} mediaType={media.details.mediaType}></MediaList>
                 </div>
                 <HeroImage backdrop={backdrop} images={media.details.images} />
             </section> : <></>

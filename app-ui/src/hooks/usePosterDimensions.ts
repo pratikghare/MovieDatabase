@@ -20,7 +20,7 @@ export function usePosterDimensions({
     };
 
     const index = getBreakpointIndex();
-    const defaultHeights: [number, number, number] = [100, 120, 180];
+    const defaultHeights: [number, number, number] = [100, 120, 150];
 
     let height: number;
     let width: number;
