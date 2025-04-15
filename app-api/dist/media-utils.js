@@ -77,7 +77,7 @@ function getDateString(date) {
     return "";
 }
 function getYear(item) {
-    return getDateString((item === null || item === void 0 ? void 0 : item.release_date) || (item === null || item === void 0 ? void 0 : item.last_air_date) || (item === null || item === void 0 ? void 0 : item.air_date) || (item === null || item === void 0 ? void 0 : item.first_air_date)).split(" ")[2] || undefined;
+    return getDateString((item === null || item === void 0 ? void 0 : item.release_date) || (item === null || item === void 0 ? void 0 : item.first_air_date) || (item === null || item === void 0 ? void 0 : item.last_air_date) || (item === null || item === void 0 ? void 0 : item.air_date)).split(" ")[2] || undefined;
 }
 function calculateAge(dob) {
     const birthDate = new Date(dob);
@@ -93,7 +93,7 @@ function calculateAge(dob) {
     return `${age} years old`;
 }
 function getReleased(item) {
-    return getDateString((item === null || item === void 0 ? void 0 : item.release_date) || (item === null || item === void 0 ? void 0 : item.last_air_date) || (item === null || item === void 0 ? void 0 : item.air_date) || (item === null || item === void 0 ? void 0 : item.first_air_date));
+    return getDateString((item === null || item === void 0 ? void 0 : item.release_date) || (item === null || item === void 0 ? void 0 : item.first_air_date) || (item === null || item === void 0 ? void 0 : item.last_air_date) || (item === null || item === void 0 ? void 0 : item.air_date));
 }
 function getDepartment(item) {
     var _a;

@@ -58,7 +58,7 @@ export function getDateString(date: string): string {
 }
 
 export function getYear(item: any): string | undefined {
-    return getDateString(item?.release_date || item?.last_air_date || item?.air_date || item?.first_air_date).split(" ")[2] || undefined;
+    return getDateString(item?.release_date || item?.first_air_date || item?.last_air_date || item?.air_date).split(" ")[2] || undefined;
 }
 
 export function calculateAge(dob: string | number): string| undefined {
@@ -80,7 +80,7 @@ export function calculateAge(dob: string | number): string| undefined {
 }
 
 export function getReleased(item: any): string | undefined {
-    return getDateString(item?.release_date || item?.last_air_date || item?.air_date || item?.first_air_date);
+    return getDateString(item?.release_date || item?.first_air_date || item?.last_air_date || item?.air_date);
 }
 
 export function getDepartment(item: any): string | undefined {
