@@ -11,7 +11,7 @@ const server = new ApolloServer({
     schema,
     cors: { origin: "*", credentials: true },
     context: ({ req }) => {
-        fetchUserLocation(req);
+        return fetchUserLocation(req);
     },
 });
 

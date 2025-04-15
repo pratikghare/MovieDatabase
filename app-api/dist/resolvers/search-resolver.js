@@ -14,6 +14,7 @@ const media_utils_1 = require("../media-utils");
 const utils_1 = require("../utils");
 const searchQuery = (_1, _a) => __awaiter(void 0, [_1, _a], void 0, function* (_, { query }) {
     try {
+        console.log('Search Query');
         const url = (0, utils_1.getResolvedTMUrl)(env_1.SEARCH, [env_1.SEARCH_DEL], [query]);
         const response = yield fetch(url);
         if (!response.ok)

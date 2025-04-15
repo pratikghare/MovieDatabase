@@ -25,6 +25,7 @@ const Media = {
 const details = async (_: any, { id, media }: { id: string, media: MediaType }) => {
     try {
         
+        console.log('Details Query');
         let imdbId: string = "";
         if(media === MediaType.TV) {
             const id_response = await fetch(getResolvedTMExternalIdUrl(id, media));

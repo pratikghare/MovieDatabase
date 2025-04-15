@@ -5,6 +5,7 @@ import { getResolvedTMUrl } from "../utils";
 
 const searchQuery = async (_: any, { query }: { query: string }) => {
     try {
+        console.log('Search Query');
         const url = getResolvedTMUrl(SEARCH, [SEARCH_DEL], [query]);
         const response: any = await fetch(url);
         if(!response.ok) throw new Error(`Failed to fetch results: ${response.statusText}`);

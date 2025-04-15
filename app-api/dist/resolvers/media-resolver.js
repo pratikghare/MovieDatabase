@@ -29,6 +29,7 @@ const Media = {
 const details = (_1, _a) => __awaiter(void 0, [_1, _a], void 0, function* (_, { id, media }) {
     var _b, _c;
     try {
+        console.log('Details Query');
         let imdbId = "";
         if (media === context_1.MediaType.TV) {
             const id_response = yield fetch((0, utils_1.getResolvedTMExternalIdUrl)(id, media));

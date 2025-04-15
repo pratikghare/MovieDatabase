@@ -34,12 +34,12 @@ export const getResolvedTMExternalIdUrl = (id: string, media: MediaType) => {
 
 export const fetchUserLocation = (request: any) => {
     const ip =
-        request.headers["x-forwarded-for"]?.toString().split(",")[0] || // if behind proxy
-        request.socket.remoteAddress ||                                // regular IP
+        request.headers["x-forwarded-for"]?.toString().split(",")[0] ||     // if behind proxy
+        request.socket.remoteAddress ||                                    // regular IP
         null;
 
     console.log("Incoming request from IP:", ip);
-    
+
     fetch(`http://ip-api.com/json/${ip}`)
         .then(res => res.json())
         .then(data => {

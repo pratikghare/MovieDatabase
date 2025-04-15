@@ -11,7 +11,7 @@ const server = new apollo_server_1.ApolloServer({
     schema,
     cors: { origin: "*", credentials: true },
     context: ({ req }) => {
-        (0, utils_1.fetchUserLocation)(req);
+        return (0, utils_1.fetchUserLocation)(req);
     },
 });
 server.listen({ port: env_1.PORT }).then(({ url }) => {
