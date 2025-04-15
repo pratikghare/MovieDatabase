@@ -14,7 +14,7 @@ export const getResolvedTMDetailsUrl = (id: string, media: MediaType, season?: n
     let urls: Array<string> = [];
     const detail: any = media === MediaType.MOVIE ? MOVIE : media === MediaType.PERSON ? PERSON : media === MediaType.TV && season ? TV_SEASON : TV;
     urls = [detail.details, detail.credits, detail.images];
-    if(media === MediaType.TV || media === MediaType.MOVIE) urls = [...urls, detail.videos, detail.similar, detail.recommendations];
+    if(media === MediaType.TV || media === MediaType.MOVIE) urls = [...urls, detail.videos, detail.similar, detail.recommendations, detail.watchProviders];
 
     urls = urls.map((url: string) => getResolvedTMUrl(url, [detail.delimiter], [id]));
     return urls;

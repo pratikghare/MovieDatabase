@@ -91,6 +91,7 @@ export function getDepartment(item: any): string | undefined {
         case "writing": return "Writer";
         case "sound": return "Music Department";
         case "producing": return "Producer";
+        case "production": return "Producer";
         default: return item?.known_for_department || undefined;
     }
 }
@@ -219,14 +220,14 @@ export function getSubtext(item: any, omdb?: any): string[] {
 
 
 
-export function getMassagedCompactMedia(item: any): CompactMedia {
+export function getMassagedCompactMedia(item: any, mediaType?: MediaType): CompactMedia {
     return {
         id: item?.id || 0,
         name: getName(item),
         backdrop: getBackdrop(item),
         thumbnail: getThumbnail(item),
-        overview: getOverview(item),
-        mediaType: getMediaType(item),
+        overview: getOverview(item), 
+        mediaType: mediaType ? mediaType : getMediaType(item),
         voteAverage: item?.vote_average || 0,
         voteCount: item?.vote_count || 0,
         subtext: getCompactMediaSubText(item),
@@ -237,8 +238,8 @@ export function getMassagedCompactMedia(item: any): CompactMedia {
     };
 }
 
-export function getMassagedCompactMediaList(items: Array<any>): Array<CompactMedia> {
-    return items?.map(getMassagedCompactMedia).filter(Boolean) || [];
+export function getMassagedCompactMediaList(items: Array<any>, media?: MediaType): Array<CompactMedia> {
+    return items?.map((item: any) => getMassagedCompactMedia(item, media)).filter(Boolean) || [];
 }
 
 
@@ -358,8 +359,8 @@ export function getMovieDetails(details: any, credits: any, images: any, videos:
         credits: getCredits(credits),
         images: getMassagedImagesList(images),
         videos: getVideos(videos),
-        similar: getMassagedCompactMediaList(similar?.results || []),
-        recommendations: getMassagedCompactMediaList(recommendations?.results || []),
+        similar: getMassagedCompactMediaList(similar?.results || [], MediaType.MOVIE),
+        recommendations: getMassagedCompactMediaList(recommendations?.results || [], MediaType.MOVIE),
         subtext: getSubtext(details, omdb),
         ratings: getRatings(omdb?.Ratings || []),
         tagline: details.tagline,
@@ -393,8 +394,8 @@ export function getTvShowDetails(details: any, credits: any, images: any, videos
         credits: getCredits(credits),
         images: getMassagedImagesList(images),
         videos: getVideos(videos),
-        similar: getMassagedCompactMediaList(similar?.results || []),
-        recommendations: getMassagedCompactMediaList(recommendations?.results || []),
+        similar: getMassagedCompactMediaList(similar?.results || [], MediaType.TV),
+        recommendations: getMassagedCompactMediaList(recommendations?.results || [], MediaType.TV),
         subtext: getSubtext(details, omdb),
         ratings: getRatings(omdb?.Ratings || []),
         tagline: details.tagline,
@@ -437,7 +438,7 @@ export function getSearchResultsData(item: any): CompactMediaResults {
 }
 
 export function getMassagedMedia(items: any[], type: MediaType): Movie | TvShow | Person {
-    const [details, credits, images, videos, similar, recommendations, omdb] = items;
+    const [details, credits, images, videos, similar, recommendations, watchProviders, omdb] = items;
 
     if (type === MediaType.MOVIE) return getMovieDetails(details, credits, images, videos, similar, recommendations, omdb);
     if (type === MediaType.TV) return getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb);
