@@ -15,6 +15,16 @@ const server = new apollo_server_1.ApolloServer({
             req.socket.remoteAddress || // regular IP
             null;
         console.log("Incoming request from IP:", ip);
+        fetch(`http://ip-api.com/json/`)
+            .then(res => res.json())
+            .then(data => {
+            console.log("Location Info SERVER:", data);
+        });
+        fetch(`http://ip-api.com/json/${ip}`)
+            .then(res => res.json())
+            .then(data => {
+            console.log("Location Info User:", data);
+        });
         return { ip };
     },
 });
