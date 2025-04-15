@@ -43,7 +43,7 @@ const fetchUserLocation = (request) => {
     fetch(`http://ip-api.com/json/${ip}`)
         .then(res => res.json())
         .then(data => {
-        console.log("Location Info User: ", data === null || data === void 0 ? void 0 : data.country, data === null || data === void 0 ? void 0 : data.countryCode, data === null || data === void 0 ? void 0 : data.zip, data === null || data === void 0 ? void 0 : data.lat, data === null || data === void 0 ? void 0 : data.lon);
+        console.log("Location Info User: ", data);
     });
     return { ip };
 };
