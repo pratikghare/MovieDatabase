@@ -1,5 +1,5 @@
-import { Chip, ScrollShadow, Image as HeroImage } from '@heroui/react';
-import { Genre, Movie, Person, TvShow } from '../../context/media-context';
+import { Chip, ScrollShadow, Image as HeroImage, Skeleton } from '@heroui/react';
+import { Genre, Media, Movie, Person, TvShow } from '../../context/media-context';
 import { useCallback, useEffect, useRef } from 'react';
 import ColorThief from 'colorthief';
 import RenderWithScrollShadow from './scroll-shadow-render';
@@ -34,24 +34,31 @@ export const StarRating = ({ percentage, imdb }: { percentage: number, imdb?: nu
 
 
 const FULL_WIDTH_OFFSET = 20;
-export default function Overview({ details, setBackdrop }: { details: Movie | Person | TvShow, setBackdrop: Function }) {
+export default function Overview({ details, setBackdrop }: { details?: Movie | Person | TvShow | Media, setBackdrop: Function }) {
     const imgRef = useRef<HTMLImageElement>(null);
 
     const RenderOverview = useCallback(() => {
-        const overview: Array<string> = details.overview ? details.overview.split('\n').filter(Boolean) : [];
+        const overview: Array<string> = details?.overview ? details.overview.split('\n').filter(Boolean) : [];
         return (
-            <ScrollShadow hideScrollBar className='text-xs max-h-[155px] md:max-h-[200px] flex flex-col gap-1'>
-                {
-                    overview.map((para: string, index: number) => (
-                        <p key={'para-' + index} className=''>{getCleanText(para)}</p>
-                    ))
-                }
-            </ScrollShadow>
+            !details ?
+                <div className="flex flex-col gap-2 min-w-[150px] w-full sm:min-w-[300px] mt-4">
+                    <Skeleton className="h-3 w-5/5 rounded-lg" />
+                    <Skeleton className="h-3 w-5/5 rounded-lg" />
+                    <Skeleton className="h-3 w-4/5 rounded-lg" />
+                    <Skeleton className="h-3 w-4/5 rounded-lg" />
+                </div> :
+                <ScrollShadow hideScrollBar className='text-xs max-h-[155px] md:max-h-[200px] flex flex-col gap-1'>
+                    {
+                        overview.map((para: string, index: number) => (
+                            <p key={'para-' + index} className=''>{getCleanText(para)}</p>
+                        ))
+                    }
+                </ScrollShadow>
         );
-    }, [details.overview]);
+    }, [details?.overview]);
 
     useEffect(() => {
-        if (details.poster && !details.poster.includes('not_found') && !details.backdrop) {
+        if (details && details.poster && !details.poster.includes('not_found') && !details.backdrop) {
             const img = new Image();
             img.crossOrigin = 'Anonymous';
             img.src = `${details.poster}/`;
@@ -66,37 +73,48 @@ export default function Overview({ details, setBackdrop }: { details: Movie | Pe
                 console.error("Failed to load image for color extraction:", err);
             };
         }
-    }, [details.poster, details.backdrop]);
+    }, [details?.poster, details?.backdrop]);
 
     return (
         <div className='min-h-[30svh] flex space-x-3'>
             <div className='font-semibold flex flex-col gap-3'>
                 <div>
-                    {('rating' in details) && !!details.rating && <StarRating percentage={details.rating} />}
+                    {details && ('rating' in details) && !!details.rating && <StarRating percentage={details.rating} />}
 
-                    <div className={'font-bold flex space-x-1 items-end ' + (('rating' in details) && !!details.rating ? '' : 'mt-2')}>
-                        <h1 className='text-lg sm:text-xl md:text-2xl !leading-none'>
-                            { details.name }
-                            { details.year && <span className='text-sm sm:text-md md:text-lg ml-1'>{ details.year }</span> }
-                        </h1>
-                    </div>
+                    {
+                        details ?
+                            <div className={'font-bold flex space-x-1 items-end ' + (('rating' in details) && !!details.rating ? '' : 'mt-2')}>
+                                <h1 className='text-lg sm:text-xl md:text-2xl !leading-none'>
+                                    {details.name}
+                                    {details.year && <span className='text-sm sm:text-md md:text-lg ml-1'>{details.year}</span>}
+                                </h1>
+                            </div> :
+                            <div className="w-full flex flex-col gap-2 overflow-hidden">
+                                <Skeleton className="h-3 w-4/5 rounded-lg" />
+                                <Skeleton className="h-3 w-3/5 rounded-lg" />
+                                <Skeleton className="h-3 w-3/5 rounded-lg" />
+                            </div>
+                    }
 
-                    <RenderWithScrollShadow offset={FULL_WIDTH_OFFSET} className='text-xs flex items-center'>
-                        {
-                            details.subtext.map((text: string, index: number) => (
-                                <div key={details.id + 'sub-text-' + index} className='flex items-center'>
-                                    <Chip variant='light' className='text-xs px-0 [&>span]:px-0'>{text}</Chip>
-                                    {index < (details.subtext.length - 1) && <DotIcon />}
-                                </div>
-                            ))
-                        }
-                    </RenderWithScrollShadow>
+                    {
+                        details &&
+                        <RenderWithScrollShadow offset={FULL_WIDTH_OFFSET} className='text-xs flex items-center'>
+                            {
+                                details.subtext.map((text: string, index: number) => (
+                                    <div key={details.id + 'sub-text-' + index} className='flex items-center'>
+                                        <Chip variant='light' className='text-xs px-0 [&>span]:px-0'>{text}</Chip>
+                                        {index < (details.subtext.length - 1) && <DotIcon />}
+                                    </div>
+                                ))
+                            }
+                        </RenderWithScrollShadow>
+                    }
                 </div>
 
-                {('tagline' in details) && details.tagline && <span className='italic text-xs'>&ldquo;{details.tagline}&rdquo;</span>}
+                {details && ('tagline' in details) && details.tagline && <span className='italic text-xs'>&ldquo;{details.tagline}&rdquo;</span>}
 
                 {
-                    !!details.genres?.length &&
+                    !!details && !!details.genres?.length &&
                     <RenderWithScrollShadow offset={FULL_WIDTH_OFFSET} className='flex space-x-2 bg-transparent scroll-items'>
                         {
                             details.genres.map((genre: Genre) => (
@@ -108,12 +126,17 @@ export default function Overview({ details, setBackdrop }: { details: Movie | Pe
                 {
                     <div className='flex space-x-4'>
                         <div className='min-w-[120px] max-w-[120px] sm:max-w-[200px] md:min-w-[200px]'>
-                            <HeroImage radius='sm' ref={imgRef} className='obect w-fit md:rounded-xl' src={details.poster} alt={details.name} />
+                            {
+                                details ? <HeroImage radius='sm' ref={imgRef} className='obect w-fit md:rounded-xl' src={details.poster} alt={details.name} /> :
+                                    <Skeleton className="rounded-lg min-h-[180px] sm:min-h-[200px] md:min-h-[250px] lg:max-w-[200px] lg:h-[300px] mt-4">
+                                        <div className="h-24 rounded-lg bg-secondary" />
+                                    </Skeleton>
+                            }
                         </div>
                         <div className='flex flex-col gap-2'>
                             <RenderOverview />
-                            { ('birthday' in details) && details.birthday && <p className='text-xs font-bold'>Birthday: { details.birthday }</p>}
-                            { ('awards' in details) && details.awards && <p className='text-sm font-bold text-primary'>{ details.awards }</p> }
+                            {details && ('birthday' in details) && details.birthday && <p className='text-xs font-bold'>Birthday: {details.birthday}</p>}
+                            {details && ('awards' in details) && details.awards && <p className='text-sm font-bold text-primary'>{details.awards}</p>}
                         </div>
                     </div>
                 }

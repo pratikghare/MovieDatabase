@@ -5,6 +5,7 @@ import { setCurrentTabStorage } from "../../utils/storage-utils";
 interface Config {
     loader: boolean;
     tab: NavigationKeyType;
+    backdrop?: string;
     theme: {
         theme: "light" | "dark" | "system";
         current: "light" | "dark";
@@ -28,9 +29,10 @@ const config = createSlice({
             setCurrentTabStorage(action.payload);
             return { ...state, tab: action.payload };
         },
+        updateBackdrop: (state: any, action: PayloadAction<string | undefined>) => ({ ...state, backdrop: action.payload })
     }
 });
 
 
-export const { updateLoader, updateCurrentTab } = config.actions;
+export const { updateLoader, updateCurrentTab, updateBackdrop } = config.actions;
 export default config.reducer;

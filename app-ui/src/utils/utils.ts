@@ -12,14 +12,14 @@ export const getShortString = (text: string, length: number = 29): string => {
     return text.length > length ? (text.substring(0, length - 5).trim() + '...') : text;
 }
 
-export const getBackdrops = (images: ImageData, backdrop?: string): Array<string> => {
-    const list: Array<string> = images.backdrops.filter((img: Image) => img.width >= 1920).map((img: Image) => img.path);
+export const getBackdrops = (images?: ImageData, backdrop?: string): Array<string> => {
+    const list: Array<string> = images ? images.backdrops.filter((img: Image) => img.width >= 1920).map((img: Image) => img.path) : [];
     return !list.length ? backdrop ? [backdrop] : [''] : list;
 }
 
-export const getImageDimensions = (img: Image): { width: number, height: number, minWidth: number, minHeight: number } => {
-    let width: number = img.width, height: number = img.height;
-    height = 150; width = height * img.aspectRatio;
+export const getImageDimensions = (img: Image, height: number = 150): { width: number, height: number, minWidth: number, minHeight: number } => {
+    let width: number = img.width;
+    width = height * img.aspectRatio;
     return { width, height, minWidth: width, minHeight: height };
 }
 

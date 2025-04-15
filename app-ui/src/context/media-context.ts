@@ -156,5 +156,5 @@ export interface Person extends Media {
 
 export interface MediaReducer {
     search: CompactMediaResults;
-    details?: Movie | Person | TvShow;
+    details?: Movie | Person | TvShow | Media;
 }

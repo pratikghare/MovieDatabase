@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
 
 export default function Header() {
     return (
-        <Navbar shouldHideOnScroll classNames={{ wrapper: 'px-2', base: 'bg-background/20 backdrop-blur-md' }}>
+        <Navbar classNames={{ wrapper: 'px-2', base: 'bg-background/20 backdrop-blur-md' }}>
             <NavbarBrand className='hidden flex-grow-0'>
                 <p className='font-bold text-inherit'>🎬 MDB</p>
             </NavbarBrand>

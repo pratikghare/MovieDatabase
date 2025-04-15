@@ -3,9 +3,11 @@ import { ImageData, Image as ImageType, Video } from '../../context/media-contex
 import RenderWithScrollShadow from './scroll-shadow-render';
 import { getImageDimensions, getImagesList } from '../../utils/utils';
 import { useEffect, useState } from 'react';
+import { usePosterDimensions } from '../../hooks/usePosterDimensions';
 
 export function ImagesSection({ images, videos = [] }: { images: ImageData, videos: Array<Video> }) {
     const [data, setData] = useState(getImagesList(images));
+    const { height } = usePosterDimensions();
 
     useEffect(() => {
         setTimeout(() => {
@@ -33,14 +35,18 @@ export function ImagesSection({ images, videos = [] }: { images: ImageData, vide
                 <div className='flex space-x-3 top-0'>
                     {
                         data.top.map((image: ImageType, index: number) => (
-                            <Image onClick={() => imageClick(image)} key={image.path + index} radius='sm' className='cursor-pointer object-cover' src={image.thumbnail} style={getImageDimensions(image)} />
+                            <div key={image.path + index} style={getImageDimensions(image, height)} >
+                                <Image onClick={() => imageClick(image)} radius='sm' className='cursor-pointer object-cover' src={image.thumbnail} style={getImageDimensions(image, height)} />
+                            </div>
                         ))
                     }
                 </div>
                 <div className='flex space-x-3 top-0'>
                     {
                         data.bottom.map((image: ImageType, index: number) => (
-                            <Image onClick={() => imageClick(image)} key={image.path + (index + 10)} radius='sm' className='cursor-pointer object-cover' src={image.thumbnail} style={getImageDimensions(image)} />
+                            <div key={image.path + (index + 10)} style={getImageDimensions(image, height)} >
+                                <Image onClick={() => imageClick(image)} radius='sm' className='cursor-pointer object-cover' src={image.thumbnail} style={getImageDimensions(image, height)} />
+                            </div>
                         ))
                     }
                 </div>

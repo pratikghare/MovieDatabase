@@ -9,7 +9,7 @@ const array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.8, 0.9, 1];
 const lightGradients = `linear-gradient(to bottom, ${array.map((i) => `rgba(255, 255, 255, ${i})`).join(', ')}), `;
 const darkGradients = `linear-gradient(to bottom, ${array.map((i) => `rgba(0, 0, 0, ${i})`).join(', ')}), `;
 
-export default function HeroImage({ backdrop, images }: { backdrop?: string, images: ImageData }) {
+export default function HeroImage({ backdrop, images }: { backdrop?: string, images?: ImageData }) {
     const config = useSelector(configSelector);
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
 

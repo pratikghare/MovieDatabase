@@ -3,6 +3,9 @@ import { getShortString } from '../../utils/utils';
 import { CompactMedia } from '../../context/media-context';
 import { useNavigate } from 'react-router';
 import { usePosterDimensions } from '../../hooks/usePosterDimensions';
+import { useAppDispatch } from '../../store/selectors';
+import { clearDetails } from '../../store/reducers/media-reducer';
+import { updateBackdrop } from '../../store/reducers/config-reducer';
 
 interface MediaListCardProps{
     media: CompactMedia;
@@ -13,13 +16,16 @@ interface MediaListCardProps{
 
 export default function MediaListCard({ media, className, isRounded }: MediaListCardProps) {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const { height, width } = usePosterDimensions();
     const classes = 'decoration-white/80 text-white/80 before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 bottom-1 absolute before:rounded-xl rounded-md w-[calc(100%_-_6px)] ml-[3px] shadow-small z-10';
 
     const characters: Array<string> = media.character ? media.character.split(', ') : [];
 
-    const onClick = (media: CompactMedia) => {
-        navigate(`/${media.mediaType}/${media.id}`);
+    const onClick = (selected: CompactMedia) => {
+        dispatch(clearDetails());
+        dispatch(updateBackdrop(selected.backdrop));
+        navigate(`/${selected.mediaType}/${selected.id}`);
     }
 
     return (
