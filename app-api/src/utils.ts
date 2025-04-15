@@ -14,7 +14,7 @@ export const getResolvedTMDetailsUrl = (id: string, media: MediaType, season?: n
     let urls: Array<string> = [];
     const detail: any = media === MediaType.MOVIE ? MOVIE : media === MediaType.PERSON ? PERSON : media === MediaType.TV && season ? TV_SEASON : TV;
     urls = [detail.details, detail.credits, detail.images];
-    if(media === MediaType.TV || media === MediaType.MOVIE) urls = [...urls, detail.videos, detail.similar, detail.recommendations, detail.watchProviders];
+    if (media === MediaType.TV || media === MediaType.MOVIE) urls = [...urls, detail.videos, detail.similar, detail.recommendations, detail.watchProviders];
 
     urls = urls.map((url: string) => getResolvedTMUrl(url, [detail.delimiter], [id]));
     return urls;
@@ -29,4 +29,22 @@ export const getResolvedOMUrl = (id: string): string => {
 export const getResolvedTMExternalIdUrl = (id: string, media: MediaType) => {
     const detail = media === MediaType.MOVIE ? MOVIE : media === MediaType.PERSON ? PERSON : TV;
     return getResolvedTMUrl(detail.externalIds, [detail.delimiter], [id]);
+}
+
+
+export const fetchUserLocation = (request: any) => {
+    const ip =
+        request.headers["x-forwarded-for"]?.toString().split(",")[0] || // if behind proxy
+        request.socket.remoteAddress ||                                // regular IP
+        null;
+
+    console.log("Incoming request from IP:", ip);
+    
+    fetch(`http://ip-api.com/json/${ip}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log("Location Info User: ", data?.country, data?.countryCode, data?.zip, data?.lat, data?.lon);
+        });
+
+    return { ip };
 }

@@ -5,27 +5,13 @@ const schema_1 = require("@graphql-tools/schema");
 const resolvers_1 = require("./resolvers/resolvers");
 const schema_2 = require("./schema/schema");
 const env_1 = require("./env/env");
+const utils_1 = require("./utils");
 const schema = (0, schema_1.makeExecutableSchema)({ typeDefs: schema_2.typeDefs, resolvers: resolvers_1.resolvers });
 const server = new apollo_server_1.ApolloServer({
     schema,
     cors: { origin: "*", credentials: true },
     context: ({ req }) => {
-        var _a;
-        const ip = ((_a = req.headers["x-forwarded-for"]) === null || _a === void 0 ? void 0 : _a.toString().split(",")[0]) || // if behind proxy
-            req.socket.remoteAddress || // regular IP
-            null;
-        console.log("Incoming request from IP:", ip);
-        fetch(`http://ip-api.com/json/`)
-            .then(res => res.json())
-            .then(data => {
-            console.log("Location Info SERVER:", data);
-        });
-        fetch(`http://ip-api.com/json/${ip}`)
-            .then(res => res.json())
-            .then(data => {
-            console.log("Location Info User:", data);
-        });
-        return { ip };
+        (0, utils_1.fetchUserLocation)(req);
     },
 });
 server.listen({ port: env_1.PORT }).then(({ url }) => {

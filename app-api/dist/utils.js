@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getResolvedTMExternalIdUrl = exports.getResolvedOMUrl = exports.getResolvedTMDetailsUrl = exports.getResolvedTMUrl = void 0;
+exports.fetchUserLocation = exports.getResolvedTMExternalIdUrl = exports.getResolvedOMUrl = exports.getResolvedTMDetailsUrl = exports.getResolvedTMUrl = void 0;
 const context_1 = require("./context/context");
 const cryptr_1 = require("./cryptr");
 const env_1 = require("./env/env");
@@ -34,3 +34,17 @@ const getResolvedTMExternalIdUrl = (id, media) => {
     return (0, exports.getResolvedTMUrl)(detail.externalIds, [detail.delimiter], [id]);
 };
 exports.getResolvedTMExternalIdUrl = getResolvedTMExternalIdUrl;
+const fetchUserLocation = (request) => {
+    var _a;
+    const ip = ((_a = request.headers["x-forwarded-for"]) === null || _a === void 0 ? void 0 : _a.toString().split(",")[0]) || // if behind proxy
+        request.socket.remoteAddress || // regular IP
+        null;
+    console.log("Incoming request from IP:", ip);
+    fetch(`http://ip-api.com/json/${ip}`)
+        .then(res => res.json())
+        .then(data => {
+        console.log("Location Info User: ", data === null || data === void 0 ? void 0 : data.country, data === null || data === void 0 ? void 0 : data.countryCode, data === null || data === void 0 ? void 0 : data.zip, data === null || data === void 0 ? void 0 : data.lat, data === null || data === void 0 ? void 0 : data.lon);
+    });
+    return { ip };
+};
+exports.fetchUserLocation = fetchUserLocation;
