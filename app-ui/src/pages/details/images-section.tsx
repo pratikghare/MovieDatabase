@@ -1,4 +1,4 @@
-import { image, Image, Link } from '@heroui/react';
+import { Image, Link } from '@heroui/react';
 import { ImageData, Image as ImageType, Video } from '../../context/media-context';
 import RenderWithScrollShadow from './scroll-shadow-render';
 import { getImageDimensions, getImagesList } from '../../utils/utils';
