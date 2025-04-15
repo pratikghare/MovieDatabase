@@ -8,6 +8,7 @@ import Overview from './overview';
 import MediaList from './media-list';
 import { ImagesSection } from './images-section';
 import HeroImage from './hero-image';
+import { updateMediaType } from '../../store/reducers/config-reducer';
 
 export default function Details() {
     const dispatch = useAppDispatch();
@@ -21,11 +22,11 @@ export default function Details() {
 
     useEffect(() => {
         const path = getMediaDataFromPathName(location.pathname);
+        dispatch(updateMediaType(path.media));
         if (media.details && media.details.id === path.id && media.details.mediaType === path.media) return;
         
         if (path.valid) dispatch(detailsQuery({ id: path.id, media: path.media }));
     }, [location.pathname]);
-
 
     useEffect(() => {
         const horizontalScrollItems = document.getElementsByClassName('scroll-items');
@@ -41,21 +42,21 @@ export default function Details() {
 
 
     useEffect(() => {
-        let cls = 'transition-ease min-h-full border-1 border-foreground/10 bg-background/50 rounded-t-xl sm:rounded-b-xl ';
+        let cls = 'transition-ease border-t-1 border-t-foreground/10 lg:border-1 lg:border-foreground/10 bg-background/50 rounded-t-xl min-h-[calc(100svh_-_144px)] sm:min-h-[calc(100svh_-_164px)] ';
         const bgDrop = media.details?.backdrop ? media.details?.backdrop : config.backdrop;
         cls += bgDrop ? 'mt-[30svh] lg:mt-[15svh] ' : 'bg-background/20 !rounded-t-none';
         if (media.details && media.details.credits?.cast.length && (media.details.images.list.length > 1 || !!media.details.images.backdrops.length)) {
             cls += ' !rounded-b-none';
         }
         setClasses(cls);
-    }, [media.details?.backdrop]);
+    }, [media.details?.backdrop, config.backdrop]);
 
 
     return (
         <section className={classes}>
             <div id='details' className={'transition-ease z-10 backdrop-blur-md flex flex-col space-y-5 p-3 sm:p-5 rounded-xl'}>
                 <Overview setBackdrop={setBackDrop} details={media.details} />
-                <MediaList list={media.details && media.details.credits?.cast ? media.details.credits?.cast : []} mediaType={media?.details?.mediaType}></MediaList>
+                <MediaList list={media.details && media.details.credits?.cast ? media.details.credits?.cast : []} mediaType={media?.details?.mediaType} showAll></MediaList>
                 {
                     media.details &&
                     <>

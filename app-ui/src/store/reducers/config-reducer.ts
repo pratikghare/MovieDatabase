@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NavigationKeyType, NavigationTabKeys } from "../../context/common";
 import { setCurrentTabStorage } from "../../utils/storage-utils";
+import { MediaType } from "../../context/media-context";
 
 interface Config {
     loader: boolean;
     tab: NavigationKeyType;
     backdrop?: string;
+    mediaType?: MediaType;
     theme: {
         theme: "light" | "dark" | "system";
         current: "light" | "dark";
@@ -18,7 +20,8 @@ const initialState: Config = {
     theme: {
         theme: "dark",
         current: "dark"
-    }
+    },
+    // mediaType: MediaType.PERSON
 }
 
 const config = createSlice({
@@ -29,10 +32,11 @@ const config = createSlice({
             setCurrentTabStorage(action.payload);
             return { ...state, tab: action.payload };
         },
-        updateBackdrop: (state: any, action: PayloadAction<string | undefined>) => ({ ...state, backdrop: action.payload })
+        updateBackdrop: (state: any, action: PayloadAction<string | undefined>) => ({ ...state, backdrop: action.payload }),
+        updateMediaType: (state: any, action: PayloadAction<MediaType>) => ({ ...state, mediaType: action.payload })
     }
 });
 
 
-export const { updateLoader, updateCurrentTab, updateBackdrop } = config.actions;
+export const { updateLoader, updateCurrentTab, updateBackdrop, updateMediaType } = config.actions;
 export default config.reducer;

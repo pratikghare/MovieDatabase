@@ -3,11 +3,13 @@ import RenderWithScrollShadow from './scroll-shadow-render';
 import MediaListCard from './media-list-item';
 import { Link, Skeleton } from '@heroui/react';
 import { usePosterDimensions } from '../../hooks/usePosterDimensions';
+import { useSelector } from 'react-redux';
+import { configSelector } from '../../store/selectors';
 
-export default function MediaList(props: { list: Array<CompactMedia>, mediaType?: MediaType, title?: string, isRounded?: boolean }) {
-
+export default function MediaList(props: { list: Array<CompactMedia>, mediaType?: MediaType, title?: string, isRounded?: boolean, showAll?: boolean }) {
+    const config = useSelector(configSelector);
     const title: string = props.title ? props.title : (props.mediaType === MediaType.PERSON ? 'Known for' : 'Top Cast');
-    const { width } = usePosterDimensions();
+    const { height, width } = usePosterDimensions();
 
     return (
         !!props.list.length && props.mediaType ?
@@ -16,7 +18,7 @@ export default function MediaList(props: { list: Array<CompactMedia>, mediaType?
                 <div className='flex justify-between'>
                     <h1 className='font-bold my-1 '>{title}</h1>
                     {
-                        props.list.length >= 10 &&
+                        props.list.length >= 10 && props.showAll &&
                         <Link className='text-xs cursor-pointer hover:underline'>See All</Link>
                     }
                 </div>
@@ -33,8 +35,8 @@ export default function MediaList(props: { list: Array<CompactMedia>, mediaType?
                     {
                         [1, 2, 3, 4].map((index: number) => (
                             <div key={'media-list-skeleton-'+index} className="space-y-2" style={{ width }}>
-                                <Skeleton className="rounded-full">
-                                    <div className="rounded-full bg-secondary" style={{ height: width, width }} />
+                                <Skeleton className={config.mediaType === MediaType.PERSON ? 'rounded-lg' : "rounded-full"}>
+                                    <div className="rounded-full bg-secondary" style={{ height: (config.mediaType == MediaType.PERSON ? height : width), width }} />
                                 </Skeleton>
                                 <div className="space-y-1 flex flex-col items-center">
                                     <Skeleton className="w-4/5 rounded-lg">

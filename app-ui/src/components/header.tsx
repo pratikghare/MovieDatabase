@@ -1,10 +1,11 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Autocomplete, AutocompleteItem, Image, CircularProgress } from '@heroui/react';
 import { mediaSelector, useAppDispatch } from '../store/selectors';
-import { searchQuery } from '../store/reducers/media-reducer';
+import { clearDetails, searchQuery } from '../store/reducers/media-reducer';
 import { useSelector } from 'react-redux';
 import { CompactMedia, MediaReducer } from '../context/media-context';
 import { useNavigate } from 'react-router';
 import { useEffect, useRef } from 'react';
+import { updateBackdrop } from '../store/reducers/config-reducer';
 
 export default function Header() {
     return (
@@ -30,6 +31,7 @@ export function AutoCompleteSearch() {
     const media: MediaReducer = useSelector(mediaSelector);
     const navigate = useNavigate();
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null); 
 
     const onValueChange = (event: any) => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -40,6 +42,9 @@ export function AutoCompleteSearch() {
     }
 
     const onSelect = (selected: CompactMedia) => {
+        inputRef.current?.blur();
+        dispatch(updateBackdrop(selected.backdrop));
+        dispatch(clearDetails());
         navigate(`/${selected.mediaType}/${selected.id}`);
     }
 
@@ -58,6 +63,7 @@ export function AutoCompleteSearch() {
             inputProps={{ classNames: { input: 'text-xs font-bold text-foreground placeholder:text-foreground/50', inputWrapper: 'border-foreground/40 hover:!border-foreground' } }}
             onInput={onValueChange}
             classNames={{ popoverContent: 'rounded-md text-xs popover-app border-foreground ml-[-4px] lg:ml-0' }}
+            ref={inputRef}
         >
             {
                 (item: CompactMedia) => (
