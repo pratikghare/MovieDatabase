@@ -25,7 +25,7 @@ const Media = {
 
 const details = async (_: any, { id, media }: { id: string, media: MediaType }, context: any) => {
     try {
-        const countryCode: string = context?.location?.countryCode ? context.location.countryCode : DEFAULT_REGION;
+        const countryCode: string = context?.location?.country_code ? context.location.country_code : DEFAULT_REGION;
         console.log('Details Query', context);
         let imdbId: string = "";
         if(media === MediaType.TV) {

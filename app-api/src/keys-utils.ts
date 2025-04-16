@@ -79,3 +79,4 @@ const getKey = (count: number = 1, type: string, exclude?: string): string => {
 
 export const getTMKey = (count: number = 1, exclude?: string): string => getKey(count, "TMDB", exclude);
 export const getOMKey = (count: number = 1, exclude?: string): string => getKey(count, "OMDB", exclude);
+export const getIPInfoKey = (count: number = 1, exclude?: string): string => getKey(count, "IPINFO", exclude);

@@ -43,14 +43,16 @@ const getResolvedTMExternalIdUrl = (id, media) => {
     return (0, exports.getResolvedTMUrl)(detail.externalIds, [detail.delimiter], [id]);
 };
 exports.getResolvedTMExternalIdUrl = getResolvedTMExternalIdUrl;
+const getResolvedIpInfoUrl = (ip) => `https://api.ipinfo.io/lite/${ip}?token=` + (0, cryptr_1.decrypt)((0, keys_utils_1.getIPInfoKey)(1));
 const fetchUserLocation = (request) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const ip = ((_a = request.headers["x-forwarded-for"]) === null || _a === void 0 ? void 0 : _a.toString().split(",")[0]) ||
         request.socket.remoteAddress ||
         null;
-    console.log("Incoming request from IP:", ip);
+    console.log("Incoming request from IP: ", ip);
     try {
-        const res = yield fetch(`http://ip-api.com/json/${ip}`);
+        // const res = await fetch(`http://ip-api.com/json/${ip}`);
+        const res = yield fetch(getResolvedIpInfoUrl(ip));
         const location = yield res.json();
         // console.log("Location Info User:", location);
         return { ip, location };

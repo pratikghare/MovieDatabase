@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOMKey = exports.getTMKey = exports.isAtleastADayDiff = exports.isAtleastAMonthDiff = void 0;
+exports.getIPInfoKey = exports.getOMKey = exports.getTMKey = exports.isAtleastADayDiff = exports.isAtleastAMonthDiff = void 0;
 const keys_json_1 = __importDefault(require("./env/keys.json"));
 const fs = __importStar(require("fs"));
 const path_1 = require("path");
@@ -91,3 +91,5 @@ const getTMKey = (count = 1, exclude) => getKey(count, "TMDB", exclude);
 exports.getTMKey = getTMKey;
 const getOMKey = (count = 1, exclude) => getKey(count, "OMDB", exclude);
 exports.getOMKey = getOMKey;
+const getIPInfoKey = (count = 1, exclude) => getKey(count, "IPINFO", exclude);
+exports.getIPInfoKey = getIPInfoKey;

@@ -1,7 +1,7 @@
 import { MediaType } from "./context/context";
 import { decrypt } from "./cryptr"
 import { MOVIE, OMDB_DEL, OMDB_URL, PERSON, TV, TV_SEASON } from "./env/env";
-import { getOMKey, getTMKey } from "./keys-utils"
+import { getIPInfoKey, getOMKey, getTMKey } from "./keys-utils"
 
 export const getResolvedTMUrl = (url: string, substitute: Array<string>, replacement: Array<string>, count: number = 1): string => {
     const key = decrypt(getTMKey(count));
@@ -31,16 +31,20 @@ export const getResolvedTMExternalIdUrl = (id: string, media: MediaType) => {
     return getResolvedTMUrl(detail.externalIds, [detail.delimiter], [id]);
 }
 
+
+const getResolvedIpInfoUrl = (ip: string): string => `https://api.ipinfo.io/lite/${ip}?token=` + decrypt(getIPInfoKey(1));
+
 export const fetchUserLocation = async (request: any) => {
     const ip =
         request.headers["x-forwarded-for"]?.toString().split(",")[0] ||
         request.socket.remoteAddress ||
         null;
 
-    console.log("Incoming request from IP:", ip);
+    console.log("Incoming request from IP: ", ip);
 
     try {
-        const res = await fetch(`http://ip-api.com/json/${ip}`);
+        // const res = await fetch(`http://ip-api.com/json/${ip}`);
+        const res = await fetch(getResolvedIpInfoUrl(ip));
         const location = await res.json();
         // console.log("Location Info User:", location);
 

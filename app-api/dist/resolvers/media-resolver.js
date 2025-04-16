@@ -30,7 +30,7 @@ const Media = {
 const details = (_1, _a, context_2) => __awaiter(void 0, [_1, _a, context_2], void 0, function* (_, { id, media }, context) {
     var _b, _c, _d;
     try {
-        const countryCode = ((_b = context === null || context === void 0 ? void 0 : context.location) === null || _b === void 0 ? void 0 : _b.countryCode) ? context.location.countryCode : env_1.DEFAULT_REGION;
+        const countryCode = ((_b = context === null || context === void 0 ? void 0 : context.location) === null || _b === void 0 ? void 0 : _b.country_code) ? context.location.country_code : env_1.DEFAULT_REGION;
         console.log('Details Query', context);
         let imdbId = "";
         if (media === context_1.MediaType.TV) {
