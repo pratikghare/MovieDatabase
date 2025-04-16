@@ -1,10 +1,10 @@
 import { Chip, ScrollShadow, Image as HeroImage, Skeleton } from '@heroui/react';
 import { Genre, Media, Movie, Person, TvShow, WatchProvider } from '../../context/media-context';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import ColorThief from 'colorthief';
 import RenderWithScrollShadow from './scroll-shadow-render';
 import { DotIcon } from '../../components/icons';
-import { getCleanText, updateArrayUsingProperty } from '../../utils/utils';
+import { getCleanText } from '../../utils/utils';
 
 
 

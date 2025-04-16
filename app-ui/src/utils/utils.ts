@@ -1,4 +1,4 @@
-import { Image, MediaType, ImageData, Movie, TvShow } from "../context/media-context";
+import { Image, MediaType, ImageData } from "../context/media-context";
 
 export const getMediaType = (media?: string) => media === 'tv' ? MediaType.TV : media === 'movie' ? MediaType.MOVIE : MediaType.PERSON;
 
