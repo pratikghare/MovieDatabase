@@ -30,6 +30,7 @@ const mediaSchema = (0, apollo_server_1.gql) `
         genres: [Genre!]
         similar: [CompactMedia!]!
         recommendations: [CompactMedia!]!
+        watchProviders: WatchProviders!
 
         released: String
         runtime: String
@@ -58,6 +59,7 @@ const mediaSchema = (0, apollo_server_1.gql) `
         genres: [Genre!]
         similar: [CompactMedia!]!
         recommendations: [CompactMedia!]!
+        watchProviders: WatchProviders!
 
         released: String
         firstAirDate: String
@@ -165,9 +167,23 @@ const mediaSchema = (0, apollo_server_1.gql) `
         logo: String
     }
 
+    type WatchProviders {
+        subscription: [WatchProvider!]!
+        rent: [WatchProvider!]!
+        buy: [WatchProvider!]!
+    }
+
+    type WatchProvider {
+        id: ID!
+        path: String!
+        name: String!
+        displayPriority: Int
+    }
+
     extend type Query {
         details(id: ID!, media: String!): Media
         searchQuery(query: String!): CompactMediaResults
     }
+    
 `;
 exports.default = mediaSchema;
