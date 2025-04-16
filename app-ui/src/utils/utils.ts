@@ -1,4 +1,4 @@
-import { Image, MediaType, ImageData } from "../context/media-context";
+import { Image, MediaType, ImageData, Movie, TvShow } from "../context/media-context";
 
 export const getMediaType = (media?: string) => media === 'tv' ? MediaType.TV : media === 'movie' ? MediaType.MOVIE : MediaType.PERSON;
 
@@ -53,3 +53,10 @@ export const getImagesList = (images: ImageData): { top: Array<Image>; bottom: A
     }
     return { top, bottom };
 }
+
+
+export const updateArrayUsingProperty = (array: Array<{ key: string, title: string, value: string }>, property: string, details: any, title: string) => {
+    if(property in details && !!details[property]) {
+        array.push({ key: property, title, value: typeof(details[property]) === 'string' ? details[property] : details[property]?.join(', ') })
+    }
+} 

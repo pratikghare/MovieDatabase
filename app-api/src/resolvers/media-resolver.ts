@@ -5,6 +5,7 @@ import person from "../../../samples/details_person.json";
 import tv from "../../../samples/details_tv.json";
 import { getMassagedMedia } from "../media-utils";
 import { MediaType } from "../context/context";
+import { DEFAULT_REGION } from "../env/env";
 
 const Media = {
     __resolveType(obj: any) {
@@ -22,10 +23,10 @@ const Media = {
 }
 
 
-const details = async (_: any, { id, media }: { id: string, media: MediaType }) => {
+const details = async (_: any, { id, media }: { id: string, media: MediaType }, context: any) => {
     try {
-        
-        console.log('Details Query');
+        const countryCode: string = context?.location?.countryCode ? context.location.countryCode : DEFAULT_REGION;
+        console.log('Details Query', context);
         let imdbId: string = "";
         if(media === MediaType.TV) {
             const id_response = await fetch(getResolvedTMExternalIdUrl(id, media));
@@ -43,7 +44,8 @@ const details = async (_: any, { id, media }: { id: string, media: MediaType }) 
         }
         
         // const data: any[] = media === MediaType.MOVIE ? movie : media === MediaType.PERSON ? person : tv;
-        const result = getMassagedMedia(data, media);
+        console.log(countryCode)
+        const result = getMassagedMedia(data, media, countryCode);
         return result;
 
     }

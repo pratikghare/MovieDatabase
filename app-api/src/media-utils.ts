@@ -13,40 +13,42 @@ import {
     Credits,
     Ratings,
     ImageData,
-    ProductionCompany
-} from "./context/context";
+    ProductionCompany,
+    WatchProviders,
+    WatchProvider
+} from './context/context';
 
-import { SHORT_IMAGE_URL, IMAGE_NOT_FOUND, IMAGE_URL, VIDEOS } from "./env/env";
-import genres from "../../samples/genres.json";
+import { SHORT_IMAGE_URL, IMAGE_NOT_FOUND, IMAGE_URL, VIDEOS, APP_IMAGE_PATH } from './env/env';
+import genres from '../../samples/genres.json';
 
 export const RatingMap = [
-    { source: "Internet Movie Database", label: "", logo: "" },
-    { source: "Rotten Tomatoes", label: "", logo: "" },
-    { source: "Metacritic", label: "Metacritic", logo: "" }
+    { source: 'Internet Movie Database', label: '', logo: APP_IMAGE_PATH + 'imdb.webp' },
+    { source: 'Rotten Tomatoes', label: '', logo: APP_IMAGE_PATH + 'rotten_tomatoes_old.png' },
+    { source: 'Metacritic', label: 'Metacritic', logo: '' }
 ];
 
-export const months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export function getMediaType(item: any): MediaType {
-    if (item?.media_type === "tv") return MediaType.TV;
-    else if (item?.media_type === "movie") return MediaType.MOVIE;
+    if (item?.media_type === 'tv') return MediaType.TV;
+    else if (item?.media_type === 'movie') return MediaType.MOVIE;
     return MediaType.PERSON;
 }
 
 export function getBaseClassNames(className?: string, base?: string): string {
-    return className && base ? `${className} ${base}` : className || base || "";
+    return className && base ? `${className} ${base}` : className || base || '';
 }
 
 export function getName(item: any): string {
-    return item?.name || item?.title || item?.original_name || item?.original_title || "";
+    return item?.name || item?.title || item?.original_name || item?.original_title || '';
 }
 
 export function getOverview(item: any): string {
-    return item?.biography || item?.overview || `We don't have a ${ getMediaType(item) === MediaType.PERSON ? 'biography' : 'overview' } for ${getName(item)}.`;
+    return item?.biography || item?.overview || `We don't have a ${getMediaType(item) === MediaType.PERSON ? 'biography' : 'overview'} for ${getName(item)}.`;
 }
 
 export function getCountry(item: any): string | undefined {
-    return item?.origin_country?.join(", ") || item?.place_of_birth || undefined;
+    return item?.origin_country?.join(', ') || item?.place_of_birth || undefined;
 }
 
 export function getDateString(date: string): string {
@@ -54,14 +56,14 @@ export function getDateString(date: string): string {
         const d = new Date(date);
         return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
     }
-    return "";
+    return '';
 }
 
 export function getYear(item: any): string | undefined {
-    return getDateString(item?.release_date || item?.first_air_date || item?.last_air_date || item?.air_date).split(" ")[2] || undefined;
+    return getDateString(item?.release_date || item?.first_air_date || item?.last_air_date || item?.air_date).split(' ')[2] || undefined;
 }
 
-export function calculateAge(dob: string | number): string| undefined {
+export function calculateAge(dob: string | number): string | undefined {
     const birthDate = new Date(dob);
 
     if (isNaN(birthDate.getTime())) {
@@ -86,24 +88,24 @@ export function getReleased(item: any): string | undefined {
 export function getDepartment(item: any): string | undefined {
     const dept = item?.known_for_department?.toLowerCase();
     switch (dept) {
-        case "acting": return "Actor";
-        case "directing": return "Director";
-        case "writing": return "Writer";
-        case "sound": return "Music Department";
-        case "producing": return "Producer";
-        case "production": return "Producer";
+        case 'acting': return 'Actor';
+        case 'directing': return 'Director';
+        case 'writing': return 'Writer';
+        case 'sound': return 'Music Department';
+        case 'producing': return 'Producer';
+        case 'production': return 'Producer';
         default: return item?.known_for_department || undefined;
     }
 }
 
 export function getKnownFor(item: any): string | undefined {
-    return getMediaType(item) === MediaType.PERSON && item?.known_for?.length ? item.known_for.map(getName).join(", ") : undefined;
+    return getMediaType(item) === MediaType.PERSON && item?.known_for?.length ? item.known_for.map(getName).join(', ') : undefined;
 }
 
 export function calculateRunTime(runtime: number): string {
     const hours = Math.floor(runtime / 60);
     const mins = runtime % 60;
-    return `${hours ? hours + "h " : ""}${mins}min${mins > 1 ? "s" : ""}`;
+    return `${hours ? hours + 'h ' : ''}${mins}min${mins > 1 ? 's' : ''}`;
 }
 
 export function getRuntime(item: any): string | undefined {
@@ -111,7 +113,7 @@ export function getRuntime(item: any): string | undefined {
 }
 
 export function getGenresString(item: any): string {
-    return (item?.genre_ids?.length ? genres.list.filter((g: Genre) => item.genre_ids.includes(g.id)).map((g: Genre) => g.name).join(", ") : "");
+    return (item?.genre_ids?.length ? genres.list.filter((g: Genre) => item.genre_ids.includes(g.id)).map((g: Genre) => g.name).join(', ') : '');
 }
 
 export function getGenres(item: any): Array<Genre> {
@@ -147,9 +149,9 @@ export function calculateHeightAndWidth(ratio: number, height?: number, width?: 
 }
 
 export function getMassagedImagesList(item: any): ImageData {
-    if (!item?.backdrops && !item?.logos && !item?.posters && !item?.profiles) return { backdrops: [], list: []};
+    if (!item?.backdrops && !item?.logos && !item?.posters && !item?.profiles) return { backdrops: [], list: [] };
     const backdrops: Array<Image> = [];
-    if(item.backdrops?.length) setImageListByList(item.backdrops, backdrops);
+    if (item.backdrops?.length) setImageListByList(item.backdrops, backdrops);
     let list: Array<Image> = [];
     if (item.posters?.length) setImageListByList(item.posters, list);
     if (item.profiles?.length) setImageListByList(item.profiles, list);
@@ -170,7 +172,7 @@ export function getMassagedImageObject(item: any): Image | null {
         aspectRatio: item.aspect_ratio,
         height: item.height,
         width: item.width,
-        path: path ? path : "", thumbnail: thumbnail ? thumbnail : ''
+        path: path ? path : '', thumbnail: thumbnail ? thumbnail : ''
     }
     return image;
 }
@@ -203,10 +205,10 @@ export function getSubtext(item: any, omdb?: any): string[] {
     // if (getYear(item)) subText.push(getYear(item)!);
     if (getDepartment(item)) subText.push(getDepartment(item)!);
     if (getRuntime(item)) subText.push(getRuntime(item)!);
-    if (item?.deathday) subText.push("Died - " + getDateString(item.deathday));
+    if (item?.deathday) subText.push('Died - ' + getDateString(item.deathday));
     if (getReleased(item)) subText.push(getReleased(item)!);
     if (getCountry(item)) subText.push(getCountry(item)!);
-    if (omdb?.Rate && omdb.Rated !== "N/A")  subText.push(omdb.Rated);
+    if (omdb?.Rate && omdb.Rated !== 'N/A') subText.push(omdb.Rated);
     const age = calculateAge(item.birthday);
     if (item.birthday && age && !item.deathday) subText.push(age);
     if (omdb?.Rated) subText.push(omdb.Rated);
@@ -226,13 +228,13 @@ export function getMassagedCompactMedia(item: any, mediaType?: MediaType): Compa
         name: getName(item),
         backdrop: getBackdrop(item),
         thumbnail: getThumbnail(item),
-        overview: getOverview(item), 
+        overview: getOverview(item),
         mediaType: mediaType ? mediaType : getMediaType(item),
         voteAverage: item?.vote_average || 0,
         voteCount: item?.vote_count || 0,
         subtext: getCompactMediaSubText(item),
         rating: getTMRating(item),
-        character: item.roles ? item.roles.map((role: any) => role.character).join(", ") : item?.character,
+        character: item.roles ? item.roles.map((role: any) => role.character).join(', ') : item?.character,
         department: getDepartment(item)
 
     };
@@ -251,8 +253,8 @@ export function getMassagedCompactMediaList(items: Array<any>, media?: MediaType
 export function getCredits(item: any): Credits {
     const castList: CompactMedia[] = getMassagedCompactMediaList(item.cast);
     const crewList = item.crew || [];
-    const directors = getMassagedCompactMediaList(crewList.filter((cred: any) => cred.department?.toLowerCase() === "directing"));
-    const writers = getMassagedCompactMediaList(crewList.filter((cred: any) => cred.department?.toLowerCase() === "writing"));
+    const directors = getMassagedCompactMediaList(crewList.filter((cred: any) => cred.department?.toLowerCase() === 'directing'));
+    const writers = getMassagedCompactMediaList(crewList.filter((cred: any) => cred.department?.toLowerCase() === 'writing'));
 
     const directorIds = new Set(directors.map(d => d.id));
     const writerIds = new Set(writers.map(w => w.id));
@@ -282,13 +284,13 @@ export function getCredits(item: any): Credits {
 export function getMassagedOmdbMedia(omdb: any): Partial<Record<string, string>> {
     if (!omdb) return {};
     return {
-        rated: omdb?.Rated !== "N/A" ? omdb.Rated : undefined,
-        released: omdb?.Released !== "N/A" ? omdb.Released : undefined,
-        awards: omdb?.Awards !== "N/A" ? omdb.Awards : undefined,
-        boxOffice: omdb?.BoxOffice !== "N/A" ? omdb.BoxOffice : undefined,
-        production: omdb?.Production !== "N/A" ? omdb.Production : undefined,
-        website: omdb?.Website !== "N/A" ? omdb.Website : undefined,
-        dvd: omdb?.DVD !== "N/A" ? omdb.DVD : undefined,
+        rated: omdb?.Rated !== 'N/A' ? omdb.Rated : undefined,
+        released: omdb?.Released !== 'N/A' ? omdb.Released : undefined,
+        awards: omdb?.Awards !== 'N/A' ? omdb.Awards : undefined,
+        boxOffice: omdb?.BoxOffice !== 'N/A' ? omdb.BoxOffice : undefined,
+        production: omdb?.Production !== 'N/A' ? omdb.Production : undefined,
+        website: omdb?.Website !== 'N/A' ? omdb.Website : undefined,
+        dvd: omdb?.DVD !== 'N/A' ? omdb.DVD : undefined,
         imdbId: omdb.imdb_id
     };
 }
@@ -298,12 +300,12 @@ export function getRatings(array: Array<any>): Array<Ratings> {
     array.forEach((item: any) => {
         if (item && item.Source && item.Value) {
             const map = RatingMap.find((r) => r.source === item.Source);
-            const rating: string = item.Value.includes("%") ? item.Value.split("%")[0] : item.Value.includes("/") ? item.Value.split("/")[0] : item.Value;
-            const scale: string = item.Value.includes("%") ? "100" : item.Value.includes("/") ? item.Value.split("/")[1] : "100";
+            const rating: string = item.Value.includes('%') ? item.Value.split('%')[0] : item.Value.includes('/') ? item.Value.split('/')[0] : item.Value;
+            const scale: string = item.Value.includes('%') ? '100' : item.Value.includes('/') ? item.Value.split('/')[1] : '100';
 
             ratings.push({
                 source: item.Source, rating, scale,
-                label: map ? map.label : "", logo: map ? map.logo : ""
+                label: map ? map.label : '', logo: map ? map.logo : ''
             });
         }
     })
@@ -324,18 +326,50 @@ export function getProductionCompanies(details: any): Array<ProductionCompany> {
         companies.push({
             id: company.id,
             name: company.name,
-            country: company.origin_country ? company.origin_country : "",
-            path: getImage(company.logo_path)
+            country: company.origin_country ? company.origin_country : '',
+            path: getImage(company.logo_path, true)
         })
     })
     return companies;
 }
 
 
+function getWatchProviderObject(provider: any): WatchProvider {
+    const path: string | undefined = getImage(provider.logo_path, true);
+    return {
+        id: provider.provider_id,
+        name: provider.provider_name,
+        path: path ? path : '',
+        displayPriority: provider.display_priority
+    }
+}
+
+function getProviderArray(list?: Array<any>): Array<WatchProvider> {
+    return list ? list.map(getWatchProviderObject).filter(Boolean) : [];
+}
+
+export function getWatchProviders(watchProviders: any, countryCode: string): WatchProviders {
+    if(!watchProviders) return { subscription: [], rent: [], buy: [] };
+    const regions: Array<string> = Object.keys(watchProviders);
+    const regionProvider: any = (countryCode in watchProviders) ? watchProviders[countryCode] : watchProviders[regions[0]];
+    const data: WatchProviders = {
+        subscription: getProviderArray(regionProvider?.flatrate),
+        rent: getProviderArray(regionProvider?.rent),
+        buy: getProviderArray(regionProvider?.buy)
+    }
+
+    return data;
+}
+
+
+function getAmountString(amount: string) {
+    if(amount != '0') return '$' + parseInt(amount, 10).toLocaleString('en-US')
+    return '';
+}
 
 
 
-export function getMovieDetails(details: any, credits: any, images: any, videos: any, similar: any, recommendations: any, omdb: any): Movie {
+export function getMovieDetails(details: any, credits: any, images: any, videos: any, similar: any, recommendations: any, omdb: any, watchProviders: any, countryCode: string): Movie {
     return {
         id: details.id,
         mediaType: MediaType.MOVIE,
@@ -350,8 +384,8 @@ export function getMovieDetails(details: any, credits: any, images: any, videos:
         genres: getGenres(details),
         runtime: getRuntime(details),
         released: getDateString(details.release_date),
-        revenue: details.revenue,
-        budget: details.budget,
+        revenue: getAmountString(details.revenue),
+        budget: getAmountString(details.budget),
         productionCompanies: getProductionCompanies(details),
         productionCountries: details.production_countries?.map((c: any): String => c.name),
         spokenLanguages: details.spoken_languages?.map((l: any): SpokenLanguage => ({ id: l.iso_639_1, englishName: l.english_name, name: l.name })),
@@ -365,11 +399,12 @@ export function getMovieDetails(details: any, credits: any, images: any, videos:
         ratings: getRatings(omdb?.Ratings || []),
         tagline: details.tagline,
         year: getYear(details) ? `(${getYear(details)})` : undefined,
-        rating: getTMRating(details)
+        rating: getTMRating(details),
+        watchProviders: getWatchProviders(watchProviders, countryCode)
     };
 }
 
-export function getTvShowDetails(details: any, credits: any, images: any, videos: any, similar: any, recommendations: any, omdb: any): TvShow {
+export function getTvShowDetails(details: any, credits: any, images: any, videos: any, similar: any, recommendations: any, omdb: any, watchProviders: any, countryCode: string): TvShow {
     return {
         id: details.id,
         mediaType: MediaType.TV,
@@ -400,7 +435,8 @@ export function getTvShowDetails(details: any, credits: any, images: any, videos
         ratings: getRatings(omdb?.Ratings || []),
         tagline: details.tagline,
         year: getYear(details) ? `(${getYear(details)})` : undefined,
-        rating: getTMRating(details)
+        rating: getTMRating(details),
+        watchProviders: getWatchProviders(watchProviders, countryCode)
     };
 }
 
@@ -437,10 +473,10 @@ export function getSearchResultsData(item: any): CompactMediaResults {
     };
 }
 
-export function getMassagedMedia(items: any[], type: MediaType): Movie | TvShow | Person {
+export function getMassagedMedia(items: any[], type: MediaType, countryCode: string): Movie | TvShow | Person {
     const [details, credits, images, videos, similar, recommendations, watchProviders, omdb] = items;
 
-    if (type === MediaType.MOVIE) return getMovieDetails(details, credits, images, videos, similar, recommendations, omdb);
-    if (type === MediaType.TV) return getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb);
+    if (type === MediaType.MOVIE) return getMovieDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders?.results, countryCode);
+    if (type === MediaType.TV) return getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders?.results, countryCode);
     return getPersonDetails(details, credits, images);
 }

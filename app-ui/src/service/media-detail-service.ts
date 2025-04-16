@@ -84,6 +84,9 @@ const MEDIA_DETAILS = gql`
                     logo
                 }
                 dvd
+                watchProviders {
+                    ...WatchProviders
+                }
             }
             ... on TvShow {
                 rating
@@ -138,6 +141,9 @@ const MEDIA_DETAILS = gql`
                     logo
                 }
                 dvd
+                watchProviders {
+                    ...WatchProviders
+                }
             }
             ... on Person {
                 credits {
@@ -152,6 +158,25 @@ const MEDIA_DETAILS = gql`
                 alsoKnownAs
             }
         }
+    }
+
+    fragment WatchProviders on WatchProviders {
+        subscription {
+            ...WatchProviderFields
+        }
+        rent {
+            ...WatchProviderFields
+        }
+        buy {
+            ...WatchProviderFields
+        }
+    }
+
+    fragment WatchProviderFields on WatchProvider {
+        id
+        name
+        path
+        displayPriority
     }
 
     fragment CreditsFields on Credits {

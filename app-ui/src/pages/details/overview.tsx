@@ -1,10 +1,10 @@
 import { Chip, ScrollShadow, Image as HeroImage, Skeleton } from '@heroui/react';
-import { Genre, Media, Movie, Person, TvShow } from '../../context/media-context';
-import { useCallback, useEffect, useRef } from 'react';
+import { Genre, Media, Movie, Person, TvShow, WatchProvider } from '../../context/media-context';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ColorThief from 'colorthief';
 import RenderWithScrollShadow from './scroll-shadow-render';
 import { DotIcon } from '../../components/icons';
-import { getCleanText } from '../../utils/utils';
+import { getCleanText, updateArrayUsingProperty } from '../../utils/utils';
 
 
 
@@ -31,6 +31,26 @@ export const StarRating = ({ percentage, imdb }: { percentage: number, imdb?: nu
         </div>
     );
 };
+
+
+function RenderWatchProvider({ providers, title }: { providers: Array<WatchProvider>, title: string }) {
+    return (
+        !!providers.length &&
+        <div className='flex flex-col gap-2'>
+            <p className='text-xxs sm:!text-xs uppercase sm:font-thin'>{title}</p>
+            <div className='flex space-x-3'>
+                {
+                    providers.map((provider: WatchProvider) => (
+                        <div key={provider.id + provider.displayPriority} className='flex flex-col gap-1 items-center'>
+                            <HeroImage src={provider.path} className='object-cover border-1 border-foreground/10 h-[35px] sm:h-[50px]' alt={provider.name} />
+                            <p className='text-xxs font-thin text-center'>{ provider.name }</p>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    );
+}
 
 
 const FULL_WIDTH_OFFSET = 20;
@@ -74,6 +94,7 @@ export default function Overview({ details, setBackdrop }: { details?: Movie | P
             };
         }
     }, [details?.poster, details?.backdrop]);
+    
 
     return (
         <div className='min-h-[30svh] flex space-x-3'>
@@ -136,8 +157,16 @@ export default function Overview({ details, setBackdrop }: { details?: Movie | P
                         <div className='flex flex-col gap-2'>
                             <RenderOverview />
                             {details && ('birthday' in details) && details.birthday && <p className='text-xs font-bold'>Birthday: {details.birthday}</p>}
-                            {details && ('awards' in details) && details.awards && <p className='text-sm font-bold text-primary'>{details.awards}</p>}
+                            {details && ('awards' in details) && details.awards && <p className='text-xs sm:text-sm font-bold text-primary dark:text-warning'>{details.awards}</p>}
                         </div>
+                    </div>
+                }
+                {
+                    details && ('watchProviders' in details) && (!!details.watchProviders.subscription.length || !!details.watchProviders.buy.length || !!details.watchProviders.rent.length) &&
+                    <div className='flex gap-5 flex-wrap mt-4'>
+                        <RenderWatchProvider providers={details.watchProviders.subscription} title='Available on' />
+                        <RenderWatchProvider providers={details.watchProviders.buy} title='Buy from' />
+                        <RenderWatchProvider providers={details.watchProviders.rent} title='Available for Rent on' />
                     </div>
                 }
             </div>

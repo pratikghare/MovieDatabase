@@ -5,10 +5,6 @@ import { configSelector } from "../../store/selectors";
 import { getBackdrops } from "../../utils/utils";
 import { ImageData } from '../../context/media-context';
 
-const array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.8, 0.9, 1];
-const lightGradients = `linear-gradient(to bottom, ${array.map((i) => `rgba(255, 255, 255, ${i})`).join(', ')}), `;
-const darkGradients = `linear-gradient(to bottom, ${array.map((i) => `rgba(0, 0, 0, ${i})`).join(', ')}), `;
-
 export default function HeroImage({ backdrop, images }: { backdrop?: string, images?: ImageData }) {
     const config = useSelector(configSelector);
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
@@ -24,8 +20,8 @@ export default function HeroImage({ backdrop, images }: { backdrop?: string, ima
     const setComputedBackground = (stateFunction: Function, url?: string) => {
         stateFunction(
             url ? config.theme.current === 'light' ?
-                url.includes('rgb(') ? `${url}` : `${lightGradients} url('${url}')  center / cover no-repeat` :
-                url.includes('rgb(') ? `${url}` : `${darkGradients} url('${url}')  center / cover no-repeat` : ''
+                url.includes('rgb(') ? `${url}` : ` url('${url}')  center / cover no-repeat` :
+                url.includes('rgb(') ? `${url}` : ` url('${url}')  center / cover no-repeat` : ''
         );
     }
 
@@ -36,10 +32,10 @@ export default function HeroImage({ backdrop, images }: { backdrop?: string, ima
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
         setCurrent(timer < backdrops.length ? backdrops[timer] : backdrops[0]);
-        if(timer < backdrops.length - 1) {
+        if (timer < backdrops.length - 1) {
             const image = new Image();
             image.crossOrigin = 'Anonymous';
-            image.src = backdrops[timer+1];
+            image.src = backdrops[timer + 1];
         }
         if (backdrops.length <= 1) return;
 
@@ -53,7 +49,6 @@ export default function HeroImage({ backdrop, images }: { backdrop?: string, ima
         let wrapper: string = '';
         let content: string = '';
         const isColor: boolean = !current || current?.includes('rgb(');
-        // const isLight: boolean = config.theme.current === 'light';
 
         if (!isColor) base = 'h-[80svh]';
 
@@ -63,7 +58,9 @@ export default function HeroImage({ backdrop, images }: { backdrop?: string, ima
     return (
         <ScrollShadow hideScrollBar className={'transition ease-in-out duration-300 scroll -z-10 w-full absolute left-0 top-0 ' + classes.base}>
             <div className='transition ease-in-out duration-300 w-full h-full' style={{ background }}>
-                <div className={'w-full h-full transition ease-in-out duration-300 ' + classes.content}></div>
+                <div
+                    className="absolute bottom-0 left-0 w-full h-64 z-10 pointer-events-none bg-gradient-to-t from-background to-transparent"
+                />
             </div>
         </ScrollShadow>
     )

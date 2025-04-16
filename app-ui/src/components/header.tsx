@@ -68,9 +68,9 @@ export function AutoCompleteSearch() {
             {
                 (item: CompactMedia) => (
                     <AutocompleteItem textValue={item.name} className='auto-complete-item' key={item.id} onPress={() => onSelect(item)}>
-                        <div className='flex space-x-4'>
+                        <div className='flex space-x-2 sm:space-x-4'>
                             <div className='w-[60px]'>
-                                <Image src={item.thumbnail} radius='none' alt={item.name} className='w-[60px] h-[90px] rounded-[3px]' />
+                                <Image src={item.thumbnail} radius='sm' alt={item.name} className='w-[56px] h-[84px] sm:w-[60px] sm:h-[90px]' />
                             </div>
                             <div className='flex flex-col justify-center space-y-2 text-xs flex-1'>
                                 <h1 className='font-bold text-xs'>{item.name}</h1>

@@ -31,20 +31,22 @@ export const getResolvedTMExternalIdUrl = (id: string, media: MediaType) => {
     return getResolvedTMUrl(detail.externalIds, [detail.delimiter], [id]);
 }
 
-
-export const fetchUserLocation = (request: any) => {
+export const fetchUserLocation = async (request: any) => {
     const ip =
-        request.headers["x-forwarded-for"]?.toString().split(",")[0] ||     // if behind proxy
-        request.socket.remoteAddress ||                                    // regular IP
+        request.headers["x-forwarded-for"]?.toString().split(",")[0] ||
+        request.socket.remoteAddress ||
         null;
 
     console.log("Incoming request from IP:", ip);
 
-    fetch(`http://ip-api.com/json/${ip}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log("Location Info User: ", data);
-        });
+    try {
+        const res = await fetch(`http://ip-api.com/json/${ip}`);
+        const location = await res.json();
+        // console.log("Location Info User:", location);
 
-    return { ip };
-}
+        return { ip, location };
+    } catch (error) {
+        console.error("Error fetching location:", error);
+        return { ip, location: null };
+    }
+};

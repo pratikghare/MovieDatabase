@@ -30,6 +30,7 @@ const mediaSchema = gql`
         genres: [Genre!]
         similar: [CompactMedia!]!
         recommendations: [CompactMedia!]!
+        watchProviders: WatchProviders!
 
         released: String
         runtime: String
@@ -58,6 +59,7 @@ const mediaSchema = gql`
         genres: [Genre!]
         similar: [CompactMedia!]!
         recommendations: [CompactMedia!]!
+        watchProviders: WatchProviders!
 
         released: String
         firstAirDate: String
@@ -165,10 +167,24 @@ const mediaSchema = gql`
         logo: String
     }
 
+    type WatchProviders {
+        subscription: [WatchProvider!]!
+        rent: [WatchProvider!]!
+        buy: [WatchProvider!]!
+    }
+
+    type WatchProvider {
+        id: ID!
+        path: String!
+        name: String!
+        displayPriority: Int
+    }
+
     extend type Query {
         details(id: ID!, media: String!): Media
         searchQuery(query: String!): CompactMediaResults
     }
+    
 `
 
 export default mediaSchema;

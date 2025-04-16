@@ -43,12 +43,25 @@ export interface SpokenLanguage {
     name: string;
 }
 
+export interface WatchProvider {
+    id: string;
+    name: string;
+    path: string;
+    displayPriority: string;
+}
+
+export interface WatchProviders {
+    subscription: WatchProvider[];
+    rent: WatchProvider[];
+    buy: WatchProvider[];
+}
+
 export interface Image {
     path: string;
-    thumbnail: string;
     width: number;
     height: number;
     aspectRatio: number;
+    thumbnail: string;
 }
 
 export interface ImageData {
@@ -119,6 +132,7 @@ export interface Movie extends Media {
     website?: string;
     ratings: Ratings[];
     dvd?: string;
+    watchProviders: WatchProviders;
 }
 
 export interface TvShow extends Media {
@@ -144,6 +158,7 @@ export interface TvShow extends Media {
     website?: string;
     ratings: Ratings[];
     dvd?: string;
+    watchProviders: WatchProviders;
 }
 
 export interface Person extends Media {
