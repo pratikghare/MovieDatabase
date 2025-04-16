@@ -31,21 +31,21 @@ export function ImagesSection({ images, videos = [] }: { images: ImageData, vide
                 <h1 className='font-bold my-1 '>Pictures { videos.length ? ' & Videos' : '' } ({ images.list.length + videos.length })</h1>
                 <Link className='text-xs cursor-pointer'>See All</Link>
             </div>
-            <RenderWithScrollShadow className='overflow-hidden relative flex flex-col gap-3 scroll-right-1'>
-                <div className='flex space-x-3 top-0'>
+            <RenderWithScrollShadow className='overflow-hidden relative flex flex-col gap-1 scroll-right-1'>
+                <div className='flex space-x-1 top-0'>
                     {
                         data.top.map((image: ImageType, index: number) => (
                             <div key={image.path + index} style={getImageDimensions(image, height)} >
-                                <Image onClick={() => imageClick(image)} radius='sm' className='cursor-pointer object-cover' src={image.thumbnail} style={getImageDimensions(image, height)} />
+                                <Image onClick={() => imageClick(image)} radius='none' className='cursor-pointer rounded-[3px] object-cover' src={image.thumbnail} style={getImageDimensions(image, height)} />
                             </div>
                         ))
                     }
                 </div>
-                <div className='flex space-x-3 top-0'>
+                <div className='flex space-x-1 top-0'>
                     {
                         data.bottom.map((image: ImageType, index: number) => (
                             <div key={image.path + (index + 10)} style={getImageDimensions(image, height)} >
-                                <Image onClick={() => imageClick(image)} radius='sm' className='cursor-pointer object-cover' src={image.thumbnail} style={getImageDimensions(image, height)} />
+                                <Image onClick={() => imageClick(image)} radius='none' className='cursor-pointer rounded-[3px] object-cover' src={image.thumbnail} style={getImageDimensions(image, height)} />
                             </div>
                         ))
                     }
