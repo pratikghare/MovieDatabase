@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const apollo_server_1 = require("apollo-server");
+const apollo_server_express_1 = require("apollo-server-express");
 const MediaFields = `
     id: ID!
     mediaType: String!
@@ -16,7 +16,7 @@ const MediaFields = `
     images: ImageData!
     subtext: [String!]!
 `;
-const mediaSchema = (0, apollo_server_1.gql) `
+const mediaSchema = (0, apollo_server_express_1.gql) `
     interface Media {
         ${MediaFields}
     }
