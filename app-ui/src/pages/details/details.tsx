@@ -9,7 +9,7 @@ import MediaList from './media-list';
 import { ImagesSection } from './images-section';
 import HeroImage from './hero-image';
 import { updateMediaType } from '../../store/reducers/config-reducer';
-import { Companies, RatingDetails, RevenueDetails } from './ratings-company-revenue';
+import { Companies, RatingDetails, RevenueDetails, StreamingPlatforms } from './ratings-company-revenue';
 
 export default function Details() {
     const dispatch = useAppDispatch();
@@ -53,10 +53,11 @@ export default function Details() {
 
     return (
         <section className={classes}>
-            <div id='details' className={'transition-ease z-10 backdrop-blur-md flex flex-col gap-8 p-3 sm:p-5 rounded-xl'}>
+            <div id='details' className={'transition-ease z-10 backdrop-blur-md flex flex-col gap-6 sm:gap-8 p-3 sm:p-5 rounded-xl'}>
                 <Overview setBackdrop={setBackDrop} details={media.details} />
-                <MediaList list={media.details && media.details.credits?.cast ? media.details.credits?.cast : []} mediaType={media?.details?.mediaType} showAll></MediaList>
                 <RevenueDetails details={media.details} />
+                <MediaList list={media.details && media.details.credits?.cast ? media.details.credits?.cast : []} mediaType={media?.details?.mediaType} showAll></MediaList>
+                <StreamingPlatforms details={media.details} />
                 {
                     media.details &&
                     <>
