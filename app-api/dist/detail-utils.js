@@ -1,30 +1,20 @@
+"use strict";
 // import { APP_IMAGE_PATH, IMAGE_NOT_FOUND, IMAGE_URL, SHORT_IMAGE_URL } from "../environment/environment";
 // import { BaseSearch, Credit, Credits, Genre, MediaDetails, MediaType, Rating, Recents, SearchResults, Image } from "../Model/Model";
 // import genres from "../Model/genres.json";
 // import { encrypt, decrypt } from "./Encryption";
 // export const months = [ "Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-
 // // MEDIA TYPE ['person', 'movie', 'tv']
 // export function getMediaType(item: any): MediaType {
 //     if(item?.media_type === "tv") return MediaType.TV;
 //     else if(item?.media_type === "movie") return MediaType.MOVIE;
 //     return MediaType.PERSON;
 // }
-
-
-
-
-
 // export function getBaseClassNames(className?: string, base?: string): string {
 //     const classNames: string = className && base ? className + " " + base :
 //     (className ? className : (base ? base : ""));
 //     return classNames;
 // }
-
-
-
-
-
 // // GET NAMES FROM DATA
 // export function getName(item: any): string {
 //     if(item?.name?.length) return item.name; 
@@ -52,11 +42,6 @@
 //     else if(item?.place_of_birth) return item.place_of_birth;
 //     return null;
 // }
-
-
-
-
-
 // // Date to be printed in full
 // export function getDateString(date: string): string {
 //     if(date && date?.length) {
@@ -83,11 +68,6 @@
 //     else if(item?.first_air_date) return getDateString(item.first_air_date);
 //     return null;
 // }
-
-
-
-
-
 // // KNOWN FOR DEPARTMENT
 // export function getDepartment(item: any): string | null {
 //     if(item?.known_for_department) {
@@ -106,11 +86,6 @@
 //     if(mediaType === MediaType.PERSON) return item?.known_for?.length ? item?.known_for?.map((knownFor: any) => getName(knownFor)).join(", ") : "";
 //     return null;
 // }
-
-
-
-
-
 // // RUNTIME
 // export function calculateRunTime(runtime: number) {
 //     let hours = 0, mins = runtime;
@@ -125,11 +100,6 @@
 //     if(item?.runtime) return calculateRunTime(item.runtime);
 //     return null;
 // }
-
-
-
-
-
 // // SUBTEXT - For Heading - Details
 // export function getSubtext(details: MediaDetails): Array<string> {
 //     const subText = [];
@@ -139,20 +109,13 @@
 //     if(details.deathDate?.length) subText.push("Died - " + details.deathDate);
 //     if(details?.released?.length) subText.push(details.released);
 //     if(details?.country?.length) subText.push(details.country);
-
 //     return subText;
 // }
-
-
-
-
-
 // // GENRES
 // export function getGenresString(item: any): string {
 //     const mediaType: MediaType = getMediaType(item);
 //     if(mediaType === MediaType.MOVIE || mediaType === MediaType.TV) 
 //         return item?.genre_ids?.length ? genres.filter((genre: any) => item.genre_ids.find((id: number) => id === genre.id)).map((genre: any) => genre.name).join(", ") : "";
-
 //     return "";
 // }
 // export function getGenres(item: any): Array<Genre> {
@@ -163,11 +126,6 @@
 //     if(item?.genres?.length) return item.genres;
 //     return [];
 // }
-
-
-
-
-
 // // CREDITS
 // export function getCredits(item: any, state?: MediaDetails): Credits {
 //     const credits: Credits = { directors: [], writers: [], producers: [], cast: [] };
@@ -177,11 +135,9 @@
 //     }
 //     if(item?.crew) {
 //         const crew = item.crew ? item.crew : [];
-        
 //         const directors: Array<Credit> = getMassagedCreditsList(crew.filter((cred: any) => String(cred.known_for_department).toLowerCase() === 'directing'));
 //         const producers: Array<Credit>  = getMassagedCreditsList(crew.filter((cred: any) => String(cred.known_for_department).toLowerCase() === 'production'));
 //         const writers: Array<Credit>  = getMassagedCreditsList(crew.filter((cred: any) => String(cred.known_for_department).toLowerCase() === 'writing'));
-
 //         credits.directors = directors;
 //         credits.producers = producers;
 //         credits.writers = writers;
@@ -223,7 +179,6 @@
 //         let mediaType: MediaType = MediaType.PERSON;
 //         if(media_type) mediaType = media_type;
 //         else if(credit) mediaType = credit.mediaType;
-
 //         if(credit) credits.push({...credit, mediaType});
 //     });
 //     if(credits.length) {
@@ -232,11 +187,6 @@
 //     }
 //     return credits;
 // }
-
-
-
-
-
 // // RATINGS -- OMDB Data
 // export function getRatings(item: any): Array<Rating> {
 //     if(!item?.Ratings) [];
@@ -255,11 +205,6 @@
 //     })
 //     return ratings;
 // }
-
-
-
-
-
 // // NAVIGATION
 // export function getDetailsNavigationURL(item: MediaDetails | Credit | Recents): string {
 //     const base: BaseSearch = {
@@ -282,11 +227,6 @@
 //     }
 //     return null;
 // }
-
-
-
-
-
 // // COLORS
 // export function componentToHex(value: number) {
 //     var hex = value.toString(16);
@@ -295,11 +235,6 @@
 // export function rgbToHex(r: number, g: number, b: number): string{
 //     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 // }
-
-
-
-
-
 // // IMAGES
 // export function getImageURL(item: any) {
 //     if(item?.poster_path != undefined) return SHORT_IMAGE_URL + item.poster_path;
@@ -353,11 +288,6 @@
 //     else if(width) return [ width / ratio, width ]
 //     return [ -1, -1 ];
 // }
-
-
-
-
-
 // // MASSAGED DATA
 // export function getMassagedData(item: any, state?: MediaDetails): MediaDetails {
 //     const data: MediaDetails = {
@@ -410,11 +340,6 @@
 //     }
 //     return data;
 // }
-
-
-
-
-
 // // UPDATE OMDB DATA
 // function getOMValue(item: string): string | null{
 //     if(item && item !== "N/A") return item;
@@ -433,11 +358,6 @@
 //         language: details?.Language ? getOMValue(details.Language) : state.language
 //     }
 // }
-
-
-
-
-
 // // SEARCH RESULTS
 // export function getMassagedDataList(items: Array<any>): Array<MediaDetails> {
 //     const list: Array<MediaDetails> = [];

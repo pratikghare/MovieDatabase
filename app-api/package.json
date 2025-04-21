@@ -1,23 +1,26 @@
 {
   "name": "app-api",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "nodemon src/index.ts",
+    "dev": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "@graphql-tools/load-files": "^7.0.1",
     "@graphql-tools/merge": "^9.0.22",
     "@graphql-tools/schema": "^10.0.21",
-    "apollo-server": "^3.13.0",
+    "apollo-server-express": "^3.12.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "cryptr": "^6.3.0",
+    "express": "^4.18.2",
     "graphql": "^16.10.0"
   },
   "devDependencies": {

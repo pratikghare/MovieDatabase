@@ -1,6 +1,8 @@
-import { gql } from "apollo-server";
-
-export const detailsSchema = gql`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.detailsSchema = void 0;
+const apollo_server_1 = require("apollo-server");
+exports.detailsSchema = (0, apollo_server_1.gql) `
     type Genre {
         id: ID!
         genre: String
