@@ -50,7 +50,7 @@ export default function ImageSection() {
     const scrollToLeft = () => {
         const elements: any = document.getElementsByClassName('image-section-scroll');
         for (let i = 0; i < elements.length; i++) {
-            elements[i].scrollLeft = 80;
+            elements[i].scrollLeft = 100;
             if (images.length > 10) elements[i].style.overflowX = 'hidden';
         }
     }
