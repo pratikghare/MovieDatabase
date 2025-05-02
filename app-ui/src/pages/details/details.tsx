@@ -6,7 +6,6 @@ import { mediaSelector } from '../../store/selectors';
 import { MediaType } from '../../context/media-context';
 import ReviewDetails from '../../components/details/reviews';
 import { useLocation, useNavigate } from 'react-router';
-import { useEffect } from 'react';
 import { getMediaTypeFromPath } from '../../utils/utils';
 import ImageSection from '../../components/details/image-video-section';
 
