@@ -48,8 +48,11 @@ export default function ImageSection() {
     }, [list1, list2]);
 
     const scrollToLeft = () => {
-        const elements = document.getElementsByClassName('image-section-scroll');
-        for (let i = 0; i < elements.length; i++) elements[i].scrollLeft = 50;   
+        const elements: any = document.getElementsByClassName('image-section-scroll');
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].scrollLeft = 80;
+            if (images.length > 10) elements[i].style.overflowX = 'hidden';
+        }
     }
 
     const seeAll = () => {
@@ -67,7 +70,7 @@ export default function ImageSection() {
                     <Link className='text-xs cursor-pointer text-primary hover:underline' onPress={seeAll}>{'See All'}</Link>
                 }
             </div>
-            <HorizontalScroll className={'flex gap-2 image-section-scroll ' + (images.length > 10 ? '' : '')}>
+            <HorizontalScroll className='flex gap-2 image-section-scroll '>
                 {
                     list1.map((item: ImageType, index: number) => (
                         <Image radius='none' className='rounded-[5px]' key={item.path + '_' + index} src={item.thumbnail}

@@ -19,7 +19,6 @@ export default function Details() {
         <div className='flex flex-col gap-6 p-3 px-4'>
             <Overview />
             <RevenueDetails />
-            
             <MediaList showSkeleton seeAll={() => { navigate('credits') }} isRounded={getMediaTypeFromPath(location.pathname) !== MediaType.PERSON}
                 list={details && details.credits?.cast ? details.credits?.cast : []}
                 title={details?.mediaType === MediaType.PERSON ? 'Known for' : 'Top Cast'}
