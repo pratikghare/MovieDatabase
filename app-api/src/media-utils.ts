@@ -159,7 +159,7 @@ export function getPoster(item: any): string {
     const image: string | undefined = item?.poster_path ? getImage(item.poster_path) :
         item?.profile_path ? getImage(item.profile_path) :
             item?.still_path ? getImage(item.still_path) :
-                item?.file_path ? getImage(item.file_path) : 
+                item?.file_path ? getImage(item.file_path) :
                     item?.avatar_path ? getImage(item.avatar_path) : IMAGE_NOT_FOUND;
     return image ? image : IMAGE_NOT_FOUND;
 }
@@ -170,6 +170,32 @@ export function calculateHeightAndWidth(ratio: number, height?: number, width?: 
     return height && width ? [height, width] : height ? [height, height * ratio] : width ? [width / ratio, width] : [-1, -1];
 }
 
+
+function interleaveAndShuffle<T>(backdrop: Image[], list: Image[]): Image[] {
+    const result: Image[] = [];
+
+    // Make copies to avoid modifying the originals
+    const shuffledBackdrop = [...backdrop].sort(() => Math.random() - 0.5);
+    const shuffledList = [...list].sort(() => Math.random() - 0.5);
+
+    let listIndex = 0;
+
+    // Interleave: one from backdrop, one from list
+    for (const backdropItem of shuffledBackdrop) {
+        result.push(backdropItem);
+        if (listIndex < shuffledList.length) {
+            result.push(shuffledList[listIndex++]);
+        }
+    }
+
+    // Remaining list items (if any)
+    const remaining = shuffledList.slice(listIndex).sort(() => Math.random() - 0.5);
+    result.push(...remaining);
+
+    return result;
+}
+
+
 export function getMassagedImagesList(item: any): ImageData {
     if (!item?.backdrops && !item?.logos && !item?.posters && !item?.profiles) return { backdrops: [], list: [] };
     const backdrops: Array<Image> = [];
@@ -178,7 +204,7 @@ export function getMassagedImagesList(item: any): ImageData {
     if (item.posters?.length) setImageListByList(item.posters, list);
     if (item.profiles?.length) setImageListByList(item.profiles, list);
     if (item.logos?.length) setImageListByList(item.logos, list);
-    list = [...list, ...backdrops];
+    list = interleaveAndShuffle(backdrops, list);
     return { backdrops, list };
 }
 function setImageListByList(list: Array<any>, images: Array<Image>) {
@@ -265,17 +291,17 @@ export function getMassagedCompactMedia(item: any, mediaType?: MediaType): Compa
 
 export function getMassagedCompactMediaList(items: Array<any>, media?: MediaType, sort?: boolean): Array<CompactMedia> {
     return !sort ? items?.map((item: any) => getMassagedCompactMedia(item, media)).filter(Boolean) || [] :
-    (
-        items
-            ?.map((item: any) => getMassagedCompactMedia(item, media))
-            .filter(Boolean)
-            .sort((a, b) => {
-                // Handle undefined orders by pushing them to the end
-                if (a.order == null) return 1;
-                if (b.order == null) return -1;
-                return a.order - b.order;
-            }) || []
-    );
+        (
+            items
+                ?.map((item: any) => getMassagedCompactMedia(item, media))
+                .filter(Boolean)
+                .sort((a, b) => {
+                    // Handle undefined orders by pushing them to the end
+                    if (a.order == null) return 1;
+                    if (b.order == null) return -1;
+                    return a.order - b.order;
+                }) || []
+        );
 }
 
 
@@ -330,7 +356,7 @@ export function getMassagedOmdbMedia(omdb: any): Partial<Record<string, string>>
     };
 }
 export function getRatings(array: Array<any>, details: any): Array<Ratings> {
-    const tmdb: Ratings = {...RatingMap[0]};
+    const tmdb: Ratings = { ...RatingMap[0] };
     tmdb.rating = Math.round(details.vote_average * 10) / 10;
     const ratings: Array<Ratings> = [tmdb];
     if (!array) return ratings;
@@ -340,13 +366,13 @@ export function getRatings(array: Array<any>, details: any): Array<Ratings> {
             const rating: string = item.Value.includes('%') ? item.Value.split('%')[0] : item.Value.includes('/') ? item.Value.split('/')[0] : item.Value;
             const scale: string = item.Value.includes('%') ? '100' : item.Value.includes('/') ? item.Value.split('/')[1] : '100';
 
-            if(map)
-            ratings.push({
-                source: item.Source, rating: parseFloat(rating), scale: parseInt(scale),
-                label: map.label, logo: map.logo,
-                showStars: !!map?.showStars,
-                type: map.type
-            });
+            if (map)
+                ratings.push({
+                    source: item.Source, rating: parseFloat(rating), scale: parseInt(scale),
+                    label: map.label, logo: map.logo,
+                    showStars: !!map?.showStars,
+                    type: map.type
+                });
         }
     });
     return ratings.filter((rating: Ratings) => rating.rating);

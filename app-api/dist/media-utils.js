@@ -44,10 +44,25 @@ exports.getMassagedMedia = getMassagedMedia;
 const context_1 = require("./context/context");
 const env_1 = require("./env/env");
 const genres_json_1 = __importDefault(require("../../samples/genres.json"));
+var countryCode = "IN";
 exports.RatingMap = [
-    { source: 'Internet Movie Database', label: '', logo: env_1.APP_IMAGE_PATH + 'imdb.webp' },
-    { source: 'Rotten Tomatoes', label: '', logo: env_1.APP_IMAGE_PATH + 'rotten_tomatoes_old.png' },
-    { source: 'Metacritic', label: 'Metacritic', logo: '' }
+    {
+        source: 'TMDB', showStars: true, type: 'image', label: '', logo: env_1.APP_IMAGE_PATH + 'tmdb.svg',
+        scale: 0, rating: 0
+    },
+    {
+        source: 'Internet Movie Database', showStars: true, type: 'image', label: '', logo: env_1.APP_IMAGE_PATH + 'imdb.png',
+        // logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/575px-IMDB_Logo_2016.svg.png?20200406194337',
+        scale: 0, rating: 0
+    },
+    {
+        source: 'Rotten Tomatoes', showStars: false, type: 'svg', label: '', logo: env_1.APP_IMAGE_PATH + 'rotten_tomatoes_old.png',
+        scale: 0, rating: 0
+    },
+    {
+        source: 'Metacritic', showStars: false, type: 'box', label: 'Metascore', logo: '',
+        scale: 0, rating: 0
+    }
 ];
 exports.months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 function getMediaType(item) {
@@ -134,22 +149,44 @@ function getImage(url, shortSize) {
     return url ? (shortSize ? env_1.SHORT_IMAGE_URL + url : env_1.IMAGE_URL + url) : undefined;
 }
 function getThumbnail(item) {
-    return (item === null || item === void 0 ? void 0 : item.poster_path) ? getImage(item.poster_path, true) :
+    const image = (item === null || item === void 0 ? void 0 : item.poster_path) ? getImage(item.poster_path, true) :
         (item === null || item === void 0 ? void 0 : item.profile_path) ? getImage(item.profile_path, true) :
             (item === null || item === void 0 ? void 0 : item.still_path) ? getImage(item.still_path, true) :
-                (item === null || item === void 0 ? void 0 : item.file_path) ? getImage(item.file_path, true) : env_1.IMAGE_NOT_FOUND;
+                (item === null || item === void 0 ? void 0 : item.file_path) ? getImage(item.file_path, true) :
+                    (item === null || item === void 0 ? void 0 : item.avatar_path) ? getImage(item.avatar_path, true) : env_1.IMAGE_NOT_FOUND;
+    return image ? image : env_1.IMAGE_NOT_FOUND;
 }
 function getPoster(item) {
-    return (item === null || item === void 0 ? void 0 : item.poster_path) ? getImage(item.poster_path) :
+    const image = (item === null || item === void 0 ? void 0 : item.poster_path) ? getImage(item.poster_path) :
         (item === null || item === void 0 ? void 0 : item.profile_path) ? getImage(item.profile_path) :
             (item === null || item === void 0 ? void 0 : item.still_path) ? getImage(item.still_path) :
-                (item === null || item === void 0 ? void 0 : item.file_path) ? getImage(item.file_path) : env_1.IMAGE_NOT_FOUND;
+                (item === null || item === void 0 ? void 0 : item.file_path) ? getImage(item.file_path) :
+                    (item === null || item === void 0 ? void 0 : item.avatar_path) ? getImage(item.avatar_path) : env_1.IMAGE_NOT_FOUND;
+    return image ? image : env_1.IMAGE_NOT_FOUND;
 }
 function getBackdrop(item, shortSize = false) {
     return getImage(item === null || item === void 0 ? void 0 : item.backdrop_path, shortSize);
 }
 function calculateHeightAndWidth(ratio, height, width) {
     return height && width ? [height, width] : height ? [height, height * ratio] : width ? [width / ratio, width] : [-1, -1];
+}
+function interleaveAndShuffle(backdrop, list) {
+    const result = [];
+    // Make copies to avoid modifying the originals
+    const shuffledBackdrop = [...backdrop].sort(() => Math.random() - 0.5);
+    const shuffledList = [...list].sort(() => Math.random() - 0.5);
+    let listIndex = 0;
+    // Interleave: one from backdrop, one from list
+    for (const backdropItem of shuffledBackdrop) {
+        result.push(backdropItem);
+        if (listIndex < shuffledList.length) {
+            result.push(shuffledList[listIndex++]);
+        }
+    }
+    // Remaining list items (if any)
+    const remaining = shuffledList.slice(listIndex).sort(() => Math.random() - 0.5);
+    result.push(...remaining);
+    return result;
 }
 function getMassagedImagesList(item) {
     var _a, _b, _c, _d;
@@ -165,7 +202,7 @@ function getMassagedImagesList(item) {
         setImageListByList(item.profiles, list);
     if ((_d = item.logos) === null || _d === void 0 ? void 0 : _d.length)
         setImageListByList(item.logos, list);
-    list = [...list, ...backdrops];
+    list = interleaveAndShuffle(backdrops, list);
     return { backdrops, list };
 }
 function setImageListByList(list, images) {
@@ -243,24 +280,35 @@ function getMassagedCompactMedia(item, mediaType) {
         subtext: getCompactMediaSubText(item),
         rating: getTMRating(item),
         character: item.roles ? item.roles.map((role) => role.character).join(', ') : item === null || item === void 0 ? void 0 : item.character,
-        department: getDepartment(item)
+        department: getDepartment(item),
+        order: item.order,
+        releaseDate: item.release_date
     };
 }
-function getMassagedCompactMediaList(items, media) {
-    return (items === null || items === void 0 ? void 0 : items.map((item) => getMassagedCompactMedia(item, media)).filter(Boolean)) || [];
+function getMassagedCompactMediaList(items, media, sort) {
+    return !sort ? (items === null || items === void 0 ? void 0 : items.map((item) => getMassagedCompactMedia(item, media)).filter(Boolean)) || [] :
+        ((items === null || items === void 0 ? void 0 : items.map((item) => getMassagedCompactMedia(item, media)).filter(Boolean).sort((a, b) => {
+            // Handle undefined orders by pushing them to the end
+            if (a.order == null)
+                return 1;
+            if (b.order == null)
+                return -1;
+            return a.order - b.order;
+        })) || []);
 }
 // CREDITS
-function getCredits(item) {
-    const castList = getMassagedCompactMediaList(item.cast);
+function getCredits(item, media) {
+    const sort = media === context_1.MediaType.PERSON;
+    const castList = getMassagedCompactMediaList(item.cast, undefined, sort);
     const crewList = item.crew || [];
-    const directors = getMassagedCompactMediaList(crewList.filter((cred) => { var _a; return ((_a = cred.department) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'directing'; }));
-    const writers = getMassagedCompactMediaList(crewList.filter((cred) => { var _a; return ((_a = cred.department) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'writing'; }));
+    const directors = getMassagedCompactMediaList(crewList.filter((cred) => { var _a; return ((_a = cred.department) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'directing'; }, undefined, sort));
+    const writers = getMassagedCompactMediaList(crewList.filter((cred) => { var _a; return ((_a = cred.department) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'writing'; }, undefined, sort));
     const directorIds = new Set(directors.map(d => d.id));
     const writerIds = new Set(writers.map(w => w.id));
     const castIds = new Set(castList.map(c => c.id));
     const crew = getMassagedCompactMediaList(crewList.filter((cred) => !directorIds.has(cred.id) &&
         !writerIds.has(cred.id) &&
-        !castIds.has(cred.id)));
+        !castIds.has(cred.id)), undefined, sort);
     return {
         directors,
         writers,
@@ -283,8 +331,10 @@ function getMassagedOmdbMedia(omdb) {
         imdbId: omdb.imdb_id
     };
 }
-function getRatings(array) {
-    const ratings = [];
+function getRatings(array, details) {
+    const tmdb = Object.assign({}, exports.RatingMap[0]);
+    tmdb.rating = Math.round(details.vote_average * 10) / 10;
+    const ratings = [tmdb];
     if (!array)
         return ratings;
     array.forEach((item) => {
@@ -292,13 +342,16 @@ function getRatings(array) {
             const map = exports.RatingMap.find((r) => r.source === item.Source);
             const rating = item.Value.includes('%') ? item.Value.split('%')[0] : item.Value.includes('/') ? item.Value.split('/')[0] : item.Value;
             const scale = item.Value.includes('%') ? '100' : item.Value.includes('/') ? item.Value.split('/')[1] : '100';
-            ratings.push({
-                source: item.Source, rating, scale,
-                label: map ? map.label : '', logo: map ? map.logo : ''
-            });
+            if (map)
+                ratings.push({
+                    source: item.Source, rating: parseFloat(rating), scale: parseInt(scale),
+                    label: map.label, logo: map.logo,
+                    showStars: !!(map === null || map === void 0 ? void 0 : map.showStars),
+                    type: map.type
+                });
         }
     });
-    return ratings;
+    return ratings.filter((rating) => rating.rating);
 }
 function getTMRating(details) {
     return details.vote_average ? Math.round(details.vote_average * 10) : undefined;
@@ -330,11 +383,11 @@ function getWatchProviderObject(provider) {
 function getProviderArray(list) {
     return list ? list.map(getWatchProviderObject).filter(Boolean) : [];
 }
-function getWatchProviders(watchProviders, countryCode) {
+function getWatchProviders(watchProviders) {
     if (!watchProviders)
         return { subscription: [], rent: [], buy: [] };
     const regions = Object.keys(watchProviders);
-    const regionProvider = (countryCode in watchProviders) ? watchProviders[countryCode] : watchProviders[regions[0]];
+    const regionProvider = (countryCode in watchProviders) ? watchProviders[countryCode] : null;
     const data = {
         subscription: getProviderArray(regionProvider === null || regionProvider === void 0 ? void 0 : regionProvider.flatrate),
         rent: getProviderArray(regionProvider === null || regionProvider === void 0 ? void 0 : regionProvider.rent),
@@ -347,13 +400,40 @@ function getAmountString(amount) {
         return '$' + parseInt(amount, 10).toLocaleString('en-US');
     return '';
 }
-function getMovieDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders, countryCode) {
-    var _a, _b;
-    return Object.assign(Object.assign({ id: details.id, mediaType: context_1.MediaType.MOVIE, name: getName(details), overview: getOverview(details), poster: getPoster(details), thumbnail: getThumbnail(details), backdrop: getBackdrop(details), popularity: details.popularity, voteAverage: details.vote_average, voteCount: details.vote_count, genres: getGenres(details), runtime: getRuntime(details), released: getDateString(details.release_date), revenue: getAmountString(details.revenue), budget: getAmountString(details.budget), productionCompanies: getProductionCompanies(details), productionCountries: (_a = details.production_countries) === null || _a === void 0 ? void 0 : _a.map((c) => c.name), spokenLanguages: (_b = details.spoken_languages) === null || _b === void 0 ? void 0 : _b.map((l) => ({ id: l.iso_639_1, englishName: l.english_name, name: l.name })) }, getMassagedOmdbMedia(omdb)), { credits: getCredits(credits), images: getMassagedImagesList(images), videos: getVideos(videos), similar: getMassagedCompactMediaList((similar === null || similar === void 0 ? void 0 : similar.results) || [], context_1.MediaType.MOVIE), recommendations: getMassagedCompactMediaList((recommendations === null || recommendations === void 0 ? void 0 : recommendations.results) || [], context_1.MediaType.MOVIE), subtext: getSubtext(details, omdb), ratings: getRatings((omdb === null || omdb === void 0 ? void 0 : omdb.Ratings) || []), tagline: details.tagline, year: getYear(details) ? `(${getYear(details)})` : undefined, rating: getTMRating(details), watchProviders: getWatchProviders(watchProviders, countryCode) });
+function getAuthor(author) {
+    return {
+        name: author.name,
+        username: author.username,
+        image: getImage(author.avatar_path),
+        rating: author.rating
+    };
 }
-function getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders, countryCode) {
+function getReviews(list) {
+    return list.map((item) => ({
+        id: item.id,
+        author: getAuthor(item.author_details),
+        content: item.content,
+        created: getDateString(item.created_at),
+        updated: getDateString(item.updated_at)
+    }));
+}
+function getReviewData(data) {
+    var _a;
+    const results = {
+        list: ((_a = data === null || data === void 0 ? void 0 : data.results) === null || _a === void 0 ? void 0 : _a.length) ? getReviews(data.results) : [],
+        total: data.total_results ? data.total_results : 0,
+        page: data.page ? data.page : 0,
+        totalPages: data.total_pages ? data.total_pages : 0
+    };
+    return results;
+}
+function getMovieDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders, reviews) {
     var _a, _b;
-    return Object.assign(Object.assign({ id: details.id, mediaType: context_1.MediaType.TV, name: getName(details), overview: getOverview(details), poster: getPoster(details), thumbnail: getThumbnail(details), backdrop: getBackdrop(details), popularity: details.popularity, voteAverage: details.vote_average, voteCount: details.vote_count, genres: getGenres(details), released: getDateString(details.release_date), firstAirDate: getDateString(details.first_air_date), lastAirDate: getDateString(details.last_air_date), numberOfEpisodes: details.number_of_episodes, numberOfSeasons: details.number_of_seasons, productionCompanies: getProductionCompanies(details), productionCountries: (_a = details.production_countries) === null || _a === void 0 ? void 0 : _a.map((c) => c.name), spokenLanguages: (_b = details.spoken_languages) === null || _b === void 0 ? void 0 : _b.map((l) => ({ id: l.iso_639_1, englishName: l.english_name, name: l.name })) }, getMassagedOmdbMedia(omdb)), { credits: getCredits(credits), images: getMassagedImagesList(images), videos: getVideos(videos), similar: getMassagedCompactMediaList((similar === null || similar === void 0 ? void 0 : similar.results) || [], context_1.MediaType.TV), recommendations: getMassagedCompactMediaList((recommendations === null || recommendations === void 0 ? void 0 : recommendations.results) || [], context_1.MediaType.TV), subtext: getSubtext(details, omdb), ratings: getRatings((omdb === null || omdb === void 0 ? void 0 : omdb.Ratings) || []), tagline: details.tagline, year: getYear(details) ? `(${getYear(details)})` : undefined, rating: getTMRating(details), watchProviders: getWatchProviders(watchProviders, countryCode) });
+    return Object.assign(Object.assign({ id: details.id, mediaType: context_1.MediaType.MOVIE, name: getName(details), overview: getOverview(details), poster: getPoster(details), thumbnail: getThumbnail(details), backdrop: getBackdrop(details), popularity: details.popularity, voteAverage: details.vote_average, voteCount: details.vote_count, genres: getGenres(details), runtime: getRuntime(details), released: getDateString(details.release_date), revenue: getAmountString(details.revenue), budget: getAmountString(details.budget), productionCompanies: getProductionCompanies(details), productionCountries: (_a = details.production_countries) === null || _a === void 0 ? void 0 : _a.map((c) => c.name), spokenLanguages: (_b = details.spoken_languages) === null || _b === void 0 ? void 0 : _b.map((l) => ({ id: l.iso_639_1, englishName: l.english_name, name: l.name })) }, getMassagedOmdbMedia(omdb)), { credits: getCredits(credits, context_1.MediaType.MOVIE), images: getMassagedImagesList(images), videos: getVideos(videos), similar: getMassagedCompactMediaList((similar === null || similar === void 0 ? void 0 : similar.results) || [], context_1.MediaType.MOVIE), recommendations: getMassagedCompactMediaList((recommendations === null || recommendations === void 0 ? void 0 : recommendations.results) || [], context_1.MediaType.MOVIE), subtext: getSubtext(details, omdb), ratings: getRatings((omdb === null || omdb === void 0 ? void 0 : omdb.Ratings) || [], details), tagline: details.tagline, year: getYear(details) ? `(${getYear(details)})` : undefined, rating: getTMRating(details), watchProviders: getWatchProviders(watchProviders), reviews: getReviewData(reviews) });
+}
+function getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders, reviews) {
+    var _a, _b;
+    return Object.assign(Object.assign({ id: details.id, mediaType: context_1.MediaType.TV, name: getName(details), overview: getOverview(details), poster: getPoster(details), thumbnail: getThumbnail(details), backdrop: getBackdrop(details), popularity: details.popularity, voteAverage: details.vote_average, voteCount: details.vote_count, genres: getGenres(details), released: getDateString(details.release_date), firstAirDate: getDateString(details.first_air_date), lastAirDate: getDateString(details.last_air_date), numberOfEpisodes: details.number_of_episodes, numberOfSeasons: details.number_of_seasons, productionCompanies: getProductionCompanies(details), productionCountries: (_a = details.production_countries) === null || _a === void 0 ? void 0 : _a.map((c) => c.name), spokenLanguages: (_b = details.spoken_languages) === null || _b === void 0 ? void 0 : _b.map((l) => ({ id: l.iso_639_1, englishName: l.english_name, name: l.name })) }, getMassagedOmdbMedia(omdb)), { credits: getCredits(credits, context_1.MediaType.MOVIE), images: getMassagedImagesList(images), videos: getVideos(videos), similar: getMassagedCompactMediaList((similar === null || similar === void 0 ? void 0 : similar.results) || [], context_1.MediaType.TV), recommendations: getMassagedCompactMediaList((recommendations === null || recommendations === void 0 ? void 0 : recommendations.results) || [], context_1.MediaType.TV), subtext: getSubtext(details, omdb), ratings: getRatings((omdb === null || omdb === void 0 ? void 0 : omdb.Ratings) || [], details), tagline: details.tagline, year: getYear(details) ? `(${getYear(details)})` : undefined, rating: getTMRating(details), watchProviders: getWatchProviders(watchProviders), reviews: getReviewData(reviews) });
 }
 function getPersonDetails(details, credits, images) {
     return {
@@ -372,7 +452,7 @@ function getPersonDetails(details, credits, images) {
         placeOfBirth: details.place_of_birth,
         knownForDepartment: details.known_for_department,
         alsoKnownAs: details.also_known_as || [],
-        credits: getCredits(credits),
+        credits: getCredits(credits, context_1.MediaType.PERSON),
         images: getMassagedImagesList(images),
         subtext: getSubtext(details)
     };
@@ -385,11 +465,12 @@ function getSearchResultsData(item) {
         list: getMassagedCompactMediaList(item.results || [])
     };
 }
-function getMassagedMedia(items, type, countryCode) {
-    const [details, credits, images, videos, similar, recommendations, watchProviders, omdb] = items;
+function getMassagedMedia(items, type, countrycode) {
+    const [details, credits, images, videos, similar, recommendations, watchProviders, reviews, omdb] = items;
+    countryCode = countrycode;
     if (type === context_1.MediaType.MOVIE)
-        return getMovieDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders === null || watchProviders === void 0 ? void 0 : watchProviders.results, countryCode);
+        return getMovieDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders === null || watchProviders === void 0 ? void 0 : watchProviders.results, reviews);
     if (type === context_1.MediaType.TV)
-        return getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders === null || watchProviders === void 0 ? void 0 : watchProviders.results, countryCode);
+        return getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders === null || watchProviders === void 0 ? void 0 : watchProviders.results, reviews);
     return getPersonDetails(details, credits, images);
 }

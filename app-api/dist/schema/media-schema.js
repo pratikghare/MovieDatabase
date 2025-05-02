@@ -31,6 +31,7 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
         similar: [CompactMedia!]!
         recommendations: [CompactMedia!]!
         watchProviders: WatchProviders!
+        reviews: ReviewResults!
 
         released: String
         runtime: String
@@ -60,6 +61,7 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
         similar: [CompactMedia!]!
         recommendations: [CompactMedia!]!
         watchProviders: WatchProviders!
+        reviews: ReviewResults!
 
         released: String
         firstAirDate: String
@@ -136,6 +138,28 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
         crew: [CompactMedia!]!
     }
 
+    type Author {
+        name: String!
+        username: String!
+        image: String
+        rating: Float
+    }
+
+    type Review {
+        id: ID!
+        author: Author
+        content: String
+        created: String
+        updated: String
+    }
+
+    type ReviewResults {
+        list: [Review!]!
+        total: Int
+        page: Int
+        totalPages: Int
+    }
+
     type CompactMedia {
         id: ID!
         mediaType: String!
@@ -150,6 +174,8 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
         character: String
         department: String
         year: String
+        order: Int
+        releaseDate: String
     }
 
     type CompactMediaResults {
@@ -161,9 +187,11 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
 
     type Ratings {
         source: String!
-        label: String!
-        rating: String!
-        scale: String!
+        rating: Float!
+        scale: Int!
+        showStars: Boolean!
+        type: String!
+        label: String
         logo: String
     }
 

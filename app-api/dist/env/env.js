@@ -78,6 +78,7 @@ exports.TV = {
     similar: `https://api.themoviedb.org/3/tv/{series_id}/similar?`,
     recommendations: `https://api.themoviedb.org/3/tv/{series_id}/recommendations?`,
     watchProviders: `https://api.themoviedb.org/3/tv/{series_id}/watch/providers?`,
+    reviews: `https://api.themoviedb.org/3/tv/{series_id}/reviews?`,
     onAir: `https://api.themoviedb.org/3/tv/on_the_air?`,
     externalIds: `https://api.themoviedb.org/3/tv/{series_id}/external_ids?`,
     delimiter: `{series_id}`,

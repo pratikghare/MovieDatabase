@@ -27,7 +27,7 @@ const getResolvedTMDetailsUrl = (id, media, season) => {
     const detail = media === context_1.MediaType.MOVIE ? env_1.MOVIE : media === context_1.MediaType.PERSON ? env_1.PERSON : media === context_1.MediaType.TV && season ? env_1.TV_SEASON : env_1.TV;
     urls = [detail.details, detail.credits, detail.images];
     if (media === context_1.MediaType.TV || media === context_1.MediaType.MOVIE)
-        urls = [...urls, detail.videos, detail.similar, detail.recommendations, detail.watchProviders];
+        urls = [...urls, detail.videos, detail.similar, detail.recommendations, detail.watchProviders, detail.reviews];
     urls = urls.map((url) => (0, exports.getResolvedTMUrl)(url, [detail.delimiter], [id]));
     return urls;
 };

@@ -1,0 +1,480 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "backdrop_path": "/1NBPhXi3C2OFeWO5uZvEDJfi6fr.jpg",
+            "id": 1175038,
+            "title": "Stranger in the Woods",
+            "original_title": "Stranger in the Woods",
+            "overview": "Olivia and her friends go on a vacation. After Olivia nearly drowns with a slit wrist in her bathtub after her fiancé's funeral, her friends suspect that she tried to kill herself, but she believes someone attacked her.",
+            "poster_path": "/qcrbiVMOkAaOyha8BqyVDQCTwh6.jpg",
+            "media_type": "movie",
+            "adult": false,
+            "original_language": "en",
+            "genre_ids": [
+                27,
+                53
+            ],
+            "popularity": 2.9149,
+            "release_date": "2024-02-14",
+            "video": false,
+            "vote_average": 6.1,
+            "vote_count": 113
+        },
+        {
+            "backdrop_path": "/fgnkqPlBSI7QFk6JXtaU3fOK9uT.jpg",
+            "id": 48361,
+            "name": "Strange Tales of Liao Zhai",
+            "original_name": "聊斋志异",
+            "overview": "",
+            "poster_path": "/rSFOuz06fZ3oz8YdlIeRgBkCXuc.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "zh",
+            "genre_ids": [
+                9648,
+                18
+            ],
+            "popularity": 8.6532,
+            "first_air_date": "2005-02-05",
+            "vote_average": 8.6,
+            "vote_count": 7,
+            "origin_country": [
+                "CN"
+            ]
+        },
+        {
+            "backdrop_path": "/jjUpwxPilDMm7GA3g6awkKiKVDG.jpg",
+            "id": 3873,
+            "name": "Strange",
+            "original_name": "Strange",
+            "overview": "The world of John Strange is no ordinary place - full of malevolent demons that must be stopped from wreaking havoc upon the Earth. In his quest he is joined by nurse Jude Atkins, computer whiz Toby and Kevin, a man who can pick up on strange vibes. But the mysterious Canon Black remains a thorn in John's side, fervent in his efforts to prove the non-existence of anything remotely demonic or paranormal...",
+            "poster_path": "/qzuiAqBsXwcBBf9x8FinPFNb9AG.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "en",
+            "genre_ids": [
+                18,
+                10765
+            ],
+            "popularity": 2.083,
+            "first_air_date": "2003-05-31",
+            "vote_average": 6,
+            "vote_count": 1,
+            "origin_country": [
+                "GB"
+            ]
+        },
+        {
+            "backdrop_path": null,
+            "id": 764205,
+            "title": "Strange",
+            "original_title": "Strange",
+            "overview": "Strange is an autobiographical story told in a visual journal style, a glimpse into an autistic author’s life exploring friendship, trails and the use of unique coping strategies.",
+            "poster_path": "/q1h9YiKKGwHsSJ52sfrcgKguxRC.jpg",
+            "media_type": "movie",
+            "adult": false,
+            "original_language": "en",
+            "genre_ids": [
+                16
+            ],
+            "popularity": 0.0732,
+            "release_date": "2020-10-16",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "backdrop_path": "/5UUUtuoIYK7SzNt5mIbDQB2MUHc.jpg",
+            "id": 853305,
+            "title": "Strange",
+            "original_title": "Strange",
+            "overview": "",
+            "poster_path": "/tJHhhews3gl6XsHbukLkubrINOA.jpg",
+            "media_type": "movie",
+            "adult": false,
+            "original_language": "hi",
+            "genre_ids": [],
+            "popularity": 0.0214,
+            "release_date": "2020-07-24",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "backdrop_path": "/cb51nVH31ikkUO6Njl6csu9kD91.jpg",
+            "id": 232682,
+            "name": "strange",
+            "original_name": "strange",
+            "overview": "borger",
+            "poster_path": null,
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "en",
+            "genre_ids": [],
+            "popularity": 0.0954,
+            "first_air_date": "2023-08-15",
+            "vote_average": 0,
+            "vote_count": 0,
+            "origin_country": [
+                "US"
+            ]
+        },
+        {
+            "backdrop_path": "/wwNasWOG4HlH9R6F8ybPJETTPO7.jpg",
+            "id": 70626,
+            "name": "Stranger",
+            "original_name": "비밀의 숲",
+            "overview": "Hwang Shi Mok underwent brain surgery as a child to curb his violent temper, which left him devoid of emotions. Hwang becomes a prosecutor known for his piercing intelligence and logic, but he is ostracized because he lacks empathy and social skills. He is also one of only a handful of upright prosecutors who have refused to take bribes. One day, he encounters a stabbing victim while investigating corruption. He meets Lieutenant Han Yeo Jin at the crime scene. They join forces to root out corruption at the prosecutors’ office and solve a serial murder case.",
+            "poster_path": "/blbbtx7DyvZ3JTGyc9MCArDL79b.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "ko",
+            "genre_ids": [
+                80,
+                18,
+                9648
+            ],
+            "popularity": 7.2179,
+            "first_air_date": "2017-06-10",
+            "vote_average": 8.3,
+            "vote_count": 173,
+            "origin_country": [
+                "KR"
+            ]
+        },
+        {
+            "backdrop_path": "/pm4fIrSfrDwqzEO5VS27YHxruFN.jpg",
+            "id": 98704,
+            "name": "Strange Tales from a Chinese Studio",
+            "original_name": "聊斋",
+            "overview": "",
+            "poster_path": "/tBZkMOYe8L1NLw8Vh8tXXMenHMx.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "zh",
+            "genre_ids": [
+                9648
+            ],
+            "popularity": 9.1573,
+            "first_air_date": "1987-01-01",
+            "vote_average": 9.3,
+            "vote_count": 3,
+            "origin_country": [
+                "CN"
+            ]
+        },
+        {
+            "backdrop_path": null,
+            "id": 49846,
+            "name": "Stranger at Home",
+            "original_name": "Evdeki Yabancı",
+            "overview": "",
+            "poster_path": "/lRDWkzj0VM2IsqKo7aurAhj9nPR.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "tr",
+            "genre_ids": [
+                35
+            ],
+            "popularity": 1.2211,
+            "first_air_date": "2000-09-01",
+            "vote_average": 7,
+            "vote_count": 3,
+            "origin_country": [
+                "TR"
+            ]
+        },
+        {
+            "backdrop_path": "/mjMkTMbWxma8A2Z9OFhTbvetOLO.jpg",
+            "id": 84464,
+            "name": "My Strange Hero",
+            "original_name": "복수가 돌아왔다",
+            "overview": "When Kang Bok-Soo was a high school student, he was falsely accused of committing violence and kicked out of school. This was caused by his first love Son Soo-Jung and a male student Oh Se-Ho. Kang Bok-Soo is a now an adult, but his life has not gone smoothly. To get revenge on Son Soo-Jung and Oh Se-Ho, he returns to the same high school as a student. The environment at the school has changed and Kang Bok-Soo gets involved in unexpected cases.",
+            "poster_path": "/p8Uzpksp6TRKwyn6L6EtZd4fJcx.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "ko",
+            "genre_ids": [
+                18,
+                35,
+                9648
+            ],
+            "popularity": 9.6169,
+            "first_air_date": "2018-12-10",
+            "vote_average": 7.243,
+            "vote_count": 37,
+            "origin_country": [
+                "KR"
+            ]
+        },
+        {
+            "backdrop_path": "/aHiif19OzqzVphS49VKnq0ZecVU.jpg",
+            "id": 89487,
+            "name": "Strange Coffee",
+            "original_name": "怪咖啡",
+            "overview": "",
+            "poster_path": "/qei9on7rIO1iMYfS7QILGHFwB4e.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "zh",
+            "genre_ids": [
+                18
+            ],
+            "popularity": 8.8813,
+            "first_air_date": "2014-09-15",
+            "vote_average": 0,
+            "vote_count": 0,
+            "origin_country": [
+                "CN"
+            ]
+        },
+        {
+            "backdrop_path": "/zUARkXDmYN2zOlzTFG8g4k7037p.jpg",
+            "id": 13980,
+            "title": "Sword of the Stranger",
+            "original_title": "ストレンヂア -無皇刃譚-",
+            "overview": "Pursued by formidable Chinese assassins, young Kotaro and his dog run into No Name, a mysterious stranger who gets pulled into the chase. The unlikely companions form a bond over saving the dog from a poison attack, but chaos erupts when the assassins find Kotaro, and No Name must face his past before a horrible fate is met again.",
+            "poster_path": "/lMsUYZq5ITW3rAqF3tB7v74KEnH.jpg",
+            "media_type": "movie",
+            "adult": false,
+            "original_language": "ja",
+            "genre_ids": [
+                28,
+                16,
+                36
+            ],
+            "popularity": 2.1772,
+            "release_date": "2007-09-29",
+            "video": false,
+            "vote_average": 7.583,
+            "vote_count": 425
+        },
+        {
+            "backdrop_path": "/7EwzruqMhiXiVBntRoUjOhey8ap.jpg",
+            "id": 54989,
+            "title": "Love Strange Love",
+            "original_title": "Amor Estranho Amor",
+            "overview": "A man remembers forty-eight crucial hours in his life when, as a child, he visited his mother, the favorite woman of an important politician, in a bordello owned by him, right before some important political changes in 1937 Brazil. In those hours, he discovers his own sexuality.",
+            "poster_path": "/9CNnxpI6H8ynyOlACRc25vqgJBY.jpg",
+            "media_type": "movie",
+            "adult": false,
+            "original_language": "pt",
+            "genre_ids": [
+                18,
+                36
+            ],
+            "popularity": 5.3231,
+            "release_date": "1982-01-11",
+            "video": false,
+            "vote_average": 5.9,
+            "vote_count": 57
+        },
+        {
+            "backdrop_path": "/t1doc4QR6eiRJoVh0mJJD5JOnS0.jpg",
+            "id": 110267,
+            "name": "Strange School Tales",
+            "original_name": "학교기담",
+            "overview": "A film drama that combines the merits of a film and a drama consists of three buses: 8 Years, The Child Who Wouldn't Come and Karma.",
+            "poster_path": "/hGnY0ZVm8GuuQSsR49ENQW8OiOt.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "ko",
+            "genre_ids": [
+                18
+            ],
+            "popularity": 0.9365,
+            "first_air_date": "2020-09-05",
+            "vote_average": 5.7,
+            "vote_count": 6,
+            "origin_country": [
+                "KR"
+            ]
+        },
+        {
+            "backdrop_path": "/gFxpqn6LsvzqKzYjlQ61RuaiM8j.jpg",
+            "id": 61317,
+            "name": "Jews and Muslims: Intimate Strangers",
+            "original_name": "Juifs et musulmans : Si loin, si proches",
+            "overview": "This journey through time retraces fourteen centuries of a rich shared history between Jews and Muslims. A story of great historical rigor, without concessions or bias, driven by fluid and inspired realization.",
+            "poster_path": "/92P2bpmtXoBN75vDqR9cL36e4zR.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "fr",
+            "genre_ids": [
+                99,
+                16,
+                10768
+            ],
+            "popularity": 2.0895,
+            "first_air_date": "2013-10-22",
+            "vote_average": 6.5,
+            "vote_count": 2,
+            "origin_country": [
+                "FR"
+            ]
+        },
+        {
+            "backdrop_path": "/ppzqtUtIJlEpuNvBdci0XTG3xr3.jpg",
+            "id": 1396004,
+            "title": "The Strange Life of Dhrubo",
+            "original_title": "ধ্রুবর আশ্চর্য জীবন",
+            "overview": "Rishav Basu stars.",
+            "poster_path": "/evvdKbqwjRPnP7VzIxAtqxCQTNG.jpg",
+            "media_type": "movie",
+            "adult": false,
+            "original_language": "bn",
+            "genre_ids": [
+                80,
+                878,
+                18
+            ],
+            "popularity": 0.0977,
+            "release_date": "2025-02-28",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "backdrop_path": "/tPO5I7BEzFLavtrd6ASeLT1x8GE.jpg",
+            "id": 67856,
+            "name": "Sweet Stranger and Me",
+            "original_name": "우리집에 사는 남자",
+            "overview": "A 30-year-old woman suddenly has a new father who is three years younger than her. With time, she accepts him as a family; he always takes her side and loves her unconditionally. What would happen to them?",
+            "poster_path": "/1ON43Foz15rWlVD4zaQVWSbJeZX.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "ko",
+            "genre_ids": [
+                18
+            ],
+            "popularity": 2.8563,
+            "first_air_date": "2016-10-24",
+            "vote_average": 5.7,
+            "vote_count": 16,
+            "origin_country": [
+                "KR"
+            ]
+        },
+        {
+            "backdrop_path": "/trs8UPrVkVsezBGCJ7KmlEyQoOw.jpg",
+            "id": 246712,
+            "name": "In Bed With A Stranger",
+            "original_name": "再見 . 枕邊人",
+            "overview": "In Hong Kong, family members of a missing person may apply for the person concerned to be declared legally dead after seven years. While production house boss Yeung Man-sum decides to forget his wife Koo Ching-tin, who has been missing for seven years, and marry his lovely and supportive girlfriend Chu Sin-mei, his son Chi-hin’s birth mother Ching-tin astonishingly turns up! Due to some falling off a cliff accident, Ching-tin became forgetful and ended up homeless somewhere overseas. With lawyer Kam Cheung-sing’s help, Ching-tin returns to Hong Kong after seven years. She wants to retrieve her old memories. Ching-tin again works as a journalist. She curiously finds out someone seemed to have harmed her when she went missing. Meanwhile, Man-sum is torn between his new love and wedded wife. And he is worried about Ching-tin recovering from amnesia as the situation could get out of hand.",
+            "poster_path": "/36rlzWaFDPAFkVs777dnGCQ4NXw.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "cn",
+            "genre_ids": [
+                18,
+                9648
+            ],
+            "popularity": 4.0757,
+            "first_air_date": "2024-02-26",
+            "vote_average": 0,
+            "vote_count": 0,
+            "origin_country": [
+                "HK"
+            ]
+        },
+        {
+            "backdrop_path": "/nOq0hfSP6IhIlcPtuAe3Vu1JSp5.jpg",
+            "id": 129003,
+            "name": "Lover or Stranger",
+            "original_name": "陌生的恋人",
+            "overview": "After an avalanche, a young violinist loses her memory. Facing her mysterious entrepreneur fiancee and their upcoming wedding, she must find herself again amidst the confusion and secrets.",
+            "poster_path": "/ovF5fR2tm9MTlGeZvLXJTmfVGYg.jpg",
+            "media_type": "tv",
+            "adult": false,
+            "original_language": "zh",
+            "genre_ids": [
+                18,
+                9648
+            ],
+            "popularity": 4.4901,
+            "first_air_date": "2021-07-12",
+            "vote_average": 4.5,
+            "vote_count": 2,
+            "origin_country": [
+                "CN"
+            ]
+        },
+        {
+            "id": 30112,
+            "name": "Glenn Strange",
+            "original_name": "Glenn Strange",
+            "media_type": "person",
+            "adult": false,
+            "popularity": 0.4571,
+            "gender": 2,
+            "known_for_department": "Acting",
+            "profile_path": "/6SPVOqbKTSt3NA6OzoXJsjJTucc.jpg",
+            "known_for": [
+                {
+                    "backdrop_path": "/t9lnFVNuYxuKkSlRTDbRwyxQWWh.jpg",
+                    "id": 3073,
+                    "title": "Bud Abbott and Lou Costello Meet Frankenstein",
+                    "original_title": "Bud Abbott and Lou Costello Meet Frankenstein",
+                    "overview": "Baggage handlers Bud and Lou accidentally stumble upon Frankenstein's Monster, Dracula and the Wolf Man.",
+                    "poster_path": "/ectRcq1y6EAmz2i72SCRHI6qUK2.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "original_language": "en",
+                    "genre_ids": [
+                        35,
+                        27
+                    ],
+                    "popularity": 1.1363,
+                    "release_date": "1948-06-15",
+                    "video": false,
+                    "vote_average": 7.066,
+                    "vote_count": 316
+                },
+                {
+                    "backdrop_path": "/2yPeVCim2ugYiYVgSFxZBhDbdpb.jpg",
+                    "id": 30793,
+                    "title": "House of Dracula",
+                    "original_title": "House of Dracula",
+                    "overview": "A scientist working on cures for rare afflictions, such as a bone softening agent made from molds to allow him to correct the spinal deformity of his nurse, finds the physical causes of lycanthropy in wolf-man Larry Talbot and of vampirism in Count Dracula, but himself becomes afflicted with homicidal madness while exchanging blood with Dracula.",
+                    "poster_path": "/x2HZq0CjGJbU90Q8Bm7jDKBM7ZG.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "original_language": "en",
+                    "genre_ids": [
+                        27,
+                        878,
+                        14
+                    ],
+                    "popularity": 0.944,
+                    "release_date": "1945-12-07",
+                    "video": false,
+                    "vote_average": 5.477,
+                    "vote_count": 133
+                },
+                {
+                    "backdrop_path": "/zhZtaNcjtc6VgV8SC4VlokiaeNt.jpg",
+                    "id": 15919,
+                    "title": "Marty",
+                    "original_title": "Marty",
+                    "overview": "Marty, a butcher who lives in the Bronx with his mother is unmarried at 34. Good-natured but socially awkward he faces constant badgering from family and friends to get married but has reluctantly resigned himself to bachelorhood. Marty meets Clara, an unattractive school teacher, realising their emotional connection, he promises to call but family and friends try to convince him not to.",
+                    "poster_path": "/8tnGO5VoAQII4DbE3hozWKhV4BY.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "original_language": "en",
+                    "genre_ids": [
+                        18,
+                        10749
+                    ],
+                    "popularity": 0.8312,
+                    "release_date": "1955-04-11",
+                    "video": false,
+                    "vote_average": 7.4,
+                    "vote_count": 398
+                }
+            ]
+        }
+    ],
+    "total_pages": 128,
+    "total_results": 2541
+}
