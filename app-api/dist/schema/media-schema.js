@@ -81,6 +81,9 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
         website: String
         ratings: [Ratings!]
         dvd: String
+        lastAirEpisode: CompactEpisode
+        nextAirEpisode: CompactEpisode
+        seasons: [Season!]!
     }
 
     type Person implements Media {
@@ -103,6 +106,37 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
         name: String!
         country: String!
         path: String
+    }
+
+    type Season {
+        id: String!
+        seasonNumber: Int!
+        name: String!
+        overview: String
+        airDate: String
+        year: String
+        episodeCount: Int
+        poster: String
+        thumbnail: String
+        voteAverage: Float
+        rating: Int
+        episodes: [CompactEpisode!]!
+        credits: Credits
+    }
+
+    type CompactEpisode {
+        id: ID!
+        name: String!
+        overview: String!
+        poster: String
+        runtime: String
+        airDate: String!
+        rating: Int
+        voteAverage: Float
+        voteCount: Int
+        seasonNumber: Int
+        episodeNumber: Int
+        episodeType: String
     }
 
     type SpokenLanguage {
@@ -211,6 +245,7 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
     extend type Query {
         details(id: ID!, media: String!): Media
         searchQuery(query: String!): CompactMediaResults
+        seasonDetails (id: ID!, media: String!, seasonNumber: Int!): Season
     }
     
 `;

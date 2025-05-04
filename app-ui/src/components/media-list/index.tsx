@@ -10,13 +10,14 @@ interface MediaListProps {
     seeAll?: Function;
     isRounded?: boolean;
     showSkeleton?: boolean;
+    classNames?: { skeletonBase?: string, base?: string }
 }
-export default function MediaList({ list, title = "", seeAll, isRounded, showSkeleton }: MediaListProps) {
+export default function MediaList({ list, title = '', seeAll, isRounded, showSkeleton, classNames }: MediaListProps) {
     const { height, width } = usePosterDimensions();
     
     return (
         !!list?.length ?
-            <section className='w-full flex flex-col gap-2'>
+            <section className={'w-full flex flex-col gap-2 ' + (classNames?.base ? classNames.base : '')}>
                 <div className='flex items-center justify-between'>
                     <h1 className='font-bold'>{title}</h1>
                     {seeAll && <Link className='text-xs cursor-pointer text-primary hover:underline' onPress={() => seeAll()}>{'See All'}</Link>}
@@ -30,22 +31,22 @@ export default function MediaList({ list, title = "", seeAll, isRounded, showSke
                 </HorizontalScroll>
             </section> :
             showSkeleton &&
-            <HorizontalScroll className='gap-4'>
+            <HorizontalScroll className={'gap-4 ' + (classNames?.skeletonBase ? classNames.skeletonBase : '')}>
                 {
                     [1, 2, 3, 4].map((index: number) => (
-                        <div key={'media-list-skeleton-' + index} className="space-y-2" style={{ width }}>
-                            <Skeleton className={!isRounded ? 'rounded-lg' : "rounded-full"}>
-                                <div className="rounded-full bg-secondary" style={{ height: (!isRounded? height : width), width }} />
+                        <div key={'media-list-skeleton-' + index} className='space-y-2' style={{ width }}>
+                            <Skeleton className={!isRounded ? 'rounded-lg' : 'rounded-full'}>
+                                <div className='rounded-full bg-secondary' style={{ height: (!isRounded? height : width), width }} />
                             </Skeleton>
-                            <div className="space-y-1 flex flex-col items-center">
-                                <Skeleton className="w-4/5 rounded-lg">
-                                    <div className="h-2 w-full rounded-lg bg-secondary" />
+                            <div className='space-y-1 flex flex-col items-center'>
+                                <Skeleton className='w-4/5 rounded-lg'>
+                                    <div className='h-2 w-full rounded-lg bg-secondary' />
                                 </Skeleton>
-                                <Skeleton className="w-4/5 rounded-lg">
-                                    <div className="h-2 w-full rounded-lg bg-secondary-300" />
+                                <Skeleton className='w-4/5 rounded-lg'>
+                                    <div className='h-2 w-full rounded-lg bg-secondary-300' />
                                 </Skeleton>
-                                <Skeleton className="w-3/5 rounded-lg">
-                                    <div className="h-2 w-full rounded-lg bg-secondary-200" />
+                                <Skeleton className='w-3/5 rounded-lg'>
+                                    <div className='h-2 w-full rounded-lg bg-secondary-200' />
                                 </Skeleton>
                             </div>
                         </div>

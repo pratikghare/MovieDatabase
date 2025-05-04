@@ -66,7 +66,7 @@ function CreditBox({ list, title, className, media }: { list: Array<CompactMedia
 const inital: Credits = { writers: [], directors: [], cast: [], crew: [] };
 
 export default function CreditsSection() {
-    const media = useSelector(mediaSelector);
+    const details = useSelector(mediaSelector).details;
 
     const [credits, setCredits] = useState<Credits>(inital);
     const [filteredCredits, setFilteredCredits] = useState<Credits>(inital);
@@ -87,15 +87,15 @@ export default function CreditsSection() {
     }, [value]);
 
     useEffect(() => {
-        if (media.details?.credits) {
-            setCredits(media.details.credits);
-            setFilteredCredits(media.details.credits)
+        if (details?.credits) {
+            setCredits(details.credits);
+            setFilteredCredits(details.credits)
         }
         else {
             setCredits(inital);
             setFilteredCredits(inital);
         }
-    }, [media.details]);
+    }, [details]);
 
     const filterData = (value: string, list: Array<CompactMedia>): Array<CompactMedia> => {
         return list.filter((item: CompactMedia) => (
@@ -106,9 +106,9 @@ export default function CreditsSection() {
 
 
     return (
-        !!media.details?.credits &&
+        !!details?.credits &&
         <section className='pt-[15px] bg-background/60'>
-            <CommonDetailsNav details={media.details} title='All Credits' />
+            <CommonDetailsNav details={details} title='All Credits' />
             <div className='z-50 flex justify-center items-center'>
                 <div className=' top-2 w-[calc(100%_-_16px)]'>
                     <Input variant='bordered' onChange={(event: any) => setValue(event.target.value)} radius='sm' placeholder='Search list' className='pratik' classNames={{ input: 'text-xs font-bold', inputWrapper: 'border-foreground/40' }} />
@@ -117,19 +117,19 @@ export default function CreditsSection() {
             <ScrollShadow hideScrollBar className='max-h-[calc(100svh_-_164px_-_48px)]'>
                 {
                     !!filteredCredits.directors?.length &&
-                    <CreditBox list={filteredCredits.directors} media={media.details.mediaType} title='Directors' />
+                    <CreditBox list={filteredCredits.directors} media={details.mediaType} title='Directors' />
                 }
                 {
                     !!filteredCredits.directors?.length &&
-                    <CreditBox list={filteredCredits.writers} media={media.details.mediaType} title='Writers' />
+                    <CreditBox list={filteredCredits.writers} media={details.mediaType} title='Writers' />
                 }
                 {
                     !!filteredCredits.cast?.length &&
-                    <CreditBox list={filteredCredits.cast} media={media.details.mediaType} title={media.details.mediaType === MediaType.PERSON ? 'All filmography' : 'Top Cast'} />
+                    <CreditBox list={filteredCredits.cast} media={details.mediaType} title={details.mediaType === MediaType.PERSON ? 'All filmography' : 'Top Cast'} />
                 }
                 {
                     !!filteredCredits.directors?.length &&
-                    <CreditBox list={filteredCredits.crew} media={media.details.mediaType} title='All Crew' />
+                    <CreditBox list={filteredCredits.crew} media={details.mediaType} title='All Crew' />
                 }
             </ScrollShadow>
         </section>

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TV_GENRES = exports.MOVIE_GENRES = exports.TV_SEASON = exports.TV = exports.PERSON = exports.MOVIE = exports.OMDB_DEL = exports.OMDB_URL = exports.VIDEOS = exports.SHORT_IMAGE_URL = exports.IMAGE_URL = exports.IMAGE_URLS = exports.DEFAULT_BG_IMAGE = exports.IMAGE_NOT_FOUND = exports.APP_IMAGE_PATH = exports.SEARCH_DEL = exports.SEARCH = exports.DEFAULT_REGION = exports.PORT = void 0;
+exports.TV_GENRES = exports.MOVIE_GENRES = exports.TV_EPISODE = exports.TV_SEASON = exports.TV = exports.PERSON = exports.MOVIE = exports.OMDB_DEL = exports.OMDB_URL = exports.VIDEOS = exports.SHORT_IMAGE_URL = exports.IMAGE_URL = exports.IMAGE_URLS = exports.DEFAULT_BG_IMAGE = exports.IMAGE_NOT_FOUND = exports.APP_IMAGE_PATH = exports.SEARCH_DEL = exports.SEARCH = exports.DEFAULT_REGION = exports.PORT = void 0;
 exports.PORT = 4462;
 // REGION
 exports.DEFAULT_REGION = "IN";
@@ -84,15 +84,22 @@ exports.TV = {
     delimiter: `{series_id}`,
 };
 exports.TV_SEASON = {
-    trending: `https://api.themoviedb.org/3/trending/tv/week?`,
-    topRated: `https://api.themoviedb.org/3/tv/top_rated?`,
-    popular: `https://api.themoviedb.org/3/tv/popular?`,
-    search: `https://api.themoviedb.org/3/search/tv?`,
     details: `https://api.themoviedb.org/3/tv/{series_id}/season/{season_no}?`,
     similar: `https://api.themoviedb.org/3/tv/{series_id}/similar?`,
     videos: `https://api.themoviedb.org/3/tv/{series_id}/videos?`,
     images: `https://api.themoviedb.org/3/tv/{series_id}/images?`,
     credits: `https://api.themoviedb.org/3/tv/{series_id}/aggregate_credits?`,
+    onAir: `https://api.themoviedb.org/3/tv/on_the_air?`,
+    externalIds: `https://api.themoviedb.org/3/tv/{series_id}/external_ids?`,
+    watchProviders: `https://api.themoviedb.org/3/tv/{series_id}/watch/providers?`,
+    delimiter: `{season_no}`
+};
+exports.TV_EPISODE = {
+    details: `https://api.themoviedb.org/3/tv/{series_id}/season/{season_no}?`,
+    similar: `https://api.themoviedb.org/3/tv/{series_id}/similar?`,
+    videos: `https://api.themoviedb.org/3/tv/{series_id}/videos?`,
+    images: `https://api.themoviedb.org/3/tv/{series_id}/images?`,
+    credits: `https://api.themoviedb.org/3/tv/{series_id}/season/{season_no}/credits?`,
     onAir: `https://api.themoviedb.org/3/tv/on_the_air?`,
     externalIds: `https://api.themoviedb.org/3/tv/{series_id}/external_ids?`,
     watchProviders: `https://api.themoviedb.org/3/tv/{series_id}/watch/providers?`,

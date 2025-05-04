@@ -8,6 +8,7 @@ import ReviewDetails from '../../components/details/reviews';
 import { useLocation, useNavigate } from 'react-router';
 import { getMediaTypeFromPath } from '../../utils/utils';
 import ImageSection from '../../components/details/image-video-section';
+import SeasonsInfo from '../../components/details/seasons-info';
 
 export default function Details() {
     const details = useSelector(mediaSelector).details;
@@ -18,6 +19,7 @@ export default function Details() {
     return (
         <div className='flex flex-col gap-6 p-3 px-4'>
             <Overview />
+            <SeasonsInfo />
             <RevenueDetails />
             <MediaList showSkeleton seeAll={() => { navigate('credits') }} isRounded={getMediaTypeFromPath(location.pathname) !== MediaType.PERSON}
                 list={details && details.credits?.cast ? details.credits?.cast : []}

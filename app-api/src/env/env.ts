@@ -98,16 +98,24 @@ export const TV = {
 }
 
 export const TV_SEASON = {
-    trending: `https://api.themoviedb.org/3/trending/tv/week?`,
-    topRated: `https://api.themoviedb.org/3/tv/top_rated?`,
-    popular: `https://api.themoviedb.org/3/tv/popular?`,
-    
-    search: `https://api.themoviedb.org/3/search/tv?`,
     details: `https://api.themoviedb.org/3/tv/{series_id}/season/{season_no}?`,
     similar: `https://api.themoviedb.org/3/tv/{series_id}/similar?`,
     videos: `https://api.themoviedb.org/3/tv/{series_id}/videos?`,
     images: `https://api.themoviedb.org/3/tv/{series_id}/images?`,
     credits: `https://api.themoviedb.org/3/tv/{series_id}/aggregate_credits?`,
+    onAir: `https://api.themoviedb.org/3/tv/on_the_air?`,
+    externalIds: `https://api.themoviedb.org/3/tv/{series_id}/external_ids?`,
+    watchProviders: `https://api.themoviedb.org/3/tv/{series_id}/watch/providers?`,
+
+    delimiter: `{season_no}`
+}
+
+export const TV_EPISODE = {
+    details: `https://api.themoviedb.org/3/tv/{series_id}/season/{season_no}?`,
+    similar: `https://api.themoviedb.org/3/tv/{series_id}/similar?`,
+    videos: `https://api.themoviedb.org/3/tv/{series_id}/videos?`,
+    images: `https://api.themoviedb.org/3/tv/{series_id}/images?`,
+    credits: `https://api.themoviedb.org/3/tv/{series_id}/season/{season_no}/credits?`,
     onAir: `https://api.themoviedb.org/3/tv/on_the_air?`,
     externalIds: `https://api.themoviedb.org/3/tv/{series_id}/external_ids?`,
     watchProviders: `https://api.themoviedb.org/3/tv/{series_id}/watch/providers?`,

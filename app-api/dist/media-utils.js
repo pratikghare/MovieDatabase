@@ -37,6 +37,7 @@ exports.getTMRating = getTMRating;
 exports.getProductionCompanies = getProductionCompanies;
 exports.getWatchProviders = getWatchProviders;
 exports.getMovieDetails = getMovieDetails;
+exports.getMassgedSeasonItem = getMassgedSeasonItem;
 exports.getTvShowDetails = getTvShowDetails;
 exports.getPersonDetails = getPersonDetails;
 exports.getSearchResultsData = getSearchResultsData;
@@ -78,8 +79,10 @@ function getBaseClassNames(className, base) {
 function getName(item) {
     return (item === null || item === void 0 ? void 0 : item.name) || (item === null || item === void 0 ? void 0 : item.title) || (item === null || item === void 0 ? void 0 : item.original_name) || (item === null || item === void 0 ? void 0 : item.original_title) || '';
 }
-function getOverview(item) {
-    return (item === null || item === void 0 ? void 0 : item.biography) || (item === null || item === void 0 ? void 0 : item.overview) || `We don't have a ${getMediaType(item) === context_1.MediaType.PERSON ? 'biography' : 'overview'} for ${getName(item)}.`;
+function getOverview(item, mediaType = getMediaType(item)) {
+    var _a, _b;
+    const overview = ((_a = item === null || item === void 0 ? void 0 : item.overview) === null || _a === void 0 ? void 0 : _a.length) ? item.overview : ((_b = item === null || item === void 0 ? void 0 : item.biography) === null || _b === void 0 ? void 0 : _b.length) ? item.biography : undefined;
+    return overview || `We don't have a ${mediaType === context_1.MediaType.PERSON ? 'biography' : 'overview'} for ${getName(item)}.`;
 }
 function getCountry(item) {
     var _a;
@@ -431,9 +434,70 @@ function getMovieDetails(details, credits, images, videos, similar, recommendati
     var _a, _b;
     return Object.assign(Object.assign({ id: details.id, mediaType: context_1.MediaType.MOVIE, name: getName(details), overview: getOverview(details), poster: getPoster(details), thumbnail: getThumbnail(details), backdrop: getBackdrop(details), popularity: details.popularity, voteAverage: details.vote_average, voteCount: details.vote_count, genres: getGenres(details), runtime: getRuntime(details), released: getDateString(details.release_date), revenue: getAmountString(details.revenue), budget: getAmountString(details.budget), productionCompanies: getProductionCompanies(details), productionCountries: (_a = details.production_countries) === null || _a === void 0 ? void 0 : _a.map((c) => c.name), spokenLanguages: (_b = details.spoken_languages) === null || _b === void 0 ? void 0 : _b.map((l) => ({ id: l.iso_639_1, englishName: l.english_name, name: l.name })) }, getMassagedOmdbMedia(omdb)), { credits: getCredits(credits, context_1.MediaType.MOVIE), images: getMassagedImagesList(images), videos: getVideos(videos), similar: getMassagedCompactMediaList((similar === null || similar === void 0 ? void 0 : similar.results) || [], context_1.MediaType.MOVIE), recommendations: getMassagedCompactMediaList((recommendations === null || recommendations === void 0 ? void 0 : recommendations.results) || [], context_1.MediaType.MOVIE), subtext: getSubtext(details, omdb), ratings: getRatings((omdb === null || omdb === void 0 ? void 0 : omdb.Ratings) || [], details), tagline: details.tagline, year: getYear(details) ? `(${getYear(details)})` : undefined, rating: getTMRating(details), watchProviders: getWatchProviders(watchProviders), reviews: getReviewData(reviews) });
 }
+function getCompactEpisode(item) {
+    if (!item || !item.id)
+        return undefined;
+    return {
+        id: item.id,
+        name: item.name,
+        overview: getOverview(item, context_1.MediaType.TV),
+        airDate: getDateString(item.air_date),
+        episodeNumber: item.episode_number,
+        seasonNumber: item.season_number,
+        poster: getImage(item.still_path, true),
+        voteAverage: item.vote_average,
+        voteCount: item.vote_count,
+        rating: getTMRating(item),
+        runtime: getRuntime(item),
+        episodeType: item.episode_type
+    };
+}
+function getMassagedEpisodeList(item) {
+    const episodes = [];
+    item && (item === null || item === void 0 ? void 0 : item.forEach((item) => {
+        if (!item || !item.id || !item.episode_number)
+            return;
+        const episode = getCompactEpisode(item);
+        if (episode)
+            episodes.push(episode);
+    }));
+    return episodes;
+}
+function getMassgedSeasonItem(item) {
+    return {
+        id: item.id,
+        seasonNumber: item.season_number,
+        airDate: getDateString(item.air_date),
+        year: getYear(item),
+        episodeCount: item.episode_count,
+        name: item.name,
+        overview: getOverview(item, context_1.MediaType.TV),
+        poster: getPoster(item),
+        thumbnail: getThumbnail(item),
+        voteAverage: item.vote_average,
+        rating: getTMRating(item),
+        episodes: item.episodes ? getMassagedEpisodeList(item.episodes) : [],
+        credits: {
+            directors: [],
+            writers: [],
+            cast: [],
+            crew: []
+        }
+    };
+}
+function getMassagedSeasonsList(item) {
+    const seasons = [];
+    item === null || item === void 0 ? void 0 : item.forEach((item) => {
+        if (!item || !item.id || !item.season_number)
+            return;
+        const season = getMassgedSeasonItem(item);
+        seasons.push(season);
+    });
+    return seasons;
+}
 function getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders, reviews) {
     var _a, _b;
-    return Object.assign(Object.assign({ id: details.id, mediaType: context_1.MediaType.TV, name: getName(details), overview: getOverview(details), poster: getPoster(details), thumbnail: getThumbnail(details), backdrop: getBackdrop(details), popularity: details.popularity, voteAverage: details.vote_average, voteCount: details.vote_count, genres: getGenres(details), released: getDateString(details.release_date), firstAirDate: getDateString(details.first_air_date), lastAirDate: getDateString(details.last_air_date), numberOfEpisodes: details.number_of_episodes, numberOfSeasons: details.number_of_seasons, productionCompanies: getProductionCompanies(details), productionCountries: (_a = details.production_countries) === null || _a === void 0 ? void 0 : _a.map((c) => c.name), spokenLanguages: (_b = details.spoken_languages) === null || _b === void 0 ? void 0 : _b.map((l) => ({ id: l.iso_639_1, englishName: l.english_name, name: l.name })) }, getMassagedOmdbMedia(omdb)), { credits: getCredits(credits, context_1.MediaType.MOVIE), images: getMassagedImagesList(images), videos: getVideos(videos), similar: getMassagedCompactMediaList((similar === null || similar === void 0 ? void 0 : similar.results) || [], context_1.MediaType.TV), recommendations: getMassagedCompactMediaList((recommendations === null || recommendations === void 0 ? void 0 : recommendations.results) || [], context_1.MediaType.TV), subtext: getSubtext(details, omdb), ratings: getRatings((omdb === null || omdb === void 0 ? void 0 : omdb.Ratings) || [], details), tagline: details.tagline, year: getYear(details) ? `(${getYear(details)})` : undefined, rating: getTMRating(details), watchProviders: getWatchProviders(watchProviders), reviews: getReviewData(reviews) });
+    return Object.assign(Object.assign({ id: details.id, mediaType: context_1.MediaType.TV, name: getName(details), overview: getOverview(details), poster: getPoster(details), thumbnail: getThumbnail(details), backdrop: getBackdrop(details), popularity: details.popularity, voteAverage: details.vote_average, voteCount: details.vote_count, genres: getGenres(details), released: getDateString(details.release_date), firstAirDate: getDateString(details.first_air_date), lastAirDate: getDateString(details.last_air_date), numberOfEpisodes: details.number_of_episodes, numberOfSeasons: details.number_of_seasons, productionCompanies: getProductionCompanies(details), productionCountries: (_a = details.production_countries) === null || _a === void 0 ? void 0 : _a.map((c) => c.name), spokenLanguages: (_b = details.spoken_languages) === null || _b === void 0 ? void 0 : _b.map((l) => ({ id: l.iso_639_1, englishName: l.english_name, name: l.name })) }, getMassagedOmdbMedia(omdb)), { credits: getCredits(credits, context_1.MediaType.MOVIE), images: getMassagedImagesList(images), videos: getVideos(videos), similar: getMassagedCompactMediaList((similar === null || similar === void 0 ? void 0 : similar.results) || [], context_1.MediaType.TV), recommendations: getMassagedCompactMediaList((recommendations === null || recommendations === void 0 ? void 0 : recommendations.results) || [], context_1.MediaType.TV), subtext: getSubtext(details, omdb), ratings: getRatings((omdb === null || omdb === void 0 ? void 0 : omdb.Ratings) || [], details), tagline: details.tagline, year: getYear(details) ? `(${getYear(details)})` : undefined, rating: getTMRating(details), watchProviders: getWatchProviders(watchProviders), reviews: getReviewData(reviews), lastAirEpisode: getCompactEpisode(details.last_episode_to_air), nextAirEpisode: getCompactEpisode(details.next_episode_to_air), seasons: getMassagedSeasonsList(details.seasons) });
 }
 function getPersonDetails(details, credits, images) {
     return {

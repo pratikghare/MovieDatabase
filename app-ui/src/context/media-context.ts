@@ -16,7 +16,8 @@ export interface CompactMedia {
     rating?: number;
     character?: string;
     department?: string;
-    year?: string;
+    order?: number;
+    releaseDate?: string;
 }
 
 export interface CompactMediaResults {
@@ -116,7 +117,7 @@ export interface Media {
 export interface Author {
     name: string;
     username: string;
-    image: string;
+    image?: string;
     rating: number;
 }
 
@@ -161,6 +162,37 @@ export interface Movie extends Media {
     reviews: ReviewResults;
 }
 
+export interface CompactEpisode {
+    id: string;
+    name: string;
+    overview: string;
+    poster?: string;
+    runtime?: string;
+    airDate: string;
+    rating?: number;
+    voteAverage: number;
+    voteCount: number;
+    seasonNumber: number;
+    episodeNumber: number;
+    episodeType?: string;
+}
+
+export interface Season {
+    id: string;
+    seasonNumber: number;
+    airDate?: string;
+    year?: string;
+    episodeCount: number;
+    name: string;
+    overview: string;
+    poster?: string;
+    thumbnail?: string;
+    voteAverage?: number;
+    rating?: number;
+    episodes: CompactEpisode[];
+    credits: Credits;
+}
+
 export interface TvShow extends Media {
     rating?: number;
     tagline: string;
@@ -186,6 +218,9 @@ export interface TvShow extends Media {
     dvd?: string;
     watchProviders: WatchProviders;
     reviews: ReviewResults;
+    lastAirEpisode?: CompactEpisode;
+    nextAirEpisode?: CompactEpisode;
+    seasons: Season[];
 }
 
 export interface Person extends Media {

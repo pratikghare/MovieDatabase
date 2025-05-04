@@ -164,6 +164,15 @@ const MEDIA_DETAILS = gql`
                 watchProviders {
                     ...WatchProviders
                 }
+                lastAirEpisode {
+                    ...CompactEpisode
+                }
+                nextAirEpisode {
+                    ...CompactEpisode
+                }
+                seasons {
+                    ...Season
+                }
             }
             ... on Person {
                 credits {
@@ -228,6 +237,35 @@ const MEDIA_DETAILS = gql`
         }
     }
 
+    fragment CompactEpisode on CompactEpisode {
+        id
+        name
+        overview
+        poster
+        runtime
+        airDate
+        rating
+        voteAverage
+        voteCount
+        seasonNumber
+        episodeNumber
+        episodeType
+    }
+
+    fragment Season on Season {
+        id
+        seasonNumber
+        name
+        overview
+        airDate
+        year
+        episodeCount
+        poster
+        thumbnail
+        voteAverage
+        rating
+    }
+
     fragment CompactMediaFields on CompactMedia {
         id
         mediaType
@@ -247,5 +285,5 @@ const MEDIA_DETAILS = gql`
 `;
 
 
-export const fetchMediaDetails = (id: string, media: MediaType): Promise<Movie | TvShow | Person> => 
+export const fetchMediaDetails = (id: string, media: MediaType): Promise<Movie | TvShow | Person> =>
     query(MEDIA_DETAILS, { id, media }).then(data => data.details);

@@ -55,9 +55,25 @@ const details = (_1, _a, context_2) => __awaiter(void 0, [_1, _a, context_2], vo
         console.log("ERROR: ", error);
     }
 });
+const seasonDetails = (_1, _a, context_2) => __awaiter(void 0, [_1, _a, context_2], void 0, function* (_, { id, media, seasonNumber }, context) {
+    var _b;
+    try {
+        const countryCode = ((_b = context === null || context === void 0 ? void 0 : context.location) === null || _b === void 0 ? void 0 : _b.country_code) ? context.location.country_code : env_1.DEFAULT_REGION;
+        const urls = (0, utils_1.getResolvedSeasonUrl)(id, seasonNumber, media);
+        const promises = urls.map((url) => fetch(url));
+        const responses = yield Promise.all(promises);
+        const data = yield Promise.all(responses.map((response) => response.json()));
+        const result = (0, media_utils_1.getMassgedSeasonItem)(data[0]);
+        result.credits = (0, media_utils_1.getCredits)(data[1], context_1.MediaType.TV);
+        return result;
+    }
+    catch (error) {
+        console.log("ERROR: ", error);
+    }
+});
 const mediaResolver = {
     Query: {
-        details
+        details, seasonDetails
     },
     Media
 };

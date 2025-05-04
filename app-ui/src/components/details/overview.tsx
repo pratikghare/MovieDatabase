@@ -76,23 +76,22 @@ export default function Overview() {
                 }
             </div>
 
-            {
-                <div className='flex space-x-4'>
-                    <div className='min-w-[120px] max-w-[120px] sm:max-w-[200px] md:min-w-[200px]'>
-                        {
-                            details ? <HeroImage radius='sm' className='obect w-fit md:rounded-xl' src={details.poster} alt={details.name} /> :
-                                <Skeleton className="rounded-lg min-h-[180px] sm:min-h-[200px] md:min-h-[250px] lg:max-w-[200px] lg:h-[300px] mt-4">
-                                    <div className="h-24 rounded-lg bg-secondary" />
-                                </Skeleton>
-                        }
-                    </div>
-                    <div className='flex flex-col gap-2'>
-                        <RenderOverview />
-                        {details && ('birthday' in details) && details.birthday && <p className='text-xs font-bold'>Birthday: {details.birthday}</p>}
-                        {details && ('awards' in details) && details.awards && <p className='text-xs sm:text-sm font-bold text-primary dark:text-warning'>{details.awards}</p>}
-                    </div>
+            <div className='flex space-x-4'>
+                <div className='min-w-[120px] max-w-[120px] sm:max-w-[200px] md:min-w-[200px]'>
+                    {
+                        details ? <HeroImage radius='sm' className='obect w-fit md:rounded-xl' src={details.poster} alt={details.name} /> :
+                            <Skeleton className="rounded-lg min-h-[180px] sm:min-h-[200px] md:min-h-[250px] lg:max-w-[200px] lg:h-[300px] mt-4">
+                                <div className="h-24 rounded-lg bg-secondary" />
+                            </Skeleton>
+                    }
                 </div>
-            }
+                <div className='flex flex-col gap-2'>
+                    <RenderOverview />
+                    {details && ('birthday' in details) && details.birthday && <p className='text-xs font-bold'>Birthday: {details.birthday}</p>}
+                    {details && ('awards' in details) && details.awards && <p className='text-xs sm:text-sm font-bold text-primary dark:text-warning'>{details.awards}</p>}
+                </div>
+            </div>
+
         </section>
     );
 }

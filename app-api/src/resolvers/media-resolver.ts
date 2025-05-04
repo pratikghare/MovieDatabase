@@ -1,10 +1,10 @@
-import { getResolvedOMUrl, getResolvedTMDetailsUrl, getResolvedTMExternalIdUrl, getResolvedTMUrl } from "../utils";
+import { getResolvedOMUrl, getResolvedSeasonUrl, getResolvedTMDetailsUrl, getResolvedTMExternalIdUrl, getResolvedTMUrl } from "../utils";
 
 import movie from "../../../samples/details_movie.json";
 import person from "../../../samples/details_person.json";
 import tv from "../../../samples/details_tv.json";
-import { getMassagedMedia } from "../media-utils";
-import { MediaType } from "../context/context";
+import { getCredits, getMassagedMedia, getMassgedSeasonItem } from "../media-utils";
+import { MediaType, Season } from "../context/context";
 import { DEFAULT_REGION } from "../env/env";
 
 const Media = {
@@ -53,9 +53,29 @@ const details = async (_: any, { id, media }: { id: string, media: MediaType }, 
         console.log("ERROR: ", error);
     }
 }
+
+const seasonDetails = async (_: any, { id, media, seasonNumber }: { id: string, media: MediaType, seasonNumber: number }, context: any) => {
+    try {
+        const countryCode: string = context?.location?.country_code ? context.location.country_code : DEFAULT_REGION;
+        const urls: Array<string> = getResolvedSeasonUrl(id, seasonNumber, media);
+        const promises = urls.map((url: string) => fetch(url));
+        const responses = await Promise.all(promises);
+        const data = await Promise.all(
+            responses.map((response: any) => response.json())
+        );
+        const result: Season = getMassgedSeasonItem(data[0]);
+        result.credits = getCredits(data[1], MediaType.TV);
+        return result;
+
+    }
+    catch (error) {
+        console.log("ERROR: ", error);
+    }
+}
+
 const mediaResolver = {
     Query: {
-        details
+        details, seasonDetails
     },
     Media
 }

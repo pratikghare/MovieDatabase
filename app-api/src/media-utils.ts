@@ -18,11 +18,14 @@ import {
     WatchProvider,
     Review,
     ReviewResults,
-    Author
+    Author,
+    CompactEpisode,
+    Season
 } from './context/context';
 
 import { SHORT_IMAGE_URL, IMAGE_NOT_FOUND, IMAGE_URL, VIDEOS, APP_IMAGE_PATH } from './env/env';
 import genres from '../../samples/genres.json';
+import { get } from 'http';
 var countryCode: string = "IN";
 
 export const RatingMap: Array<Ratings> = [
@@ -61,8 +64,9 @@ export function getName(item: any): string {
     return item?.name || item?.title || item?.original_name || item?.original_title || '';
 }
 
-export function getOverview(item: any): string {
-    return item?.biography || item?.overview || `We don't have a ${getMediaType(item) === MediaType.PERSON ? 'biography' : 'overview'} for ${getName(item)}.`;
+export function getOverview(item: any, mediaType = getMediaType(item)): string {
+    const overview: string | undefined = item?.overview?.length ? item.overview : item?.biography?.length ? item.biography : undefined;
+    return overview || `We don't have a ${mediaType === MediaType.PERSON ? 'biography' : 'overview'} for ${getName(item)}.`;
 }
 
 export function getCountry(item: any): string | undefined {
@@ -500,6 +504,67 @@ export function getMovieDetails(details: any, credits: any, images: any, videos:
     };
 }
 
+
+function getCompactEpisode(item: any): CompactEpisode | undefined {
+    if (!item || !item.id) return undefined;
+    return {
+        id: item.id,
+        name: item.name,
+        overview: getOverview(item, MediaType.TV),
+        airDate: getDateString(item.air_date),
+        episodeNumber: item.episode_number,
+        seasonNumber: item.season_number,
+        poster: getImage(item.still_path, true),
+        voteAverage: item.vote_average,
+        voteCount: item.vote_count,
+        rating: getTMRating(item),
+        runtime: getRuntime(item),
+        episodeType: item.episode_type
+    };
+}
+function getMassagedEpisodeList(item: any): Array<CompactEpisode> {
+    const episodes: Array<CompactEpisode> = [];
+    item && item?.forEach((item: any) => {
+        if (!item || !item.id || !item.episode_number) return;
+        const episode: CompactEpisode | undefined = getCompactEpisode(item);
+        if (episode) episodes.push(episode);
+    });
+    return episodes;
+}
+export function getMassgedSeasonItem(item: any): Season {
+    return {
+        id: item.id,
+        seasonNumber: item.season_number,
+        airDate: getDateString(item.air_date),
+        year: getYear(item),
+        episodeCount: item.episode_count,
+        name: item.name,
+        overview: getOverview(item, MediaType.TV),
+        poster: getPoster(item),
+        thumbnail: getThumbnail(item),
+        voteAverage: item.vote_average,
+        rating: getTMRating(item),
+        episodes: item.episodes ? getMassagedEpisodeList(item.episodes) : [],
+        credits: {
+            directors: [],
+            writers: [],
+            cast: [],
+            crew: []
+        }
+    }
+}
+
+function getMassagedSeasonsList(item: any): Array<Season> {
+    const seasons: Array<Season> = [];
+    item?.forEach((item: any) => {
+        if (!item || !item.id || !item.season_number) return;
+        const season: Season = getMassgedSeasonItem(item);
+        seasons.push(season);
+    })
+    return seasons;
+}
+
+
 export function getTvShowDetails(details: any, credits: any, images: any, videos: any, similar: any, recommendations: any, omdb: any, watchProviders: any, reviews: any): TvShow {
     return {
         id: details.id,
@@ -533,7 +598,10 @@ export function getTvShowDetails(details: any, credits: any, images: any, videos
         year: getYear(details) ? `(${getYear(details)})` : undefined,
         rating: getTMRating(details),
         watchProviders: getWatchProviders(watchProviders),
-        reviews: getReviewData(reviews)
+        reviews: getReviewData(reviews),
+        lastAirEpisode: getCompactEpisode(details.last_episode_to_air),
+        nextAirEpisode: getCompactEpisode(details.next_episode_to_air),
+        seasons: getMassagedSeasonsList(details.seasons)
     };
 }
 

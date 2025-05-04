@@ -41,7 +41,7 @@ export function DetailsContainer() {
         if (media.details?.backdrop) updateBackground(media.details.backdrop);
         if (media.details) setColorFromImage(dispatch, media.details.poster);
 
-    }, [media.details]);
+    }, [media.details, location.pathname]);
 
     useEffect(() => {
         let wrapper: string = '';

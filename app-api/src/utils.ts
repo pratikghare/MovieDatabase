@@ -54,3 +54,13 @@ export const fetchUserLocation = async (request: any) => {
         return { ip, location: null };
     }
 };
+
+export const getResolvedSeasonUrl = (id: string, seasonNumber: number, media: MediaType): Array<string> => {
+    const delimeters = [TV.delimiter, TV_SEASON.delimiter];
+    const values = [id, seasonNumber.toString()];
+    const url: Array<string> = [
+        getResolvedTMUrl(TV_SEASON.details, delimeters, values),
+        getResolvedTMUrl(TV_SEASON.credits, delimeters, values)
+    ];
+    return url;
+}

@@ -43,15 +43,16 @@ export default function BackgroundImage() {
         let wrapper: string = 'h-[100svh] sm:h-[80svh]';
         let content: string = 'absolute bottom-0 left-0 w-full h-64 z-10 pointer-events-none bg-gradient-to-t from-background to-transparent sm:flex';
         let base: string = '';
+        console.log('isColor', isColor);
         
         if (isColor) {
-            setBackground(config.background);
+            setBackground(config.backgroundColor);
             wrapper = 'h-[100svh] fixed';
             content = '';
         }
 
         setClasses({ base, wrapper, content });
-    }, [config.background, location.pathname]);
+    }, [config.background, config.backgroundColor, location.pathname]);
     
 
     return (

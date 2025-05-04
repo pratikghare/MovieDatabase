@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchUserLocation = exports.getResolvedTMExternalIdUrl = exports.getResolvedOMUrl = exports.getResolvedTMDetailsUrl = exports.getResolvedTMUrl = void 0;
+exports.getResolvedSeasonUrl = exports.fetchUserLocation = exports.getResolvedTMExternalIdUrl = exports.getResolvedOMUrl = exports.getResolvedTMDetailsUrl = exports.getResolvedTMUrl = void 0;
 const context_1 = require("./context/context");
 const cryptr_1 = require("./cryptr");
 const env_1 = require("./env/env");
@@ -63,3 +63,13 @@ const fetchUserLocation = (request) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.fetchUserLocation = fetchUserLocation;
+const getResolvedSeasonUrl = (id, seasonNumber, media) => {
+    const delimeters = [env_1.TV.delimiter, env_1.TV_SEASON.delimiter];
+    const values = [id, seasonNumber.toString()];
+    const url = [
+        (0, exports.getResolvedTMUrl)(env_1.TV_SEASON.details, delimeters, values),
+        (0, exports.getResolvedTMUrl)(env_1.TV_SEASON.credits, delimeters, values)
+    ];
+    return url;
+};
+exports.getResolvedSeasonUrl = getResolvedSeasonUrl;

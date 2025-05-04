@@ -4,6 +4,7 @@ import { DetailsContainer } from "../pages/details";
 import CreditsSection from "../pages/details/credits";
 import Details from "../pages/details/details";
 import { MediaType } from "../context/media-context";
+import Seasons from "../pages/details/seasons";
 
 const router = createBrowserRouter([
     {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
                         path: 'credits/',
                         element: <CreditsSection />
                     },
+                    {
+                        path: 'seasons/:seasonNumber',
+                        element: <Seasons />
+                    }
                 ]
             },
         ]

@@ -1,5 +1,5 @@
 import ColorThief from "colorthief";
-import { Image as ImageType, MediaType, ImageData, CompactMedia, TvShow, Media, Movie, Person } from "../context/media-context";
+import { Image as ImageType, MediaType, ImageData, CompactMedia, TvShow, Media, Movie, Person, Season } from "../context/media-context";
 import { clearDetails } from "../store/reducers/media-reducer";
 import { updateBackground, updateBackgroundColor } from "../store/reducers/config-reducer";
 
@@ -120,4 +120,12 @@ export const setColorFromImage = (dispatch: Function, path?: string) => {
     img.onerror = (err) => {
         console.error("Failed to load image for color extraction:", err);
     };
+}
+
+export const navigateToSeasons = (navigate: Function, details: Movie | Person | TvShow | Media, season?: Season) => {
+    navigate(`/${details.mediaType}/${details.id}/seasons/${season?.seasonNumber ? season.seasonNumber : 1}/`);
+}
+
+export const navigateToCredits = (navigate: Function, details: Movie | Person | TvShow | Media) => {
+    navigate(`/${details.mediaType}/${details.id}/credits/`);
 }
