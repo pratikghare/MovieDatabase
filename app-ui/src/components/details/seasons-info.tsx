@@ -48,7 +48,7 @@ export default function SeasonsInfo() {
 
 function EpisodeCard({ episode, title }: { episode: CompactEpisode, title: string }) {
     return episode && (
-        <Card className='min-w-[300px] w-[300px] shadow-none border-1 border-foreground/10'>
+        <Card className='min-w-[320px] max-w-[350px] shadow-none border-1 border-foreground/10'>
             <CardHeader className='justify-between'>
                 <div className='flex flex-col gap-1'>
                     <div className='flex items-center'>
@@ -63,7 +63,7 @@ function EpisodeCard({ episode, title }: { episode: CompactEpisode, title: strin
                     </div>
                 </div>
             </CardHeader>
-            <CardBody className='px-3 py-0 text-small text-default-400 backdrop'>
+            <CardBody className='px-3 py-2 text-small text-default-400 backdrop'>
                 <ScrollShadow hideScrollBar className={'max-h-[120px] text-xs '}>
                     <ComputedParagraph text={episode.overview} id={'episode-' + episode.id} />
                 </ScrollShadow>

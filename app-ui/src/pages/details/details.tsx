@@ -14,17 +14,20 @@ export default function Details() {
     const details = useSelector(mediaSelector).details;
     const location = useLocation();
     const navigate = useNavigate();
-    
+
 
     return (
         <div className='flex flex-col gap-6 p-3 px-4'>
             <Overview />
             <SeasonsInfo />
             <RevenueDetails />
-            <MediaList showSkeleton seeAll={() => { navigate('credits') }} isRounded={getMediaTypeFromPath(location.pathname) !== MediaType.PERSON}
-                list={details && details.credits?.cast ? details.credits?.cast : []}
-                title={details?.mediaType === MediaType.PERSON ? 'Known for' : 'Top Cast'}
-            />
+            {
+                !details || !!details.credits?.cast?.length ?
+                    <MediaList showSkeleton seeAll={() => { navigate('credits') }} isRounded={getMediaTypeFromPath(location.pathname) !== MediaType.PERSON}
+                        list={details && details.credits?.cast ? details.credits?.cast : []}
+                        title={details?.mediaType === MediaType.PERSON ? 'Known for' : 'Top Cast'}
+                    /> : <></>
+            }
             <StreamingPlatforms />
             <Companies />
             <ReviewDetails />
@@ -36,7 +39,7 @@ export default function Details() {
                     <MediaList list={('recommendations' in details) && details.recommendations ? details?.recommendations : []} title='You may also like' isRounded={false}></MediaList>
                 </>
             }
-            
+
         </div>
     );
 }

@@ -25,7 +25,6 @@ import {
 
 import { SHORT_IMAGE_URL, IMAGE_NOT_FOUND, IMAGE_URL, VIDEOS, APP_IMAGE_PATH } from './env/env';
 import genres from '../../samples/genres.json';
-import { get } from 'http';
 var countryCode: string = "IN";
 
 export const RatingMap: Array<Ratings> = [
@@ -255,6 +254,7 @@ function getCompactMediaSubText(item: any): Array<string> {
 export function getSubtext(item: any, omdb?: any): string[] {
     const subText: string[] = [];
     // if (getYear(item)) subText.push(getYear(item)!);
+    if (omdb?.Rated) subText.push(omdb.Rated);
     if (getDepartment(item)) subText.push(getDepartment(item)!);
     if (getRuntime(item)) subText.push(getRuntime(item)!);
     if (item?.deathday) subText.push('Died - ' + getDateString(item.deathday));
@@ -263,7 +263,6 @@ export function getSubtext(item: any, omdb?: any): string[] {
     if (omdb?.Rate && omdb.Rated !== 'N/A') subText.push(omdb.Rated);
     const age = calculateAge(item.birthday);
     if (item.birthday && age && !item.deathday) subText.push(age);
-    if (omdb?.Rated) subText.push(omdb.Rated);
     return subText;
 }
 
@@ -536,8 +535,8 @@ export function getMassgedSeasonItem(item: any): Season {
         id: item.id,
         seasonNumber: item.season_number,
         airDate: getDateString(item.air_date),
-        year: getYear(item),
-        episodeCount: item.episode_count,
+        year: getYear(item) ? `(${getYear(item)})` : undefined,
+        episodeCount: item.episode_count ? item.episode_count : item.episodes.length,
         name: item.name,
         overview: getOverview(item, MediaType.TV),
         poster: getPoster(item),

@@ -33,7 +33,7 @@ export default function MediaList({ list, title = '', seeAll, isRounded, showSke
             showSkeleton &&
             <HorizontalScroll className={'gap-4 ' + (classNames?.skeletonBase ? classNames.skeletonBase : '')}>
                 {
-                    [1, 2, 3, 4].map((index: number) => (
+                    Array(4).fill(1).map((_, index: number) => (
                         <div key={'media-list-skeleton-' + index} className='space-y-2' style={{ width }}>
                             <Skeleton className={!isRounded ? 'rounded-lg' : 'rounded-full'}>
                                 <div className='rounded-full bg-secondary' style={{ height: (!isRounded? height : width), width }} />

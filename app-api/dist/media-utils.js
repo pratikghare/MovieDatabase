@@ -251,6 +251,8 @@ function getCompactMediaSubText(item) {
 function getSubtext(item, omdb) {
     const subText = [];
     // if (getYear(item)) subText.push(getYear(item)!);
+    if (omdb === null || omdb === void 0 ? void 0 : omdb.Rated)
+        subText.push(omdb.Rated);
     if (getDepartment(item))
         subText.push(getDepartment(item));
     if (getRuntime(item))
@@ -266,8 +268,6 @@ function getSubtext(item, omdb) {
     const age = calculateAge(item.birthday);
     if (item.birthday && age && !item.deathday)
         subText.push(age);
-    if (omdb === null || omdb === void 0 ? void 0 : omdb.Rated)
-        subText.push(omdb.Rated);
     return subText;
 }
 function getMassagedCompactMedia(item, mediaType) {
@@ -468,8 +468,8 @@ function getMassgedSeasonItem(item) {
         id: item.id,
         seasonNumber: item.season_number,
         airDate: getDateString(item.air_date),
-        year: getYear(item),
-        episodeCount: item.episode_count,
+        year: getYear(item) ? `(${getYear(item)})` : undefined,
+        episodeCount: item.episode_count ? item.episode_count : item.episodes.length,
         name: item.name,
         overview: getOverview(item, context_1.MediaType.TV),
         poster: getPoster(item),
