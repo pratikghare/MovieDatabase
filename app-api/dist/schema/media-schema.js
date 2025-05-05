@@ -163,6 +163,8 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
         site: String!
         type: String
         name: String
+        embedUrl: String!
+        thumbnail: String!
     }
 
     type Credits {

@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TV_GENRES = exports.MOVIE_GENRES = exports.TV_EPISODE = exports.TV_SEASON = exports.TV = exports.PERSON = exports.MOVIE = exports.OMDB_DEL = exports.OMDB_URL = exports.VIDEOS = exports.SHORT_IMAGE_URL = exports.IMAGE_URL = exports.IMAGE_URLS = exports.DEFAULT_BG_IMAGE = exports.IMAGE_NOT_FOUND = exports.APP_IMAGE_PATH = exports.SEARCH_DEL = exports.SEARCH = exports.DEFAULT_REGION = exports.PORT = void 0;
 exports.PORT = 4462;
 // REGION
-exports.DEFAULT_REGION = "IN";
+exports.DEFAULT_REGION = 'IN';
 // MULTI SEARCH
 exports.SEARCH = `https://api.themoviedb.org/3/search/multi?query={query}&`;
 exports.SEARCH_DEL = `{query}`;
 // DEFAULT IMAGE PATH
-exports.APP_IMAGE_PATH = "/";
+exports.APP_IMAGE_PATH = '/';
 exports.IMAGE_NOT_FOUND = `${exports.APP_IMAGE_PATH}not_found.png`;
 exports.DEFAULT_BG_IMAGE = `${exports.APP_IMAGE_PATH}bg-default.jpg`;
 // IMAGES
@@ -24,12 +24,17 @@ exports.SHORT_IMAGE_URL = exports.IMAGE_URLS[4];
 // VIDEO
 exports.VIDEOS = [
     {
-        site: "YouTube",
-        url: "www.youtube.com/watch?v="
+        site: 'YouTube',
+        url: 'www.youtube.com/watch?v=',
+        embed: 'https://www.youtube.com/embed/',
+        thumbnail: 'https://img.youtube.com/vi/{id}/mqdefault.jpg'
+        //hqdefault.jpg'
     },
     {
-        site: "Vimeo",
-        url: "https://vimeo.com/"
+        site: 'Vimeo',
+        url: 'https://vimeo.com/',
+        embed: 'https://vimeo.com/',
+        thumbnail: ''
     }
 ];
 exports.OMDB_URL = `https://www.omdbapi.com/?i={id}&apikey=`;

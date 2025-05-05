@@ -98,12 +98,12 @@ function getDateString(date) {
 function getYear(item) {
     return getDateString((item === null || item === void 0 ? void 0 : item.release_date) || (item === null || item === void 0 ? void 0 : item.first_air_date) || (item === null || item === void 0 ? void 0 : item.last_air_date) || (item === null || item === void 0 ? void 0 : item.air_date)).split(' ')[2] || undefined;
 }
-function calculateAge(dob) {
+function calculateAge(dob, dod) {
     const birthDate = new Date(dob);
     if (isNaN(birthDate.getTime())) {
         return undefined;
     }
-    const today = new Date();
+    const today = dod ? new Date(dod) : new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
@@ -238,7 +238,9 @@ function getVideos(data) {
             url: videoUrl.url + item.key,
             site: item.site,
             type: item.type,
-            name: item.name
+            name: item.name,
+            embedUrl: videoUrl.embed + item.key,
+            thumbnail: videoUrl.thumbnail.replace('{id}', item.key)
         });
     });
     return videos;
@@ -251,23 +253,23 @@ function getCompactMediaSubText(item) {
 function getSubtext(item, omdb) {
     const subText = [];
     // if (getYear(item)) subText.push(getYear(item)!);
-    if (omdb === null || omdb === void 0 ? void 0 : omdb.Rated)
+    if ((omdb === null || omdb === void 0 ? void 0 : omdb.Rated) && omdb.Rated !== 'N/A')
         subText.push(omdb.Rated);
     if (getDepartment(item))
         subText.push(getDepartment(item));
     if (getRuntime(item))
         subText.push(getRuntime(item));
-    if (item === null || item === void 0 ? void 0 : item.deathday)
-        subText.push('Died - ' + getDateString(item.deathday));
     if (getReleased(item))
         subText.push(getReleased(item));
     if (getCountry(item))
         subText.push(getCountry(item));
     if ((omdb === null || omdb === void 0 ? void 0 : omdb.Rate) && omdb.Rated !== 'N/A')
         subText.push(omdb.Rated);
-    const age = calculateAge(item.birthday);
+    const age = calculateAge(item.birthday, item.deathday);
     if (item.birthday && age && !item.deathday)
         subText.push(age);
+    if (item === null || item === void 0 ? void 0 : item.deathday)
+        subText.push(`Died - ` + getDateString(item.deathday) + (age ? ' (age ' + (age === null || age === void 0 ? void 0 : age.split(' ')[0]) + ')' : ''));
     return subText;
 }
 function getMassagedCompactMedia(item, mediaType) {
@@ -389,7 +391,7 @@ function getProviderArray(list) {
 function getWatchProviders(watchProviders) {
     if (!watchProviders)
         return { subscription: [], rent: [], buy: [] };
-    const regions = Object.keys(watchProviders);
+    // const regions: Array<string> = Object.keys(watchProviders);
     const regionProvider = (countryCode in watchProviders) ? watchProviders[countryCode] : null;
     const data = {
         subscription: getProviderArray(regionProvider === null || regionProvider === void 0 ? void 0 : regionProvider.flatrate),
@@ -464,12 +466,13 @@ function getMassagedEpisodeList(item) {
     return episodes;
 }
 function getMassgedSeasonItem(item) {
+    var _a;
     return {
         id: item.id,
         seasonNumber: item.season_number,
         airDate: getDateString(item.air_date),
         year: getYear(item) ? `(${getYear(item)})` : undefined,
-        episodeCount: item.episode_count ? item.episode_count : item.episodes.length,
+        episodeCount: item.episode_count ? item.episode_count : (_a = item === null || item === void 0 ? void 0 : item.episodes) === null || _a === void 0 ? void 0 : _a.length,
         name: item.name,
         overview: getOverview(item, context_1.MediaType.TV),
         poster: getPoster(item),

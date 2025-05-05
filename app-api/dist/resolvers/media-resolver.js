@@ -47,9 +47,8 @@ const details = (_1, _a, context_2) => __awaiter(void 0, [_1, _a, context_2], vo
             data.push(yield (yield fetch((0, utils_1.getResolvedOMUrl)(data[0].imdb_id))).json());
         }
         // const data: any[] = media === MediaType.MOVIE ? movie : media === MediaType.PERSON ? person : tv;
-        console.log(countryCode);
         const result = (0, media_utils_1.getMassagedMedia)(data, media, countryCode);
-        return result;
+        return result.id ? result : null;
     }
     catch (error) {
         console.log("ERROR: ", error);
