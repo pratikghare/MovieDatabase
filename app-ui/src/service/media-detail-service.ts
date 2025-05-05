@@ -44,6 +44,8 @@ const MEDIA_DETAILS = gql`
                     site
                     type
                     name
+                    embedUrl
+                    thumbnail
                 }
                 genres {
                     id
@@ -110,6 +112,8 @@ const MEDIA_DETAILS = gql`
                     site
                     type
                     name
+                    embedUrl
+                    thumbnail
                 }
                 genres {
                     id

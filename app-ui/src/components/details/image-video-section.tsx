@@ -50,13 +50,17 @@ export default function ImageSection() {
     const scrollToLeft = () => {
         const elements: any = document.getElementsByClassName('image-section-scroll');
         for (let i = 0; i < elements.length; i++) {
-            elements[i].scrollLeft = 100;
+            elements[i].scrollLeft = 50;
             if (images.length > 10) elements[i].style.overflowX = 'hidden';
         }
     }
 
     const seeAll = () => {
         navigate('media');
+    }
+
+    const navigateToMedia = (id?: string) => {
+        navigate(`media/${id ? id : ''}`);
     }
 
 
@@ -67,14 +71,15 @@ export default function ImageSection() {
                 <h1 className='font-bold'>{title}</h1>
                 {
                     (images.length >= 10 || !!videos.length) &&
-                    <Link className='text-xs cursor-pointer text-primary hover:underline' onPress={seeAll}>{'See All'}</Link>
+                    <Link className='text-xs cursor-pointer text-primary hover:underline' onPress={() => navigateToMedia()}>{'See All'}</Link>
                 }
             </div>
             <HorizontalScroll className='flex gap-2 image-section-scroll '>
                 {
                     list1.map((item: ImageType, index: number) => (
                         <Image radius='none' className='rounded-[5px]' key={item.path + '_' + index} src={item.thumbnail}
-                            style={{ height, width: getImageWidth(item, height), minWidth: getImageWidth(item, height) }}
+                            onClick={() => navigateToMedia(item.path.split('/')[item.path.split('/').length - 1])}
+                            style={{ height, width: getImageWidth(item, height), minWidth: getImageWidth(item, height), cursor: 'pointer' }}
                         />
                     ))
                 }
@@ -85,7 +90,8 @@ export default function ImageSection() {
                     {
                         list2.map((item: ImageType, index: number) => (
                             <Image radius='none' className='rounded-[5px]' key={item.path + '_' + index} src={item.thumbnail}
-                                style={{ height, width: getImageWidth(item, height), minWidth: getImageWidth(item, height) }}
+                                onClick={() => navigateToMedia(item.path.split('/')[item.path.split('/').length - 1])}
+                                style={{ height, width: getImageWidth(item, height), minWidth: getImageWidth(item, height), cursor: 'pointer' }}
                             />
                         ))
                     }

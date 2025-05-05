@@ -76,6 +76,8 @@ export interface Video {
     site: string;
     type: string;
     name: string;
+    embedUrl: string;
+    thumbnail: string;
 }
 
 export interface Credits {
@@ -182,7 +184,7 @@ export interface Season {
     seasonNumber: number;
     airDate?: string;
     year?: string;
-    episodeCount: number;
+    episodeCount?: number;
     name: string;
     overview: string;
     poster?: string;
@@ -234,4 +236,5 @@ export interface Person extends Media {
 export interface MediaReducer {
     search: CompactMediaResults;
     details?: Movie | Person | TvShow | Media;
+    loader: boolean;
 }

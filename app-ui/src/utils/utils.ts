@@ -1,5 +1,5 @@
 import ColorThief from "colorthief";
-import { Image as ImageType, MediaType, ImageData, CompactMedia, TvShow, Media, Movie, Person, Season } from "../context/media-context";
+import { Image as ImageType, MediaType, ImageData, CompactMedia, TvShow, Media, Movie, Person, Season, Credits } from "../context/media-context";
 import { clearDetails } from "../store/reducers/media-reducer";
 import { updateBackground, updateBackgroundColor } from "../store/reducers/config-reducer";
 
@@ -27,7 +27,7 @@ export const getBackgroundImages = (backdrop?: string, images?: ImageData): Arra
 }
 
 export const getIsColor = (backdrop?: string, path?: string): boolean => {
-    const paths: Array<string> = ['credits', 'images'];
+    const paths: Array<string> = ['credits', 'images', 'media'];
     if (!backdrop || backdrop.includes('rgb(')) return true;
     if (!path || paths.find(p => path.includes(p))) return true;
     return false;
@@ -113,7 +113,7 @@ export const setColorFromImage = (dispatch: Function, path?: string) => {
     img.onload = () => {
         const colorThief = new ColorThief();
         const dominantColor = colorThief.getColor(img);  // Get the dominant color
-        console.log('Setting dominant color:', `rgb(${dominantColor.join(', ')})`);
+        // console.log('Setting dominant color:', `rgb(${dominantColor.join(', ')})`);
         dispatch(updateBackgroundColor(`rgb(${dominantColor.join(', ')})`));
     };
 
@@ -128,4 +128,18 @@ export const navigateToSeasons = (navigate: Function, details: Movie | Person | 
 
 export const navigateToCredits = (navigate: Function, details: Movie | Person | TvShow | Media) => {
     navigate(`/${details.mediaType}/${details.id}/credits/`);
+}
+
+export const navigateToMedia = (navigate: Function, id?: string) => {
+    navigate(`media/${id ? id : ''}`);
+}
+
+export const getMappedCredits = (data?: Credits): Credits => {
+    const credits: Credits = {
+        directors: data?.directors ? data.directors : [],
+        writers: data?.writers ? data.writers : [],
+        cast: data?.cast ? data.cast : [],
+        crew: data?.crew ? data.crew : []
+    }
+    return credits;
 }

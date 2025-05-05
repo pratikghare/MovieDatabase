@@ -84,14 +84,14 @@ export function getYear(item: any): string | undefined {
     return getDateString(item?.release_date || item?.first_air_date || item?.last_air_date || item?.air_date).split(' ')[2] || undefined;
 }
 
-export function calculateAge(dob: string | number): string | undefined {
+export function calculateAge(dob: string | number, dod?: string | number): string | undefined {
     const birthDate = new Date(dob);
 
     if (isNaN(birthDate.getTime())) {
         return undefined;
     }
 
-    const today = new Date();
+    const today = dod ? new Date(dod) : new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
 
@@ -239,7 +239,9 @@ export function getVideos(data: any): Video[] {
             url: videoUrl.url + item.key,
             site: item.site,
             type: item.type,
-            name: item.name
+            name: item.name,
+            embedUrl: videoUrl.embed + item.key,
+            thumbnail: videoUrl.thumbnail.replace('{id}', item.key)
         })
     });
     return videos;
@@ -254,15 +256,15 @@ function getCompactMediaSubText(item: any): Array<string> {
 export function getSubtext(item: any, omdb?: any): string[] {
     const subText: string[] = [];
     // if (getYear(item)) subText.push(getYear(item)!);
-    if (omdb?.Rated) subText.push(omdb.Rated);
+    if (omdb?.Rated && omdb.Rated !== 'N/A') subText.push(omdb.Rated);
     if (getDepartment(item)) subText.push(getDepartment(item)!);
     if (getRuntime(item)) subText.push(getRuntime(item)!);
-    if (item?.deathday) subText.push('Died - ' + getDateString(item.deathday));
     if (getReleased(item)) subText.push(getReleased(item)!);
     if (getCountry(item)) subText.push(getCountry(item)!);
     if (omdb?.Rate && omdb.Rated !== 'N/A') subText.push(omdb.Rated);
-    const age = calculateAge(item.birthday);
+    const age = calculateAge(item.birthday, item.deathday);
     if (item.birthday && age && !item.deathday) subText.push(age);
+    if (item?.deathday) subText.push(`Died - ` + getDateString(item.deathday) +  ( age ? ' (age ' + age?.split(' ')[0] + ')' : '') );
     return subText;
 }
 
@@ -419,7 +421,7 @@ function getProviderArray(list?: Array<any>): Array<WatchProvider> {
 
 export function getWatchProviders(watchProviders: any): WatchProviders {
     if (!watchProviders) return { subscription: [], rent: [], buy: [] };
-    const regions: Array<string> = Object.keys(watchProviders);
+    // const regions: Array<string> = Object.keys(watchProviders);
     const regionProvider: any = (countryCode in watchProviders) ? watchProviders[countryCode] : null;
     const data: WatchProviders = {
         subscription: getProviderArray(regionProvider?.flatrate),
@@ -536,7 +538,7 @@ export function getMassgedSeasonItem(item: any): Season {
         seasonNumber: item.season_number,
         airDate: getDateString(item.air_date),
         year: getYear(item) ? `(${getYear(item)})` : undefined,
-        episodeCount: item.episode_count ? item.episode_count : item.episodes.length,
+        episodeCount: item.episode_count ? item.episode_count : item?.episodes?.length,
         name: item.name,
         overview: getOverview(item, MediaType.TV),
         poster: getPoster(item),

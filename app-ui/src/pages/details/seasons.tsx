@@ -63,7 +63,7 @@ export default function Seasons() {
                             <div className='flex gap-2 items-center flex-wrap'>
                                 {
                                     details.seasons.map((season: Season) => (
-                                        <Chip onClick={() => navigateToSeasons(navigate, details, season)}
+                                        <Chip isDisabled={!active} onClick={() => navigateToSeasons(navigate, details, season)}
                                             key={season.id + '-' + season.seasonNumber}
                                             className={'text-xs cursor-pointer border-1 border-foreground-50 hover:bg-foreground/20 ' + (active?.seasonNumber === season.seasonNumber ? 'border-1 border-foreground/50' : '')}
                                         >
@@ -92,7 +92,7 @@ export default function Seasons() {
                                 {details.name}
                                 {active.year && <span className='text-sm sm:text-md md:text-lg ml-1'>{active.year}</span>}
                             </h1>
-                            <h1 className='text-xs md:text-sm'>{active.name} ({active.episodeCount} episodes)</h1>
+                            <h1 className='text-xs md:text-sm'>{active.name} { !!active.episodeCount && `(${active.episodeCount} episodes)` }</h1>
                         </div> :
                         <div className='w-full flex flex-col gap-2 overflow-hidden mt-6'>
                             <Skeleton className='h-3 w-4/5 rounded-lg' />
@@ -132,7 +132,7 @@ export default function Seasons() {
                     !!active?.episodes.length && <h1 className='font-bold'>Episodes ({active.episodes.length})</h1>
                 }
                 {
-                    !!active?.episodes?.length ?
+                    !!active?.episodes ?
                     active?.episodes.map((episode: CompactEpisode) => (
                         <EpisodeCard key={episode.id} episode={episode} title={active.name + ' - ' + episode.name} />
                     )) :
@@ -156,10 +156,10 @@ function EpisodeCard({ episode, title }: { episode?: CompactEpisode, title: stri
             <div className='flex flex-col sm:flex-row gap-2 sm:gap-4 items-start p-2'>
                 {
                     !episode || !!episode.poster ?
-                        <div className=' h-full'>
+                        <div className=' h-full flex-shrink-0'>
                             {
                                 !!episode ?
-                                    <Image radius='none' className='obect rounded-md' style={{ height, width, minHeight: height, minWidth: width }} src={episode.poster} alt={title} /> :
+                                    <Image radius='none' className='obect object-cover rounded-md' style={{ height, minHeight: height, maxHeight: height }} src={episode.poster} alt={title} /> :
                                     <Skeleton className='rounded-md' style={{ height, width, minHeight: height, minWidth: width }}>
                                         <div className='h-full rounded-md bg-secondary' />
                                     </Skeleton>

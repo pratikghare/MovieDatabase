@@ -5,6 +5,7 @@ import { ScrollShadow } from '@heroui/react';
 import useTimer from '../hooks/useTimer';
 import { getBackgroundImages, getIsColor } from '../utils/utils';
 import { useLocation } from 'react-router';
+import { MediaType } from '../context/media-context';
 
 
 export default function BackgroundImage() {
@@ -27,7 +28,8 @@ export default function BackgroundImage() {
 
     useEffect(() => {
         // console.log('changed', config.background, location.pathname, getIsColor(config.background, location.pathname));
-        if (!getIsColor(config.background, location.pathname)) {
+        const isColor: boolean = getIsColor(config.background, location.pathname) || !media.details || media?.details?.mediaType === MediaType.PERSON;
+        if (!isColor) {
             const index: number = timer % backgrounds.length;
             setBackground(`url('${backgrounds[index]}') center top / cover`);
         }
@@ -35,15 +37,15 @@ export default function BackgroundImage() {
             // console.log('ELSE BACKGROUND', config.backgroundColor);
             setBackground(config.backgroundColor);
         }
-    }, [timer, backgrounds, location.pathname, config.backgroundColor])
+    }, [timer, backgrounds, location.pathname, config.backgroundColor, media.details])
 
     useEffect(() => {
         // console.log('second', config.background, location.pathname, getIsColor(config.background, location.pathname));
-        const isColor = getIsColor(config.background, location.pathname);
+        const isColor: boolean = getIsColor(config.background, location.pathname) || !media.details || media?.details?.mediaType === MediaType.PERSON;
         let wrapper: string = 'h-[100svh] sm:h-[80svh]';
         let content: string = 'absolute bottom-0 left-0 w-full h-64 z-10 pointer-events-none bg-gradient-to-t from-background to-transparent sm:flex';
         let base: string = '';
-        console.log('isColor', isColor);
+        // console.log('isColor', isColor);
         
         if (isColor) {
             setBackground(config.backgroundColor);

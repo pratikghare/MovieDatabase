@@ -5,6 +5,9 @@ import CreditsSection from "../pages/details/credits";
 import Details from "../pages/details/details";
 import { MediaType } from "../context/media-context";
 import Seasons from "../pages/details/seasons";
+import PageNotFound from "../pages/page-not-found";
+import ImagesVideos from "../pages/details/image-videos";
+import ImageViewer from "../pages/details/image-viewer";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +30,18 @@ const router = createBrowserRouter([
                         path: 'credits/',
                         element: <CreditsSection />
                     },
+                    {
+                        path: 'media/:mediaId',
+                        element: <ImageViewer />,
+                        loader: async ({ params }) => {
+                            const mediaId: string | undefined = params?.mediaId;
+                            return { mediaId, media: MediaType.PERSON };
+                        },
+                    },
+                    {
+                        path: 'media/',
+                        element: <ImagesVideos />,
+                    },
                 ]
             },
             {
@@ -44,6 +59,18 @@ const router = createBrowserRouter([
                     {
                         path: 'credits/',
                         element: <CreditsSection />
+                    },
+                    {
+                        path: 'media/:mediaId',
+                        element: <ImageViewer />,
+                        loader: async ({ params }) => {
+                            const mediaId: string | undefined = params?.mediaId;
+                            return { mediaId, media: MediaType.MOVIE };
+                        },
+                    },
+                    {
+                        path: 'media/',
+                        element: <ImagesVideos />,
                     },
                 ]
             },
@@ -66,9 +93,25 @@ const router = createBrowserRouter([
                     {
                         path: 'seasons/:seasonNumber',
                         element: <Seasons />
-                    }
+                    },
+                    {
+                        path: 'media/:mediaId',
+                        element: <ImageViewer />,
+                        loader: async ({ params }) => {
+                            const mediaId: string | undefined = params?.mediaId;
+                            return { mediaId, media: MediaType.TV };
+                        },
+                    },
+                    {
+                        path: 'media/',
+                        element: <ImagesVideos />,
+                    },
                 ]
             },
+            {
+                path: '*',
+                element: <PageNotFound />
+            }
         ]
     }
 ]);

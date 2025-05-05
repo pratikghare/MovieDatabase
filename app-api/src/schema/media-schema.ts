@@ -163,6 +163,8 @@ const mediaSchema = gql`
         site: String!
         type: String
         name: String
+        embedUrl: String!
+        thumbnail: String!
     }
 
     type Credits {

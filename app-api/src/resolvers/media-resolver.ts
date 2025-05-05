@@ -44,9 +44,8 @@ const details = async (_: any, { id, media }: { id: string, media: MediaType }, 
         }
         
         // const data: any[] = media === MediaType.MOVIE ? movie : media === MediaType.PERSON ? person : tv;
-        console.log(countryCode)
         const result = getMassagedMedia(data, media, countryCode);
-        return result;
+        return result.id ? result : null;
 
     }
     catch (error) {

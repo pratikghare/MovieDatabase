@@ -1,14 +1,14 @@
 export const PORT = 4462;
 
 // REGION
-export const DEFAULT_REGION = "IN";
+export const DEFAULT_REGION = 'IN';
 
 // MULTI SEARCH
 export const SEARCH = `https://api.themoviedb.org/3/search/multi?query={query}&`;
 export const SEARCH_DEL = `{query}`;
 
 // DEFAULT IMAGE PATH
-export const APP_IMAGE_PATH = "/";
+export const APP_IMAGE_PATH = '/';
 export const IMAGE_NOT_FOUND = `${APP_IMAGE_PATH}not_found.png`;
 export const DEFAULT_BG_IMAGE = `${APP_IMAGE_PATH}bg-default.jpg`;
 
@@ -26,12 +26,17 @@ export const SHORT_IMAGE_URL = IMAGE_URLS[4];
 // VIDEO
 export const VIDEOS = [
     {
-        site: "YouTube",
-        url: "www.youtube.com/watch?v="
+        site: 'YouTube',
+        url: 'www.youtube.com/watch?v=',
+        embed: 'https://www.youtube.com/embed/',
+        thumbnail: 'https://img.youtube.com/vi/{id}/mqdefault.jpg'
+        //hqdefault.jpg'
     },
     {
-        site: "Vimeo",
-        url: "https://vimeo.com/"
+        site: 'Vimeo',
+        url: 'https://vimeo.com/',
+        embed: 'https://vimeo.com/',
+        thumbnail: ''
     }
 ]
 

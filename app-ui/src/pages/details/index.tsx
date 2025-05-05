@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Outlet, useLoaderData, useLocation } from 'react-router';
+import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
 import { configSelector, mediaSelector, useAppDispatch } from '../../store/selectors';
 import { detailsQuery } from '../../store/reducers/media-reducer';
 import { MediaType } from '../../context/media-context';
@@ -20,6 +20,7 @@ export function DetailsContainer() {
     const config = useSelector(configSelector);
     const location = useLocation();
     const params = useLoaderData() as LoaderParams;
+    const navigate = useNavigate();
 
     const [classes, setClasses] = useState<{ base: string, wrapper: string, content: string }>({ base: '', wrapper: '', content: '' });
     const [backgroundToggle, setBackgroundToggle] = useState<boolean>(false);
@@ -41,21 +42,24 @@ export function DetailsContainer() {
         if (media.details?.backdrop) updateBackground(media.details.backdrop);
         if (media.details) setColorFromImage(dispatch, media.details.poster);
 
-    }, [media.details, location.pathname]);
+        if (!media.details && !media.loader) navigate('/page-not-found');
+
+    }, [media.details, location.pathname, media.loader]);
 
     useEffect(() => {
         let wrapper: string = '';
         let content: string = '';
         let base: string = '';
+        // console.log('pathchanged')
 
-        const isColor = getIsColor(config.background, location.pathname);
+        const isColor = getIsColor(config.background, location.pathname) || !media.details || media?.details?.mediaType === MediaType.PERSON;
         // console.log('isColor', isColor)
         if (!isColor) {
             base = 'rounded-t-lg ' + (backgroundToggle ? 'mt-[70svh]' : 'mt-[30svh] md:mt-[20svh]');
         }
 
         setClasses({ base, wrapper, content });
-    }, [config.background, location.pathname, backgroundToggle]);
+    }, [config.background, location.pathname, backgroundToggle, media.details]);
 
     return (
         <section className={'transition-ease bg-background/50 backdrop-blur-md min-h-[calc(100svh_-_144px)] sm:min-h-[calc(100svh_-_164px)] ' + (classes && classes.base)}>
