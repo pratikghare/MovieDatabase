@@ -55,14 +55,9 @@ export default function ImageSection() {
         }
     }
 
-    const seeAll = () => {
-        navigate('media');
-    }
-
     const navigateToMedia = (id?: string) => {
         navigate(`media/${id ? id : ''}`);
     }
-
 
     return (
         images.length > 1 &&
