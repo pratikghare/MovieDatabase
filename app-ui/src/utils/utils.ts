@@ -1,13 +1,13 @@
-import ColorThief from "colorthief";
-import { Image as ImageType, MediaType, ImageData, CompactMedia, TvShow, Media, Movie, Person, Season, Credits } from "../context/media-context";
-import { clearDetails } from "../store/reducers/media-reducer";
-import { updateBackground, updateBackgroundColor } from "../store/reducers/config-reducer";
+import ColorThief from 'colorthief';
+import { Image as ImageType, MediaType, ImageData, CompactMedia, TvShow, Media, Movie, Person, Season, Credits } from '../context/media-context';
+import { clearDetails } from '../store/reducers/media-reducer';
+import { updateBackground, updateBackgroundColor } from '../store/reducers/config-reducer';
 
 export const getMediaType = (media?: string) => media === 'tv' ? MediaType.TV : media === 'movie' ? MediaType.MOVIE : MediaType.PERSON;
 
 export const getMediaDataFromPathName = (path: string): { valid: boolean, id: string, media: MediaType } => {
     const [, media, id] = path.split('/');
-    if (!id?.length || !media?.length) return { valid: false, id: "", media: getMediaType(media) };
+    if (!id?.length || !media?.length) return { valid: false, id: '', media: getMediaType(media) };
     return { valid: true, id, media: getMediaType(media) };
 }
 
@@ -118,7 +118,7 @@ export const setColorFromImage = (dispatch: Function, path?: string) => {
     };
 
     img.onerror = (err) => {
-        console.error("Failed to load image for color extraction:", err);
+        console.error('Failed to load image for color extraction:', err);
     };
 }
 

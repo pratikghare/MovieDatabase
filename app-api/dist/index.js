@@ -29,7 +29,7 @@ function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         yield server.start();
         server.applyMiddleware({ app });
-        app.get("/health", (_, res) => res.send("OK"));
+        app.get('/health', (_, res) => res.send('OK'));
         app.listen({ port: env_1.PORT }, () => {
             console.log(`🚀 Server running on http://localhost:${env_1.PORT}${server.graphqlPath}`);
         });

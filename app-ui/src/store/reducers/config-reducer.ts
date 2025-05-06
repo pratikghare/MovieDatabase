@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NavigationKeyType, NavigationTabKeys } from "../../context/common";
-import { setCurrentTabStorage } from "../../utils/storage-utils";
-import { MediaType, PAGES } from "../../context/media-context";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NavigationKeyType, NavigationTabKeys } from '../../context/common';
+import { setCurrentTabStorage } from '../../utils/storage-utils';
+import { MediaType, PAGES } from '../../context/media-context';
 
 interface Config {
     loader: boolean;
@@ -12,8 +12,8 @@ interface Config {
     isLoggedIn: boolean;
     comingFrom: PAGES;
     theme: {
-        theme: "light" | "dark" | "system";
-        current: "light" | "dark";
+        theme: 'light' | 'dark' | 'system';
+        current: 'light' | 'dark';
     }
 }
 
@@ -21,15 +21,15 @@ const initialState: Config = {
     loader: true,
     tab: NavigationTabKeys.home,
     theme: {
-        theme: "dark",
-        current: "dark"
+        theme: 'dark',
+        current: 'dark'
     },
     isLoggedIn: false,
     comingFrom: PAGES.HOME
 }
 
 const config = createSlice({
-    name: "config", initialState,
+    name: 'config', initialState,
     reducers: {
         updateLoader: (state: any, action: PayloadAction<boolean>) => ({ ...state, loader: action.payload }),
         updateCurrentTab: (state: any, action: PayloadAction<NavigationKeyType>) => {

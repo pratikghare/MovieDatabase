@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
-import { getCleanText, updateArrayUsingProperty } from "../../utils/utils";
-import { mediaSelector } from "../../store/selectors";
-import { useState, useEffect } from "react";
-import { Movie, Person, TvShow, Media, WatchProvider, ProductionCompany } from "../../context/media-context";
-import { Image } from "@heroui/react";
+import { useSelector } from 'react-redux';
+import { getCleanText, updateArrayUsingProperty } from '../../utils/utils';
+import { mediaSelector } from '../../store/selectors';
+import { useState, useEffect } from 'react';
+import { Movie, Person, TvShow, Media, WatchProvider, ProductionCompany } from '../../context/media-context';
+import { Image } from '@heroui/react';
 
 export function ComputedParagraph({ text, id }: { text: string, id: string }) {
     const list: Array<string> = text?.length ? text.split('\n').filter(Boolean) : [];

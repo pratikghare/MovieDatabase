@@ -1,5 +1,5 @@
 export enum MediaType {
-    PERSON = "person", TV = "tv", MOVIE = "movie"
+    PERSON = 'person', TV = 'tv', MOVIE = 'movie'
 }
 
 export interface CompactMedia {

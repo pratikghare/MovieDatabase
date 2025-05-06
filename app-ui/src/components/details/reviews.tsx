@@ -1,11 +1,11 @@
-import { Card, CardHeader, Avatar, CardBody, ScrollShadow, CardFooter, Image } from "@heroui/react";
-import { Media, Movie, Person, TvShow, Ratings, Review } from "../../context/media-context";
-import HorizontalScroll from "../horizontal-scroll";
-import { RottenTomatoes } from "../icons";
-import { ComputedParagraph } from "./details-exports";
-import { StarRating } from "./star-rating";
-import { useSelector } from "react-redux";
-import { mediaSelector } from "../../store/selectors";
+import { Card, CardHeader, Avatar, CardBody, ScrollShadow, CardFooter, Image } from '@heroui/react';
+import { Media, Movie, Person, TvShow, Ratings, Review } from '../../context/media-context';
+import HorizontalScroll from '../horizontal-scroll';
+import { RottenTomatoes } from '../icons';
+import { ComputedParagraph } from './details-exports';
+import { StarRating } from './star-rating';
+import { useSelector } from 'react-redux';
+import { mediaSelector } from '../../store/selectors';
 
 function RatingDetails({ type, className }: { type?: 'all' | 'stars' | 'others', className?: string}) {
     const details: Movie | Person | TvShow | Media | undefined = useSelector(mediaSelector).details;
@@ -50,31 +50,31 @@ export default function ReviewDetails() {
                     <HorizontalScroll className='flex gap-2 !bg-transparent pb-1 '>
                         {
                             reviews.map((review: Review) => (
-                                <Card key={review.id} className="min-w-[300px] shadow-none border-1 border-foreground/10">
-                                    <CardHeader className="justify-between">
-                                        <div className="flex gap-2">
+                                <Card key={review.id} className='min-w-[300px] shadow-none border-1 border-foreground/10'>
+                                    <CardHeader className='justify-between'>
+                                        <div className='flex gap-2'>
                                             <Avatar
                                                 isBordered
-                                                radius="full"
-                                                size="sm"
+                                                radius='full'
+                                                size='sm'
                                                 src={review.author.image}
                                                 showFallback
                                             />
-                                            <div className="flex flex-col gap-1 items-start justify-center">
-                                                <h4 className="text-xs font-semibold leading-none text-default-600">{review.author.name}</h4>
-                                                <h5 className="text-xs tracking-tight text-default-400">@{review.author.username}</h5>
+                                            <div className='flex flex-col gap-1 items-start justify-center'>
+                                                <h4 className='text-xs font-semibold leading-none text-default-600'>{review.author.name}</h4>
+                                                <h5 className='text-xs tracking-tight text-default-400'>@{review.author.username}</h5>
                                             </div>
                                         </div>
                                     </CardHeader>
-                                    <CardBody className="px-3 py-0 text-small text-default-400 backdrop">
+                                    <CardBody className='px-3 py-0 text-small text-default-400 backdrop'>
                                         <ScrollShadow hideScrollBar className={'max-h-[120px] text-xs ' + (!!review.author.rating && 'max-h-[100px]')}>
                                             <ComputedParagraph text={review.content} id={'review-' + review.id} />
                                         </ScrollShadow>
                                     </CardBody>
                                     {
                                         !!review.author.rating &&
-                                        <CardFooter className="gap-4 p-1 px-3">
-                                            <div className="flex gap-1">
+                                        <CardFooter className='gap-4 p-1 px-3'>
+                                            <div className='flex gap-1'>
                                                 <StarRating percentage={review.author.rating * 10} className={'text-default-400 text-semibold text-xs'} />
                                             </div>
                                         </CardFooter>

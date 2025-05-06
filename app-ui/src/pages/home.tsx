@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { useAppDispatch } from "../store/selectors";
-import { updateComingFrom } from "../store/reducers/config-reducer";
-import { PAGES } from "../context/media-context";
+import { useEffect } from 'react';
+import { useAppDispatch } from '../store/selectors';
+import { updateComingFrom } from '../store/reducers/config-reducer';
+import { PAGES } from '../context/media-context';
 
 export default function Home() {
     const dispatch = useAppDispatch();

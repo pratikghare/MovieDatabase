@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 export default function useTimer(duration: number = 10) {
     const [timer, setTimer] = useState<number>(0);
@@ -35,13 +35,13 @@ export default function useTimer(duration: number = 10) {
             startInterval();
         };
 
-        window.addEventListener("blur", handleBlur);
-        window.addEventListener("focus", handleFocus);
+        window.addEventListener('blur', handleBlur);
+        window.addEventListener('focus', handleFocus);
 
         return () => {
             stopInterval();
-            window.removeEventListener("blur", handleBlur);
-            window.removeEventListener("focus", handleFocus);
+            window.removeEventListener('blur', handleBlur);
+            window.removeEventListener('focus', handleFocus);
         };
     }, []);
 
