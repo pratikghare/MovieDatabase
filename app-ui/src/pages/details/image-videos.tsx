@@ -3,7 +3,6 @@ import CommonDetailsNav from '../../components/details/common-details-nav';
 import { Image as ImageType, Video } from '../../context/media-context';
 import { mediaSelector } from '../../store/selectors';
 import { Image, ScrollShadow, Skeleton } from '@heroui/react';
-import { getImageWidth } from '../../utils/utils';
 import usePosterDimensions from '../../hooks/usePosterDimensions';
 import { useNavigate } from 'react-router';
 import { useEffect, useId, useState } from 'react';
@@ -33,13 +32,13 @@ function MediaSection({ loader, images = [], videos = [], title = '' }: { loader
                 !loader ? <h1 className='font-bold'>{title}</h1> :
                     <Skeleton className='h-3 w-5/5 max-w-[300px] rounded-lg' />
             }
-            <ScrollShadow hideScrollBar className='flex gap-2 sm:gap-3 flex-wrap max-h-[300px] sm:max-h-[400px] overflow-x-hidden'>
+            <ScrollShadow hideScrollBar className='flex gap-2 sm:gap-3 items-center flex-wrap max-h-[300px] sm:max-h-[400px] overflow-x-hidden'>
                 {
                     !!images?.length &&
                     images.map((item: ImageType, index: number) => (
                         <Image radius='none' className='rounded-[5px]' key={item.path + '_' + index} src={item.thumbnail}
                             onClick={() => navigate(item.path.split('/')[item.path.split('/').length - 1])}
-                            style={{ height, width: getImageWidth(item, height), minWidth: getImageWidth(item, height), cursor: 'pointer' }}
+                            style={{ maxHeight: height, maxWidth: 270, cursor: 'pointer' }}
                         />
                     ))
                 }
@@ -56,8 +55,8 @@ function MediaSection({ loader, images = [], videos = [], title = '' }: { loader
                 {
                     !!videos.length &&
                     videos.map((video: Video, index: number) => (
-                        <div key={video.url} className='flex flex-col gap-1 w-full h-full' style={{ gridColumn: index === playing.findIndex(Boolean) ? 'span 2' : '', gridRow: index === playing.findIndex(Boolean) ? 'span 2' : '' }}>
-                            <div className='relative w-full h-full'>
+                        <div key={video.url} className='flex flex-col gap-1 h-full' style={{ gridColumn: index === playing.findIndex(Boolean) ? 'span 2' : '', gridRow: index === playing.findIndex(Boolean) ? 'span 2' : '' }}>
+                            <div className='relative h-full'>
                                 {
                                     playing[index] ?
                                         <ReactPlayer

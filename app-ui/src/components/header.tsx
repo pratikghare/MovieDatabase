@@ -1,7 +1,7 @@
 import { Autocomplete, AutocompleteItem, CircularProgress, Navbar, NavbarBrand, NavbarContent, NavbarItem, Image } from "@heroui/react";
 import { CompactMedia, MediaReducer } from "../context/media-context";
-import { useNavigate } from "react-router";
-import { useRef } from "react";
+import { useLocation, useNavigate } from "react-router";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { searchQuery } from "../store/reducers/media-reducer";
 import { useAppDispatch, mediaSelector } from "../store/selectors";
@@ -13,6 +13,7 @@ function AutoCompleteSearch() {
     const navigate = useNavigate();
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null); 
+
 
     const onValueChange = (event: any) => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -26,7 +27,7 @@ function AutoCompleteSearch() {
         inputRef.current?.blur();
         navigateToDetails(selected, navigate, dispatch);
     }
-    
+
     return (
         <Autocomplete
             aria-label='Search'
@@ -79,8 +80,18 @@ function AutoCompleteSearch() {
 
 
 export default function Header() {
+    const location = useLocation();
+    const [zIndex, setZIndex] = useState<string>('');
+
+    useEffect(() => {
+        const array: Array<string> = location.pathname.split('/').filter(Boolean);
+        if (array[array.length - 2] === 'media') setZIndex('-z-1');
+        else setZIndex('');
+    }, [location])
+    
+
     return (
-        <Navbar classNames={{ wrapper: 'px-2 gap-2 lg-p-0', base: 'bg-background/10 backdrop-blur-md' }}>
+        <Navbar classNames={{ wrapper: 'px-2 gap-2 lg-p-0', base: 'bg-background/10 backdrop-blur-md ' + zIndex }}>
             <NavbarBrand className='hidden flex-grow-0'>
                 <p className='font-bold text-inherit'>🎬 MDB</p>
             </NavbarBrand>

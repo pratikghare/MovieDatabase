@@ -59,6 +59,7 @@ export interface WatchProviders {
 }
 
 export interface Image {
+    key: string;
     path: string;
     width: number;
     height: number;
@@ -72,6 +73,7 @@ export interface ImageData {
 }
 
 export interface Video {
+    key: string;
     url: string;
     site: string;
     type: string;
@@ -237,4 +239,8 @@ export interface MediaReducer {
     search: CompactMediaResults;
     details?: Movie | Person | TvShow | Media;
     loader: boolean;
+}
+
+export enum PAGES {
+    DETAILS, HOME, LOGIN, REGISTER, IMAGES, IMAGE_VIEWER, VIDEOS, CREDITS, ADV_SEARCH, SEASONS
 }

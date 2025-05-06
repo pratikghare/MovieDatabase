@@ -27,7 +27,7 @@ export const getBackgroundImages = (backdrop?: string, images?: ImageData): Arra
 }
 
 export const getIsColor = (backdrop?: string, path?: string): boolean => {
-    const paths: Array<string> = ['credits', 'images', 'media'];
+    const paths: Array<string> = ['credits', 'videos', 'media'];
     if (!backdrop || backdrop.includes('rgb(')) return true;
     if (!path || paths.find(p => path.includes(p))) return true;
     return false;

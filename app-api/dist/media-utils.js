@@ -219,6 +219,7 @@ function getMassagedImageObject(item) {
     const path = getImage(item.file_path);
     const thumbnail = getImage(item.file_path, true);
     const image = {
+        key: item.file_path,
         aspectRatio: item.aspect_ratio,
         height: item.height,
         width: item.width,
@@ -235,6 +236,7 @@ function getVideos(data) {
         if (!videoUrl || !(item === null || item === void 0 ? void 0 : item.site) || !(item === null || item === void 0 ? void 0 : item.name) || !item.key)
             return;
         videos.push({
+            key: item.key,
             url: videoUrl.url + item.key,
             site: item.site,
             type: item.type,

@@ -2,18 +2,25 @@ import { useSelector } from 'react-redux';
 import { Companies, RevenueDetails, StreamingPlatforms } from '../../components/details/details-exports';
 import Overview from '../../components/details/overview';
 import MediaList from '../../components/media-list/index';
-import { mediaSelector } from '../../store/selectors';
-import { MediaType } from '../../context/media-context';
+import { mediaSelector, useAppDispatch } from '../../store/selectors';
+import { MediaType, PAGES } from '../../context/media-context';
 import ReviewDetails from '../../components/details/reviews';
 import { useLocation, useNavigate } from 'react-router';
 import { getMediaTypeFromPath } from '../../utils/utils';
 import ImageSection from '../../components/details/image-video-section';
 import SeasonsInfo from '../../components/details/seasons-info';
+import { useEffect } from 'react';
+import { updateComingFrom } from '../../store/reducers/config-reducer';
 
 export default function Details() {
     const details = useSelector(mediaSelector).details;
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(updateComingFrom(PAGES.DETAILS));
+    }, []);
 
 
     return (
@@ -29,9 +36,9 @@ export default function Details() {
                     /> : <></>
             }
             <StreamingPlatforms />
-            <Companies />
             <ReviewDetails />
             <ImageSection />
+            <Companies />
             {
                 details &&
                 <>

@@ -1,13 +1,14 @@
 import { useSelector } from 'react-redux';
 import { mediaSelector, useAppDispatch } from '../../store/selectors';
 import { useEffect, useId, useState } from 'react';
-import { CompactMedia, Credits, MediaType } from '../../context/media-context';
+import { CompactMedia, Credits, MediaType, PAGES } from '../../context/media-context';
 import { Card, CardHeader, CardBody, Image as HeroImage, Input, ScrollShadow, Avatar, Chip, Skeleton } from '@heroui/react';
 import { useNavigate } from 'react-router';
 import { getMappedCredits, navigateToDetails } from '../../utils/utils';
 import CommonDetailsNav from '../../components/details/common-details-nav';
 import HorizontalScroll from '../../components/horizontal-scroll';
 import { DotIcon } from '../../components/icons';
+import { updateComingFrom } from '../../store/reducers/config-reducer';
 
 const FULL_WIDTH_OFFSET = 120;
 function CreditBox({ list, title, className, media }: { list: Array<CompactMedia>, title: string, className?: string, media?: MediaType }) {
@@ -20,9 +21,13 @@ function CreditBox({ list, title, className, media }: { list: Array<CompactMedia
 
     const onItemClick = (media: CompactMedia) => navigateToDetails(media, navigate, dispatch);
 
+    useEffect(() => {
+        dispatch(updateComingFrom(PAGES.CREDITS));
+    }, []);
+
     return (
         !media || !!list.length ?
-        <Card radius='sm' className={'m-2 shadow-none border-2 border-foreground/10 bg-transparent ' + classes}>
+        <Card radius='sm' className={'my-2 shadow-none border-2 border-foreground/10 bg-transparent ' + classes}>
             <CardHeader>
                 {
                     !!media ?
@@ -126,10 +131,10 @@ export default function CreditsSection() {
 
 
     return (
-        <section className='pt-[15px] bg-background/60'>
-            <CommonDetailsNav details={details} title='All Credits' />
+        <section className='pt-[15px] bg-background/60 px-2'>
+            <CommonDetailsNav hideDivider details={details} title='All Credits' />
             <div className='z-50 flex justify-center items-center'>
-                <div className=' top-2 w-[calc(100%_-_16px)]'>
+                <div className='top-2 w-full'>
                     {
                         details ?
                         <Input variant='bordered' onChange={(event: any) => setValue(event.target.value)} radius='sm' placeholder='Search list' className='pratik' classNames={{ input: 'text-xs font-bold', inputWrapper: 'border-foreground/40' }} />

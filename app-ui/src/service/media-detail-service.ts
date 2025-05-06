@@ -18,6 +18,7 @@ const MEDIA_DETAILS = gql`
             subtext
             images {
                 backdrops {
+                    key
                     path
                     width
                     height
@@ -25,6 +26,7 @@ const MEDIA_DETAILS = gql`
                     thumbnail
                 }
                 list {
+                    key
                     path
                     width
                     height
@@ -40,6 +42,7 @@ const MEDIA_DETAILS = gql`
                     ...CreditsFields
                 }
                 videos {
+                    key
                     url
                     site
                     type
@@ -108,6 +111,7 @@ const MEDIA_DETAILS = gql`
                     ...CreditsFields
                 }
                 videos {
+                    key
                     url
                     site
                     type

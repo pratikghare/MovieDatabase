@@ -220,6 +220,7 @@ export function getMassagedImageObject(item: any): Image | null {
     const path: string | undefined = getImage(item.file_path);
     const thumbnail: string | undefined = getImage(item.file_path, true);
     const image: Image = {
+        key: item.file_path,
         aspectRatio: item.aspect_ratio,
         height: item.height,
         width: item.width,
@@ -236,6 +237,7 @@ export function getVideos(data: any): Video[] {
         if (!videoUrl || !item?.site || !item?.name || !item.key) return;
 
         videos.push({
+            key: item.key,
             url: videoUrl.url + item.key,
             site: item.site,
             type: item.type,

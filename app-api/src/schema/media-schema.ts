@@ -146,6 +146,7 @@ const mediaSchema = gql`
     }
 
     type Image {
+        key: String!
         path: String!
         thumbnail: String!
         width: Int!
@@ -159,6 +160,7 @@ const mediaSchema = gql`
     }
 
     type Video {
+        key: String!
         url: String!
         site: String!
         type: String

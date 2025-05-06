@@ -44,3 +44,7 @@
 .video-grid {
     display: grid;
 }
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 270px));
+}

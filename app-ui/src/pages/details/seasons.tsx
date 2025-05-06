@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { Movie, Person, TvShow, Media, Season, CompactEpisode, MediaType } from '../../context/media-context';
-import { mediaSelector } from '../../store/selectors';
+import { Movie, Person, TvShow, Media, Season, CompactEpisode, MediaType, PAGES } from '../../context/media-context';
+import { mediaSelector, useAppDispatch } from '../../store/selectors';
 import { Card, CardBody, CardHeader, Chip, Image, ScrollShadow, Skeleton } from '@heroui/react';
 import { navigateToCredits, navigateToSeasons } from '../../utils/utils';
 import { useLocation, useNavigate } from 'react-router';
@@ -11,14 +11,21 @@ import { DotIcon } from '../../components/icons';
 import { fetchSeasonDetails } from '../../service/media-service';
 import usePosterDimensions from '../../hooks/usePosterDimensions';
 import MediaList from '../../components/media-list';
+import { updateComingFrom } from '../../store/reducers/config-reducer';
 
 export default function Seasons() {
     const details: Movie | Person | TvShow | Media | undefined = useSelector(mediaSelector).details;
 
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useAppDispatch();
+    
 
     const [active, setActive] = useState<Season | undefined | null>(undefined);
+
+    useEffect(() => {
+        dispatch(updateComingFrom(PAGES.SEASONS));
+    }, []);
 
     const RenderOverview = useCallback(() => {
         const overview: string = active?.overview ? active.overview : '';
@@ -149,7 +156,6 @@ export default function Seasons() {
 
 function EpisodeCard({ episode, title }: { episode?: CompactEpisode, title: string }) {
     const { width, height } = usePosterDimensions({ breakpointHeights: [60, 90, 110], factor: (1080 / 1920) });
-    console.log('calling with ep', episode, !episode || !!episode.poster, !!episode)
 
     return (
         <Card className='shadow-none border-1 border-foreground/10 rounded-md'>

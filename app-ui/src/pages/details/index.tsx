@@ -62,7 +62,7 @@ export function DetailsContainer() {
     }, [config.background, location.pathname, backgroundToggle, media.details]);
 
     return (
-        <section className={'transition-ease bg-background/50 backdrop-blur-md min-h-[calc(100svh_-_144px)] sm:min-h-[calc(100svh_-_164px)] ' + (classes && classes.base)}>
+        <section className={'transition-ease bg-background/50 backdrop-blur-md min-h-[calc(100svh_-_144px)] sm:min-h-[calc(100svh_-_164px)] flex flex-col ' + (classes && classes.base)}>
             <Outlet />
             {
                 !getIsColor(config.background, location.pathname) &&

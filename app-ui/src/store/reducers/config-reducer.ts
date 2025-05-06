@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NavigationKeyType, NavigationTabKeys } from "../../context/common";
 import { setCurrentTabStorage } from "../../utils/storage-utils";
-import { MediaType } from "../../context/media-context";
+import { MediaType, PAGES } from "../../context/media-context";
 
 interface Config {
     loader: boolean;
@@ -10,6 +10,7 @@ interface Config {
     backgroundColor?: string;
     mediaType?: MediaType;
     isLoggedIn: boolean;
+    comingFrom: PAGES;
     theme: {
         theme: "light" | "dark" | "system";
         current: "light" | "dark";
@@ -24,6 +25,7 @@ const initialState: Config = {
         current: "dark"
     },
     isLoggedIn: false,
+    comingFrom: PAGES.HOME
 }
 
 const config = createSlice({
@@ -36,7 +38,7 @@ const config = createSlice({
         },
         updateBackground: (state: any, action: PayloadAction<string | undefined>) => ({ ...state, background: action.payload }),
         updateBackgroundColor: (state: any, action: PayloadAction<string | undefined>) => ({ ...state, backgroundColor: action.payload }),
-        // updateMediaType: (state: any, action: PayloadAction<MediaType>) => ({ ...state, mediaType: action.payload }),
+        updateComingFrom: (state: any, action: PayloadAction<PAGES>) => ({ ...state, comingFrom: action.payload }),
         toggleTheme: (state: any) => {
             const theme = state.theme.current === 'light' ? 'dark' : 'light';
             const backgroundColor = state.backgroundColor ? state.backgroundColor : state.theme.current === 'dark' ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)';
@@ -51,5 +53,5 @@ const config = createSlice({
 });
 
 
-export const { updateLoader, updateCurrentTab, updateBackground, updateBackgroundColor, toggleTheme, updateConfigTheme } = config.actions;
+export const { updateLoader, updateCurrentTab, updateBackground, updateBackgroundColor, toggleTheme, updateConfigTheme, updateComingFrom } = config.actions;
 export default config.reducer;
