@@ -1,18 +1,19 @@
-import { Autocomplete, AutocompleteItem, CircularProgress, Navbar, NavbarBrand, NavbarContent, NavbarItem, Image } from "@heroui/react";
-import { CompactMedia, MediaReducer } from "../context/media-context";
-import { useLocation, useNavigate } from "react-router";
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { searchQuery } from "../store/reducers/media-reducer";
-import { useAppDispatch, mediaSelector } from "../store/selectors";
-import { navigateToDetails } from "../utils/utils";
+import { Autocomplete, AutocompleteItem, CircularProgress, Navbar, NavbarBrand, NavbarContent, NavbarItem, Image } from '@heroui/react';
+import { CompactMedia, MediaReducer, MediaType } from '../context/media-context';
+import { useLocation, useNavigate } from 'react-router';
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { searchQuery } from '../store/reducers/media-reducer';
+import { useAppDispatch, mediaSelector } from '../store/selectors';
+import { navigateToDetails } from '../utils/utils';
+import { MovieClipIcon, TVShowIcon } from './icons';
 
 function AutoCompleteSearch() {
     const dispatch = useAppDispatch();
     const media: MediaReducer = useSelector(mediaSelector);
     const navigate = useNavigate();
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
-    const inputRef = useRef<HTMLInputElement | null>(null); 
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
 
     const onValueChange = (event: any) => {
@@ -20,7 +21,7 @@ function AutoCompleteSearch() {
 
         const query: string = event.target.value ? event.target.value : '';
 
-        debounceRef.current = setTimeout(() => dispatch(searchQuery(query)), 500);   
+        debounceRef.current = setTimeout(() => dispatch(searchQuery(query)), 500);
     }
 
     const onSelect = (selected: CompactMedia) => {
@@ -49,10 +50,14 @@ function AutoCompleteSearch() {
                                 <Image src={item.thumbnail} radius='sm' alt={item.name} className='w-[56px] h-[84px] sm:w-[60px] sm:h-[90px]' />
                             </div>
                             <div className='flex flex-col justify-center space-y-2 text-xs flex-1'>
-                                <h1 className='font-bold text-xs'>{item.name}</h1>
+                            <h1 className='font-bold text-xs'>{item.name}</h1>
                                 {
                                     item.subtext.map((text: string, index) => (
-                                        <p key={item.id + '-subtext-' + index}>{text}</p>
+                                        <div className='flex gap-2 items-center' key={item.id + '-subtext-' + index}>
+                                            { index === 0 && item.mediaType === MediaType.MOVIE && <MovieClipIcon className='size-4' /> }
+                                            { index === 0 && item.mediaType === MediaType.TV && <TVShowIcon className='size-4' /> }
+                                            <p>{text}</p>
+                                        </div>
                                     ))
                                 }
                             </div>
@@ -60,12 +65,12 @@ function AutoCompleteSearch() {
                                 !!item.rating &&
                                 <CircularProgress
                                     classNames={{
-                                        svg: "w-12 h-12 drop-shadow-md",
-                                        value: "text-xxs font-semibold",
+                                        svg: 'w-12 h-12 drop-shadow-md',
+                                        value: 'text-xxs font-semibold',
                                     }}
                                     value={item.rating}
                                     strokeWidth={4}
-                                    aria-label="Rating"
+                                    aria-label='Rating'
                                     color={item.rating >= 60 ? 'success' : item.rating >= 35 ? 'warning' : 'danger'}
                                     showValueLabel={true}
                                 />
@@ -88,7 +93,7 @@ export default function Header() {
         if (array[array.length - 2] === 'media') setZIndex('-z-1');
         else setZIndex('');
     }, [location])
-    
+
 
     return (
         <Navbar classNames={{ wrapper: 'px-2 gap-2 lg-p-0', base: 'bg-background/10 backdrop-blur-md ' + zIndex }}>

@@ -7,7 +7,7 @@ import { ComputedParagraph } from './details-exports';
 import { StarRating } from './star-rating';
 import { DotIcon } from '../icons';
 import { useNavigate } from 'react-router';
-import { navigateToSeasons } from '../../utils/utils';
+import { getCleanText, navigateToSeasons } from '../../utils/utils';
 
 export default function SeasonsInfo() {
     const details: Movie | Person | TvShow | Media | undefined = useSelector(mediaSelector).details;
@@ -57,9 +57,12 @@ function EpisodeCard({ episode, title }: { episode: CompactEpisode, title: strin
                         <h2 className='text-xs font-bold leading-none'>{episode.airDate}</h2>
                     </div>
                     <div className='flex items-center'>
-                        <h2 className='text-xs font-bold leading-none'>{'S' + episode.seasonNumber + ' E' + episode.episodeNumber}</h2>
+                        <h2 className='text-xs font-bold leading-none flex gap-1'>
+                            <span>{ 'S' + episode.seasonNumber }</span> 
+                            <span>{ 'E' + episode.episodeNumber }</span>
+                        </h2>
                         <DotIcon className='size-4' />
-                        <h2 className='text-xs font-bold leading-none'>{episode.name}</h2>
+                        <h2 className='text-xs font-bold leading-none'>{getCleanText(episode.name)}</h2>
                     </div>
                 </div>
             </CardHeader>

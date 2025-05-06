@@ -143,3 +143,8 @@ export const getMappedCredits = (data?: Credits): Credits => {
     }
     return credits;
 }
+
+export const navigateToNotFound = (dispatch: Function, navigate: Function) => {
+    dispatch(clearDetails());
+    navigate('/not-found');
+}

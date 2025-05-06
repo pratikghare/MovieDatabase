@@ -4,7 +4,7 @@ import { configSelector, mediaSelector, useAppDispatch } from '../../store/selec
 import { detailsQuery } from '../../store/reducers/media-reducer';
 import { MediaType } from '../../context/media-context';
 import { useSelector } from 'react-redux';
-import { getIsColor, setColorFromImage, updateBackdropUtils } from '../../utils/utils';
+import { getIsColor, navigateToNotFound, setColorFromImage, updateBackdropUtils } from '../../utils/utils';
 import { updateBackground } from '../../store/reducers/config-reducer';
 import { Button } from '@heroui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
@@ -42,7 +42,7 @@ export function DetailsContainer() {
         if (media.details?.backdrop) updateBackground(media.details.backdrop);
         if (media.details) setColorFromImage(dispatch, media.details.poster);
 
-        if (!media.details && !media.loader) navigate('/page-not-found');
+        if (!media.details && !media.loader) navigateToNotFound(dispatch, navigate);
 
     }, [media.details, location.pathname, media.loader]);
 
@@ -50,10 +50,8 @@ export function DetailsContainer() {
         let wrapper: string = '';
         let content: string = '';
         let base: string = '';
-        // console.log('pathchanged')
 
         const isColor = getIsColor(config.background, location.pathname) || !media.details || media?.details?.mediaType === MediaType.PERSON;
-        // console.log('isColor', isColor)
         if (!isColor) {
             base = 'rounded-t-lg ' + (backgroundToggle ? 'mt-[70svh]' : 'mt-[30svh] md:mt-[20svh]');
         }

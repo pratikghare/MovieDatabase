@@ -89,7 +89,7 @@ export default function ImageSection() {
                     </HorizontalScroll>
                     {
                         list2.length > 5 &&
-                        <HorizontalScroll className='flex gap-2 image-section-scroll scroll-l justify-evenly overflow-x-hidden select-none'>
+                        <HorizontalScroll className='flex gap-2 image-section-scroll justify-evenly overflow-x-hidden select-none'>
                             {
                                 list2.map((item: ImageType, index: number) => (
                                     <Image radius='none' className='rounded-[5px]' key={item.path + '_' + index} src={item.thumbnail}
@@ -109,7 +109,7 @@ export default function ImageSection() {
                         <h1 className='font-bold'>Videos {!!videos.length && `(${videos.length})`}</h1>
                         <Link className='text-xs cursor-pointer text-primary hover:underline' onPress={() => navigate('videos/')}>{'See All'}</Link>
                     </div>
-                    <HorizontalScroll className='flex gap-2 image-section-scroll scroll-l justify-evenly overflow-x-hidden select-none'>
+                    <HorizontalScroll className='flex gap-2 image-section-scroll overflow-x-hidden select-none'>
                         {
                             videos.slice(0, 10).map((video: Video, index: number) => (
                                 <div key={video.url + '_' + index} className='relative' onClick={() => navigate('videos/')} >

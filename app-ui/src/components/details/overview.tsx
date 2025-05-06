@@ -71,7 +71,7 @@ export default function Overview() {
                     <HorizontalScroll offset={FULL_WIDTH_OFFSET} className='flex space-x-2 bg-transparent scroll-items'>
                         {
                             details.genres.map((genre: Genre) => (
-                                <Chip key={genre.id} className='transition-ease text-xxs rounded-md h-6 border-1 border-foreground-400 hover:bg-foreground/30 [&>*]:font-semibold' variant='light'>{genre.name}</Chip>
+                                <Chip key={genre.id} className='transition-ease text-xxs h-6 border-1 border-foreground-400 hover:bg-foreground/30 [&>*]:font-semibold' variant='light'>{genre.name}</Chip>
                             ))
                         }
                     </HorizontalScroll>

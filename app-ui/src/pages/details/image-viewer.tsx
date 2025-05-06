@@ -9,6 +9,7 @@ import { updateBackgroundColor, updateComingFrom } from '../../store/reducers/co
 import { DotIcon, GalleryGridIcon } from '../../components/icons';
 import HorizontalScroll from '../../components/horizontal-scroll';
 import { clearDetails } from '../../store/reducers/media-reducer';
+import { navigateToNotFound } from '../../utils/utils';
 
 interface LoaderParams {
     mediaId: string | undefined;
@@ -40,16 +41,20 @@ export default function ImageViewer() {
     useEffect(() => {
         const key: string | undefined = params.mediaId;
 
-        if (images && key) {
+        if (!!images.length && key) {
             const item: number = images.findIndex(i => i.path.includes(key));
-            setCurrentIndex(item);
+            if (item >= 0) setCurrentIndex(item);
+            else navigateToNotFound(dispatch, navigate);
         }
         dispatch(updateBackgroundColor(undefined));
-    }, [images, location.pathname, params]);
+    }, [images, location.pathname, params, details]);
 
     useEffect(() => {
         if (details?.images?.list) setImages(details.images.list);
-        else setImages([]);
+        else {
+            setImages([]);
+            if (!!details && !details.images.list.length) navigateToNotFound(dispatch, navigate);
+        }
     }, [details]);
 
     const navigateToMedia = (id?: number) => {

@@ -1,4 +1,8 @@
-
+.auto-complete-item {
+    >span:last-child {
+        display: none;
+    }
+}
 .popover-app,
 .popover-app>div {
     max-height: 50svh !important;
@@ -47,4 +51,7 @@
 .photo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 270px));
+}
+.video-player iframe{
+    border-radius: 8px;
 }

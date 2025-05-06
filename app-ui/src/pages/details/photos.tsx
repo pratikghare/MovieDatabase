@@ -30,8 +30,8 @@ export default function Photos() {
     return (
         <section className='p-2 flex flex-col gap-3 select-none'>
             <CommonDetailsNav className='m-0' details={details} title={'Photos ' + (!!list.length ? `(${list.length})` : '')} />
-            <ScrollShadow hideScrollBar className='grid items-center grid-cols-4 sm:grid-cols-7 grid-flow-dense gap-1 sm:gap-2 flex-wrap max-h-[calc(100svh_-_197px_-_50px_+_80px)] sm:max-h-[calc(100svh_-_197px_-_64px_-_5px_+_100px)] overflow-x-hidden'
-            // style={{ gridTemplateRows: `repeat(auto-fit, minmax(${height}px, 1fr))` }}
+            <ScrollShadow hideScrollBar className='grid items-center grid-cols-4 sm:grid-cols-7 grid-flow-dense gap-1 sm:gap-2 flex-wrap '
+            // max-h-[calc(100svh_-_197px_-_50px_+_80px)] sm:max-h-[calc(100svh_-_197px_-_64px_-_5px_+_100px)] overflow-x-hidden
             >
                 {
                     !!list?.length &&
@@ -53,9 +53,9 @@ export default function Photos() {
                 }
                 {
                     loader &&
-                    Array(9).fill(1).map((_, index: number) => (
-                        <div className={'flex w-full h-full ' + (index % 2 === 0 ? 'col-span-2' : '')} key={'image-skeleton-' + index} style={{ height }}>
-                            <Skeleton className='rounded-md w-full h-full'>
+                    Array(14).fill(1).map((_, index: number) => (
+                        <div className={'flex w-full h-full ' + (index % 2 === 0 ? 'col-span-2 ' : '') + (index >= 8 ? 'hidden sm:flex' : '')} key={'image-skeleton-' + index} style={{ height }}>
+                            <Skeleton className={'rounded-md w-full h-full '}>
                                 <div className='h-full w-full rounded-lg bg-secondary' />
                             </Skeleton>
                         </div>

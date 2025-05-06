@@ -14,7 +14,7 @@ export default function CommonDetailsNav({ className, details, title, hideDivide
         <div>
             <div className={'flex gap-x-4 ' + (className ? className : '')}>
                 {
-                    !!details && !!details.poster && !details.poster?.includes('not_found') &&
+                    !!details && !!details.poster && 
                     <Image onClick={navigateToDetails} radius='none' className='rounded-[5px] min-w-[48px] max-w-[48px] cursor-pointer' src={details.poster} />
                 }
                 {
@@ -38,7 +38,7 @@ export default function CommonDetailsNav({ className, details, title, hideDivide
                     }
                 </div>
             </div>
-            { !hideDivider && <Divider /> }
+            { !hideDivider && <Divider className='mt-2' /> }
         </div>
     );
 }
