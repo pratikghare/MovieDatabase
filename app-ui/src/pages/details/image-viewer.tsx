@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { configSelector, mediaSelector, useAppDispatch } from '../../store/selectors';
 import { Button, Chip, Image, Link } from '@heroui/react';
 import { ChevronLeftIcon, ChevronRightIcon, HomeIcon, ShareIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { updateBackgroundColor, updateComingFrom } from '../../store/reducers/config-reducer';
+import { updateBackgroundColor, updateComingFrom, updateLastViewedImage } from '../../store/reducers/config-reducer';
 import { DotIcon, GalleryGridIcon } from '../../components/icons';
 import HorizontalScroll from '../../components/horizontal-scroll';
 import { clearDetails } from '../../store/reducers/media-reducer';
@@ -40,6 +40,7 @@ export default function ImageViewer() {
 
     useEffect(() => {
         const key: string | undefined = params.mediaId;
+        dispatch(updateLastViewedImage(key ? (key[0] === '/' ? key : '/'+key) : key));
 
         if (!!images.length && key) {
             const item: number = images.findIndex(i => i.path.includes(key));
@@ -98,24 +99,27 @@ export default function ImageViewer() {
                     <div className='bg-background/60 flex justify-between items-center px-2 py-4 lg:rounded-b-md border-b-1 lg:border-l-1 lg:border-r-1 border-foreground-100'>
                         <Button variant='light' radius='sm' className='p-0' onPress={close}>
                             {
-                                comingFrom === PAGES.HOME ? 
-                                <>
-                                    <HomeIcon className='size-4' />
-                                    <span>Home</span>
-                                </> :
-                                <>
-                                    <XMarkIcon className='size-4' />
-                                    <span>Close</span>
-                                </>
+                                comingFrom === PAGES.HOME ?
+                                    <>
+                                        <HomeIcon className='size-4' />
+                                        <span>Home</span>
+                                    </> :
+                                    <>
+                                        <XMarkIcon className='size-4' />
+                                        <span>Close</span>
+                                    </>
                             }
                         </Button>
 
                         <div className='flex gap-2 items-center'>
-                            <p className='text-warning'>{currentIndex+1} of {images.length}</p>
+                            <p className='text-warning'>{currentIndex + 1} of {images.length}</p>
 
-                            <Button isIconOnly variant='light' radius='sm' onPress={gallery}>
-                                <GalleryGridIcon className='size-6' />
-                            </Button>
+                            {
+                                images.length > 1 &&
+                                <Button isIconOnly variant='light' radius='sm' onPress={gallery}>
+                                    <GalleryGridIcon className='size-6' />
+                                </Button>
+                            }
 
                             <Button isIconOnly variant='light' radius='sm'>
                                 <ShareIcon className='size-5' />
@@ -124,9 +128,9 @@ export default function ImageViewer() {
                     </div>
                     <div className='bg-background/60 flex justify-between p-2 py-4 border-t-1 lg:border-l-1 lg:border-r-1 lg:px-4 lg:rounded-t-md border-foreground-100'>
                         <div className='flex-1'>
-                            <Link onPress={navigateToDetails} 
+                            <Link onPress={navigateToDetails}
                                 className='font-bold hover:underline cursor-pointer'>
-                                    {details.name}
+                                {details.name}
                             </Link>
                             <HorizontalScroll offset={FULL_WIDTH_OFFSET} className='text-xs flex items-center mt-2'>
                                 {
@@ -158,7 +162,7 @@ export default function ImageViewer() {
                 </div>
             }
             {
-                toggle &&
+                toggle && images.length > 1 &&
                 <div className='absolute top-0 left-0 flex justify-between items-center w-full h-svh px-4'>
                     <Button isIconOnly variant='bordered' className='border-1 bg-background/60 z-50' radius='sm' onPress={prev}>
                         <ChevronLeftIcon className='size-5' />

@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TV_GENRES = exports.MOVIE_GENRES = exports.TV_EPISODE = exports.TV_SEASON = exports.TV = exports.PERSON = exports.MOVIE = exports.OMDB_DEL = exports.OMDB_URL = exports.VIDEOS = exports.SHORT_IMAGE_URL = exports.IMAGE_URL = exports.IMAGE_URLS = exports.DEFAULT_BG_IMAGE = exports.IMAGE_NOT_FOUND = exports.APP_IMAGE_PATH = exports.SEARCH_DEL = exports.SEARCH = exports.DEFAULT_REGION = exports.PORT = void 0;
+exports.TV_GENRES = exports.MOVIE_GENRES = exports.TV_EPISODE = exports.TV_SEASON = exports.TV = exports.PERSON = exports.MOVIE = exports.OMDB_DEL = exports.OMDB_URL = exports.VIDEOS = exports.SHORT_IMAGE_URL = exports.IMAGE_URL = exports.IMAGE_URLS = exports.DEFAULT_BG_IMAGE = exports.IMAGE_NOT_FOUND = exports.APP_IMAGE_PATH = exports.ADULT_DEL = exports.SEARCH_DEL = exports.SEARCH = exports.DEFAULT_REGION = exports.PORT = void 0;
 exports.PORT = 4462;
 // REGION
 exports.DEFAULT_REGION = 'IN';
 // MULTI SEARCH
-exports.SEARCH = `https://api.themoviedb.org/3/search/multi?query={query}&`;
+exports.SEARCH = `https://api.themoviedb.org/3/search/multi?query={query}&include_adult={include_adult}&`;
 exports.SEARCH_DEL = `{query}`;
+exports.ADULT_DEL = `{include_adult}`;
 // DEFAULT IMAGE PATH
 exports.APP_IMAGE_PATH = '/';
 exports.IMAGE_NOT_FOUND = `${exports.APP_IMAGE_PATH}not_found.png`;

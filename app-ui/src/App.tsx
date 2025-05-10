@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import Header from './components/header';
 import BackgroundImage from './components/background-image';
 import { useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import Footer from './components/footer';
 
 export default function App() {
     const config = useSelector(configSelector);
+    const location = useLocation();
     const { setTheme } = useTheme();
 
     useEffect(() => {
@@ -18,7 +19,10 @@ export default function App() {
     return (
         <section className='px-0 flex flex-col items-center cursor-default bg-black/10 min-h-svh'>
             <BackgroundImage />
-            <Header />
+            {
+                !location.pathname.includes('credits') &&
+                <Header />
+            }
             <div className='max-w-[1024px] w-full flex-1 h-full'>
                 <Outlet />
             </div>

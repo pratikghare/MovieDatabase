@@ -4,8 +4,9 @@ export const PORT = 4462;
 export const DEFAULT_REGION = 'IN';
 
 // MULTI SEARCH
-export const SEARCH = `https://api.themoviedb.org/3/search/multi?query={query}&`;
+export const SEARCH = `https://api.themoviedb.org/3/search/multi?query={query}&include_adult={include_adult}&`;
 export const SEARCH_DEL = `{query}`;
+export const ADULT_DEL = `{include_adult}`
 
 // DEFAULT IMAGE PATH
 export const APP_IMAGE_PATH = '/';

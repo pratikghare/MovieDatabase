@@ -12,10 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const env_1 = require("../env/env");
 const media_utils_1 = require("../media-utils");
 const utils_1 = require("../utils");
-const searchQuery = (_1, _a) => __awaiter(void 0, [_1, _a], void 0, function* (_, { query }) {
+const searchQuery = (_1, _a) => __awaiter(void 0, [_1, _a], void 0, function* (_, { query, includeAdult }) {
     try {
         console.log('Search Query');
-        const url = (0, utils_1.getResolvedTMUrl)(env_1.SEARCH, [env_1.SEARCH_DEL], [query]);
+        const url = (0, utils_1.getResolvedTMUrl)(env_1.SEARCH, [env_1.SEARCH_DEL, env_1.ADULT_DEL], [query, includeAdult ? 'true' : 'false']);
         const response = yield fetch(url);
         if (!response.ok)
             throw new Error(`Failed to fetch results: ${response.statusText}`);

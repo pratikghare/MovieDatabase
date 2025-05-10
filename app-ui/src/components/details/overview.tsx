@@ -1,16 +1,18 @@
 import { useSelector } from 'react-redux';
 import { mediaSelector } from '../../store/selectors';
-import { Genre, Media, Movie, Person, TvShow } from '../../context/media-context';
+import { Genre, Image, Media, Movie, Person, TvShow } from '../../context/media-context';
 import { Chip, ScrollShadow, Skeleton, Image as HeroImage } from '@heroui/react';
 import { StarRating } from './star-rating';
 import HorizontalScroll from '../horizontal-scroll';
 import { DotIcon } from '../icons';
 import { useCallback } from 'react';
 import { ComputedParagraph } from './details-exports';
+import { useNavigate } from 'react-router';
 
 const FULL_WIDTH_OFFSET = 20;
 export default function Overview() {
     const details: Movie | Person | TvShow | Media | undefined = useSelector(mediaSelector).details;
+    const navigate = useNavigate();
 
     const RenderOverview = useCallback(() => {
         const overview: string = details?.overview ? details.overview : '';
@@ -27,6 +29,11 @@ export default function Overview() {
                 </ScrollShadow>
         );
     }, [details?.overview]);
+
+    const navigateToViewer = () => {
+        const image: Image | undefined = details?.images.list.find((item: Image) => item?.path === details.poster);
+        if (image) navigate(`media${image.key}`);
+    }
 
     return (
         <section className='my-2'>
@@ -81,7 +88,7 @@ export default function Overview() {
             <div className='flex space-x-4'>
                 <div className='min-w-[120px] max-w-[120px] sm:max-w-[200px] md:min-w-[200px]'>
                     {
-                        details ? <HeroImage radius='sm' className='obect w-fit md:rounded-xl' src={details.poster} alt={details.name} /> :
+                        details ? <HeroImage radius='sm' onClick={navigateToViewer} className={'obect w-fit md:rounded-xl ' + (!details.poster?.includes('not_found') ? 'cursor-pointer' : '')} src={details.poster} alt={details.name} /> :
                             <Skeleton className='rounded-lg min-h-[180px] sm:min-h-[200px] md:min-h-[250px] lg:max-w-[200px] lg:h-[300px] mt-4'>
                                 <div className='h-24 rounded-lg bg-secondary' />
                             </Skeleton>

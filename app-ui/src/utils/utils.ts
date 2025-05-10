@@ -148,3 +148,27 @@ export const navigateToNotFound = (dispatch: Function, navigate: Function) => {
     dispatch(clearDetails());
     navigate('/not-found');
 }
+interface CreditListItem {
+    title: string;
+    list: CompactMedia[];
+    show: boolean;
+}
+export const getUpdatedCreditsList = (updated: Credits, media?: MediaType): CreditListItem[] => {
+    const list: CreditListItem[] = [];
+    list.push(getCreditListItem(updated.directors, 'Directors'));
+    list.push(getCreditListItem(updated.writers, 'Writers'));
+    if (media === MediaType.PERSON) {
+        list.push(getCreditListItem(updated.cast.filter((item: CompactMedia) => item.mediaType === MediaType.MOVIE), 'All movies'));
+        list.push(getCreditListItem(updated.cast.filter((item: CompactMedia) => item.mediaType === MediaType.TV), 'All TV shows'));
+    }
+    else list.push(getCreditListItem(updated.cast, 'All Cast'));
+    list.push(getCreditListItem(updated.crew, 'All Crew'));
+    console.log(list)
+    return list.filter((item: CreditListItem) => item.show);
+}
+
+const getCreditListItem = (list: CompactMedia[], title: string): CreditListItem => {
+    return {
+        title, list, show: !!list.length
+    }
+}

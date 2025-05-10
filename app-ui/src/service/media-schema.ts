@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const SEARCH_QUERY = gql`
-    query Query($query: String!) {
-        searchQuery(query: $query) {
+    query Query($query: String!, $includeAdult: Boolean) {
+        searchQuery(query: $query, includeAdult: $includeAdult) {
             page
             totalPages
             totalResults

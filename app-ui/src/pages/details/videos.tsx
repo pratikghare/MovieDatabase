@@ -79,6 +79,13 @@ export default function Videos() {
                                                 playing={playing[index]}
                                                 controls={true}
                                                 className='video-player'
+                                                config={{
+                                                    youtube: {
+                                                        playerVars: {
+                                                            cc_load_policy: 0, // 0 disables CC
+                                                        },
+                                                    },
+                                                }}
                                             />
                                         </div> :
                                         <>

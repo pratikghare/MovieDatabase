@@ -11,6 +11,7 @@ interface Config {
     mediaType?: MediaType;
     isLoggedIn: boolean;
     comingFrom: PAGES;
+    lastViewedImage?: string;
     theme: {
         theme: 'light' | 'dark' | 'system';
         current: 'light' | 'dark';
@@ -44,6 +45,7 @@ const config = createSlice({
             const backgroundColor = state.backgroundColor ? state.backgroundColor : state.theme.current === 'dark' ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)';
             return { ...state, theme: { theme, current: theme }, backgroundColor }
         },
+        updateLastViewedImage: (state: any, action: PayloadAction<string | undefined>) => ({ ...state, lastViewedImage: action.payload }),
         updateConfigTheme: (state: any, action: PayloadAction<'light' | 'dark' | 'system'>) => {
             const theme = action.payload;
             const current = theme === 'system' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme;
@@ -53,5 +55,5 @@ const config = createSlice({
 });
 
 
-export const { updateLoader, updateCurrentTab, updateBackground, updateBackgroundColor, toggleTheme, updateConfigTheme, updateComingFrom } = config.actions;
+export const { updateLoader, updateCurrentTab, updateBackground, updateBackgroundColor, toggleTheme, updateConfigTheme, updateComingFrom, updateLastViewedImage } = config.actions;
 export default config.reducer;

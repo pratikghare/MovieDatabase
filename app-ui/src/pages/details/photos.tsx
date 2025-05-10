@@ -1,25 +1,56 @@
 import { useSelector } from 'react-redux';
 import { Movie, Person, TvShow, Media, Image as ImageType, PAGES } from '../../context/media-context';
-import { mediaSelector, useAppDispatch } from '../../store/selectors';
+import { configSelector, mediaSelector, useAppDispatch } from '../../store/selectors';
 import { useEffect, useState } from 'react';
 import CommonDetailsNav from '../../components/details/common-details-nav';
 import { ScrollShadow, Skeleton, Image } from '@heroui/react';
 import { useNavigate } from 'react-router';
 import usePosterDimensions from '../../hooks/usePosterDimensions';
-import { updateComingFrom } from '../../store/reducers/config-reducer';
+import { updateComingFrom, updateLastViewedImage } from '../../store/reducers/config-reducer';
 
 export default function Photos() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const details: Movie | Person | TvShow | Media | undefined = useSelector(mediaSelector).details;
     const loader: boolean = useSelector(mediaSelector).loader;
+    const config = useSelector(configSelector);
 
     const { height } = usePosterDimensions();
     const [list, setList] = useState<Array<ImageType>>([]);
 
     useEffect(() => {
         dispatch(updateComingFrom(PAGES.IMAGES));
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (config.lastViewedImage && list.length) {
+            const lastViewedImage: string | undefined = config.lastViewedImage;
+            dispatch(updateLastViewedImage());
+            const element = document.getElementById(lastViewedImage);
+            const rect = element?.getBoundingClientRect();
+            if (element) {
+                //#17c964 
+                let border = '2px solid #f5a524';
+                let interval = setInterval(()=> {
+                    border = border === '0' ? '2px solid #f5a524' : '0';
+                    element.style.border = border;
+                }, 400);
+                setTimeout(()=> {
+                    element.style.border = '0';
+                    clearInterval(interval);
+                }, 4000)
+            }
+            console.log(element)
+            console.log(rect)
+            if (rect) {
+                const y = rect?.top + window.scrollY - 170;
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth',
+                });
+            }
+        }
+    }, [list, config.lastViewedImage])
 
 
     useEffect(() => {
@@ -41,10 +72,11 @@ export default function Photos() {
                         //     onClick={() => navigate(item.path.split('/')[item.path.split('/').length - 1])}
                         //     style={{  cursor: 'pointer' }}
                         // />
-                        <div className={'rounded-sm h-full cursor-pointer '+(item.aspectRatio > 1 ? 'col-span-2 sm:col-span-3' : '')}
-                            key={item.path + '_' + index}
-                            style={{ background: `url('${item.thumbnail}') center/cover` }} onClick={() => navigate(item.path.split('/')[item.path.split('/').length - 1])}
+                        <div className={'rounded-sm h-full w-full cursor-pointer relative ' + (item.aspectRatio > 1 ? 'col-span-2 sm:col-span-3' : '')}
+                            key={item.key + '_' + index} style={{ background: `url('${item.thumbnail}') center/cover` }} 
+                            onClick={() => navigate(item.path.split('/')[item.path.split('/').length - 1])}
                         >
+                            <div id={item.key} className='absolute top-0 left-0 w-full h-full border-1 border-transparent'></div>
                             <Image radius='none' src={item.thumbnail}
                                 className='rounded-[5px] object-cover invisible ' classNames={{ wrapper: item.aspectRatio > 1 ? 'col-span-3' : '' }}
                             />
