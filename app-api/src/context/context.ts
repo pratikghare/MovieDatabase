@@ -1,5 +1,5 @@
 export enum MediaType {
-    PERSON = "person", TV = "tv", MOVIE = "movie"
+    PERSON = 'person', TV = 'tv', MOVIE = 'movie'
 }
 
 export interface CompactMedia {
@@ -235,10 +235,18 @@ export interface Person extends Media {
     alsoKnownAs: string[];
 }
 
+export interface HomePageGrid {
+    nowPlaying?: Array<CompactMedia>;
+    trendingPeople?: Array<CompactMedia>;
+    topRatedTV?: Array<CompactMedia>;
+}
+
 export interface MediaReducer {
     search: CompactMediaResults;
     details?: Movie | Person | TvShow | Media;
     loader: boolean;
+    homePage?: HomePageGrid;
+    homePageLoader?: boolean;
 }
 
 export enum PAGES {

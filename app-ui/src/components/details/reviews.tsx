@@ -44,7 +44,7 @@ export default function ReviewDetails() {
     return (
         !!ratings.length || !!reviews.length ?
             <div className='flex flex-col gap-2'>
-                <h1 className='font-bold'>Reviews</h1>
+                <h1 className='font-bold text-sm md:text-md'>Reviews</h1>
                 {
                     !!reviews.length &&
                     <HorizontalScroll className='flex gap-2 !bg-transparent pb-1 '>

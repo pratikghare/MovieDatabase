@@ -1,6 +1,6 @@
-import { CompactMediaResults, MediaType } from '../context/media-context';
+import { CompactMediaResults, HomePageGrid, MediaType } from '../context/media-context';
 import { query } from './graphql-service';
-import { SEARCH_QUERY, SEASON_SCHEMA } from './media-schema';
+import { HOMEPAGE_SCHEMA, SEARCH_QUERY, SEASON_SCHEMA } from './media-schema';
 
 export const fetchByMultiSearch = (term: string, includeAdult: boolean = true): Promise<CompactMediaResults> => query(SEARCH_QUERY, { query: term, includeAdult }).then((data: any) => data.searchQuery);
 
@@ -8,3 +8,7 @@ export const fetchByMultiSearch = (term: string, includeAdult: boolean = true): 
 export const fetchSeasonDetails = (id: string, media: MediaType, seasonNumber: number): Promise<any> => {
     return query(SEASON_SCHEMA, { id, media, seasonNumber }).then((data: any) => data.seasonDetails);
 }
+
+
+
+export const fetchHomePageGrid = (): Promise<HomePageGrid> => query(HOMEPAGE_SCHEMA).then((data: any) => data.homePageQuery)

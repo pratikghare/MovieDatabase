@@ -40,8 +40,6 @@ export default function Photos() {
                     clearInterval(interval);
                 }, 4000)
             }
-            console.log(element)
-            console.log(rect)
             if (rect) {
                 const y = rect?.top + window.scrollY - 170;
                 window.scrollTo({

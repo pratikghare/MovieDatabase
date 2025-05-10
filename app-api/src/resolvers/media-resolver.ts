@@ -32,8 +32,10 @@ const details = async (_: any, { id, media }: { id: string, media: MediaType }, 
             const id_response = await fetch(getResolvedTMExternalIdUrl(id, media));
             imdbId = (await id_response.json()).imdb_id;
         }
+        
         const urls: Array<string> = getResolvedTMDetailsUrl(id, media);
         if(imdbId) urls.push(getResolvedOMUrl(imdbId));
+        
         const promises = urls.map((url: string) => fetch(url));
         const responses = await Promise.all(promises);
         const data = await Promise.all(

@@ -42,6 +42,7 @@ exports.getTvShowDetails = getTvShowDetails;
 exports.getPersonDetails = getPersonDetails;
 exports.getSearchResultsData = getSearchResultsData;
 exports.getMassagedMedia = getMassagedMedia;
+exports.getHomePageData = getHomePageData;
 const context_1 = require("./context/context");
 const env_1 = require("./env/env");
 const genres_json_1 = __importDefault(require("../../samples/genres.json"));
@@ -542,4 +543,11 @@ function getMassagedMedia(items, type, countrycode) {
     if (type === context_1.MediaType.TV)
         return getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders === null || watchProviders === void 0 ? void 0 : watchProviders.results, reviews);
     return getPersonDetails(details, credits, images);
+}
+function getHomePageData(nowPlaying, topRatedTV, trendingPeople) {
+    return {
+        nowPlaying: getMassagedCompactMediaList(nowPlaying, context_1.MediaType.MOVIE),
+        trendingPeople: getMassagedCompactMediaList(trendingPeople, context_1.MediaType.PERSON),
+        topRatedTV: getMassagedCompactMediaList(topRatedTV, context_1.MediaType.TV),
+    };
 }

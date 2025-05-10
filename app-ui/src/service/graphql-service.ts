@@ -13,7 +13,7 @@ const client = new ApolloClient({
  * @returns Promise resolving to query/mutation data
  */
 
-export const query = (query: DocumentNode, variables: Record<string, any>): Promise<any> =>
+export const query = (query: DocumentNode, variables?: Record<string, any>): Promise<any> =>
     client.query({query, variables})
     .then((response: any) => response.data)
     .catch((error: any) => {

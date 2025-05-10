@@ -85,10 +85,14 @@ export default function Overview() {
                 }
             </div>
 
-            <div className='flex space-x-4'>
+            <div className='flex gap-4 wrap-320'>
                 <div className='min-w-[120px] max-w-[120px] sm:max-w-[200px] md:min-w-[200px]'>
                     {
-                        details ? <HeroImage radius='sm' onClick={navigateToViewer} className={'obect w-fit md:rounded-xl ' + (!details.poster?.includes('not_found') ? 'cursor-pointer' : '')} src={details.poster} alt={details.name} /> :
+                        details ?
+                            <HeroImage onClick={navigateToViewer} src={details.poster}
+                                className={'md:rounded-xl ' + (!details.poster?.includes('not_found') ? 'cursor-pointer' : '')}
+                                alt={details.name} radius='sm'
+                            /> :
                             <Skeleton className='rounded-lg min-h-[180px] sm:min-h-[200px] md:min-h-[250px] lg:max-w-[200px] lg:h-[300px] mt-4'>
                                 <div className='h-24 rounded-lg bg-secondary' />
                             </Skeleton>

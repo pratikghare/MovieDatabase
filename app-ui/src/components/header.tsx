@@ -96,7 +96,7 @@ export default function Header() {
 
 
     return (
-        <Navbar classNames={{ wrapper: 'px-2 gap-2 lg-p-0', base: 'bg-background/10 backdrop-blur-md ' + zIndex }}>
+        <Navbar classNames={{ wrapper: 'px-1 gap-2 lg-p-0', base: 'bg-background/10 backdrop-blur-md ' + zIndex }}>
             <NavbarBrand className='hidden flex-grow-0'>
                 <p className='font-bold text-inherit'>🎬 MDB</p>
             </NavbarBrand>

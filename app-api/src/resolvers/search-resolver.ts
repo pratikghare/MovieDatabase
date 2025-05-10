@@ -1,7 +1,7 @@
-import { CompactMediaResults } from "../context/context";
-import { ADULT_DEL, SEARCH, SEARCH_DEL } from "../env/env";
-import { getSearchResultsData } from "../media-utils";
-import { getResolvedTMUrl } from "../utils";
+import { CompactMediaResults } from '../context/context';
+import { ADULT_DEL, MOVIE, PERSON, SEARCH, SEARCH_DEL, TV } from '../env/env';
+import { getHomePageData, getSearchResultsData } from '../media-utils';
+import { getResolvedTMUrl } from '../utils';
 
 const searchQuery = async (_: any, { query, includeAdult }: { query: string, includeAdult?: boolean }) => {
     try {
@@ -15,13 +15,29 @@ const searchQuery = async (_: any, { query, includeAdult }: { query: string, inc
         return searchResults;
     }
     catch(error) {
-        console.log("ERROR: ", error);
+        console.log('ERROR: ', error);
+    }
+}
+
+
+const homePageQuery = async () => {
+    try {
+        console.log('HomePage Query');
+        const urls = [getResolvedTMUrl(MOVIE.nowPlaying, [], []), getResolvedTMUrl(TV.topRated, [], []), getResolvedTMUrl(PERSON.popular, [], [])];
+        const all: Array<Promise<any>> = urls.map((url) => fetch(url));
+        const responses: Array<any> = await Promise.all(all);
+        const data: any[] = await Promise.all(responses.map((response: any) => response.json()));
+        
+        return getHomePageData(data[0].results, data[1].results, data[2].results);
+    }
+    catch (error) {
+        console.log('ERROR: ', error);
     }
 }
 
 const searchResolver = {
     Query: {
-        searchQuery
+        searchQuery, homePageQuery
     }
 }
 

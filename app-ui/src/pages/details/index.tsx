@@ -42,7 +42,9 @@ export function DetailsContainer() {
         if (media.details?.backdrop) updateBackground(media.details.backdrop);
         if (media.details) setColorFromImage(dispatch, media.details.poster);
 
-        if (!media.details && !media.loader) navigateToNotFound(dispatch, navigate);
+        setTimeout(() => {
+            if (!media.details && !media.loader) navigateToNotFound(dispatch, navigate);
+        }, 1000);
 
     }, [media.details, location.pathname, media.loader]);
 

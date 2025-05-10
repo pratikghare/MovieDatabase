@@ -246,10 +246,17 @@ const mediaSchema = (0, apollo_server_express_1.gql) `
         displayPriority: Int
     }
 
+    type HomePageGrid {
+        nowPlaying: [CompactMedia!]
+        trendingPeople: [CompactMedia!]
+        topRatedTV: [CompactMedia!]
+    }
+
     extend type Query {
         details(id: ID!, media: String!): Media
         searchQuery(query: String!, includeAdult: Boolean): CompactMediaResults
         seasonDetails (id: ID!, media: String!, seasonNumber: Int!): Season
+        homePageQuery: HomePageGrid!
     }
     
 `;

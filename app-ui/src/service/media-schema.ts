@@ -91,3 +91,38 @@ export const SEASON_SCHEMA = gql`
         releaseDate
     }
 `;
+
+
+
+export const HOMEPAGE_SCHEMA = gql`
+    query Query {
+        homePageQuery {
+            nowPlaying {
+                ...CompactMediaFields
+            }
+            trendingPeople {
+                ...CompactMediaFields
+            }
+            topRatedTV {
+                ...CompactMediaFields
+            }
+        }
+    }  
+
+    fragment CompactMediaFields on CompactMedia {
+        id
+        mediaType
+        name
+        overview
+        thumbnail
+        backdrop
+        voteAverage
+        voteCount
+        subtext
+        character
+        department
+        year
+        order
+        releaseDate
+    }
+`

@@ -24,12 +24,25 @@ const searchQuery = (_1, _a) => __awaiter(void 0, [_1, _a], void 0, function* (_
         return searchResults;
     }
     catch (error) {
-        console.log("ERROR: ", error);
+        console.log('ERROR: ', error);
+    }
+});
+const homePageQuery = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log('HomePage Query');
+        const urls = [(0, utils_1.getResolvedTMUrl)(env_1.MOVIE.nowPlaying, [], []), (0, utils_1.getResolvedTMUrl)(env_1.TV.topRated, [], []), (0, utils_1.getResolvedTMUrl)(env_1.PERSON.popular, [], [])];
+        const all = urls.map((url) => fetch(url));
+        const responses = yield Promise.all(all);
+        const data = yield Promise.all(responses.map((response) => response.json()));
+        return (0, media_utils_1.getHomePageData)(data[0].results, data[1].results, data[2].results);
+    }
+    catch (error) {
+        console.log('ERROR: ', error);
     }
 });
 const searchResolver = {
     Query: {
-        searchQuery
+        searchQuery, homePageQuery
     }
 };
 exports.default = searchResolver;

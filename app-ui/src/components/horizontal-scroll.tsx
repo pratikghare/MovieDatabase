@@ -1,10 +1,13 @@
 import { ScrollShadow } from '@heroui/react';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { configSelector } from '../store/selectors';
 
-const MAX_WIDTH: number = 1024;
 export default function HorizontalScroll(props: { children?: React.ReactNode, className?: string, offset?: number, width?: number }) {
     const dimensions = useWindowDimensions();
+    const MAX_WIDTH = useSelector(configSelector).maxWidth || dimensions.width;
+
     const [width, setWidth] = useState<number>();
     const [maxWidth, setMaxWidth] = useState<number>(MAX_WIDTH);
 
@@ -14,7 +17,7 @@ export default function HorizontalScroll(props: { children?: React.ReactNode, cl
 
         if (dimensions.width <= 500 && props.offset) setWidth(width - (props.offset ? props.offset : 0));
         else setWidth(undefined);
-    }, [props.offset, dimensions])
+    }, [props.offset, dimensions]);
     
     return (
         <ScrollShadow orientation='horizontal' hideScrollBar 

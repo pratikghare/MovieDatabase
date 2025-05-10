@@ -9,12 +9,13 @@ interface MediaListCardProps{
     media: CompactMedia;
     className?: string;
     isRounded?: boolean;
+    largeSize?: boolean;
 }
 
-export default function MediaListItem({ media, className, isRounded }: MediaListCardProps) {
+export default function MediaListItem({ media, className, isRounded, largeSize }: MediaListCardProps) {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { height, width } = usePosterDimensions();
+    const { height, width } = usePosterDimensions(largeSize ? { breakpointHeights: [120, 150, 200] } : undefined);
     const classes = 'decoration-white/80 text-white/80 before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 bottom-1 absolute before:rounded-xl rounded-md w-[calc(100%_-_6px)] ml-[3px] shadow-small z-10';
 
     const characters: Array<string> = media.character ? media.character.split(', ') : [];

@@ -79,8 +79,8 @@ export function Companies() {
     
     return (
         details && ('productionCompanies' in details) && !!details.productionCompanies?.length &&
-        <div>
-            <h1 className='font-bold my-1 '>Production Companies</h1>
+        <div className='flex flex-col gap-2'>
+            <h1 className='font-bold text-sm md:text-md'>Production Companies</h1>
             <div className='flex gap-4 flex-wrap'>
                 {
                     details.productionCompanies.map((company: ProductionCompany) => (

@@ -20,7 +20,8 @@ import {
     ReviewResults,
     Author,
     CompactEpisode,
-    Season
+    Season,
+    HomePageGrid
 } from './context/context';
 
 import { SHORT_IMAGE_URL, IMAGE_NOT_FOUND, IMAGE_URL, VIDEOS, APP_IMAGE_PATH } from './env/env';
@@ -648,4 +649,13 @@ export function getMassagedMedia(items: any[], type: MediaType, countrycode: str
     if (type === MediaType.MOVIE) return getMovieDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders?.results, reviews);
     if (type === MediaType.TV) return getTvShowDetails(details, credits, images, videos, similar, recommendations, omdb, watchProviders?.results, reviews);
     return getPersonDetails(details, credits, images);
+}
+
+
+export function getHomePageData(nowPlaying: any, topRatedTV: any, trendingPeople: any): HomePageGrid {
+    return {
+        nowPlaying: getMassagedCompactMediaList(nowPlaying, MediaType.MOVIE),
+        trendingPeople: getMassagedCompactMediaList(trendingPeople, MediaType.PERSON),
+        topRatedTV: getMassagedCompactMediaList(topRatedTV, MediaType.TV),
+    }
 }

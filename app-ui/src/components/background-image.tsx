@@ -3,7 +3,7 @@ import { configSelector, mediaSelector } from '../store/selectors';
 import { useEffect, useState } from 'react';
 import { ScrollShadow } from '@heroui/react';
 import useTimer from '../hooks/useTimer';
-import { getBackgroundImages, getIsColor } from '../utils/utils';
+import { getBackgroundImages, getIsColor, isMatchingPath } from '../utils/utils';
 import { useLocation } from 'react-router';
 import { MediaType } from '../context/media-context';
 
@@ -33,10 +33,11 @@ export default function BackgroundImage() {
             const index: number = timer % backgrounds.length;
             setBackground(`url('${backgrounds[index]}') center top / cover`);
         }
-        else {
+        else if (!isMatchingPath(location.pathname)) {
             // console.log('ELSE BACKGROUND', config.backgroundColor);
             setBackground(config.backgroundColor);
         }
+        else setBackground('');
     }, [timer, backgrounds, location.pathname, config.backgroundColor, media.details])
 
     useEffect(() => {
@@ -48,7 +49,8 @@ export default function BackgroundImage() {
         // console.log('isColor', isColor);
         
         if (isColor) {
-            setBackground(config.backgroundColor);
+            if (!isMatchingPath(location.pathname)) setBackground(config.backgroundColor);
+            else setBackground('');
             wrapper = 'h-[100svh] fixed';
             content = '';
         }

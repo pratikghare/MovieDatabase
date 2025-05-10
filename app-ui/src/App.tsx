@@ -14,7 +14,7 @@ export default function App() {
 
     useEffect(() => {
         setTheme(config.theme.theme);
-    }, [config.theme])
+    }, [config.theme]);
 
     return (
         <section className='px-0 flex flex-col items-center cursor-default bg-black/10 min-h-svh'>
@@ -23,7 +23,7 @@ export default function App() {
                 !location.pathname.includes('credits') &&
                 <Header />
             }
-            <div className='max-w-[1024px] w-full flex-1 h-full'>
+            <div className={'w-full flex-1 h-full max-w-[1024px] ' + (location.pathname === '/' ? '' : 'max-w-[1024px]')} >
                 <Outlet />
             </div>
             <Footer />

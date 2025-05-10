@@ -74,7 +74,7 @@ export default function ImageSection() {
                 images.length > 1 &&
                 <div className='flex flex-col gap-2'>
                     <div className='flex justify-between'>
-                        <h1 className='font-bold'>Photos {!!images.length && `(${images.length})`}</h1>
+                        <h1 className='font-bold text-sm md:text-md'>Photos {!!images.length && `(${images.length})`}</h1>
                         <Link className='text-xs cursor-pointer text-primary hover:underline' onPress={() => navigateToMedia()}>{'See All'}</Link>
                     </div>
                     <HorizontalScroll className='flex gap-2 image-section-scroll overflow-x-hidden select-none'>
@@ -106,7 +106,7 @@ export default function ImageSection() {
                 !!videos.length &&
                 <div className='flex flex-col gap-2'>
                     <div className='flex justify-between'>
-                        <h1 className='font-bold'>Videos {!!videos.length && `(${videos.length})`}</h1>
+                        <h1 className='font-bold text-sm md:text-md'>Videos {!!videos.length && `(${videos.length})`}</h1>
                         <Link className='text-xs cursor-pointer text-primary hover:underline' onPress={() => navigate('videos/')}>{'See All'}</Link>
                     </div>
                     <HorizontalScroll className='flex gap-2 image-section-scroll overflow-x-hidden select-none'>

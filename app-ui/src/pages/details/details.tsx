@@ -10,7 +10,7 @@ import { getMediaTypeFromPath } from '../../utils/utils';
 import ImageSection from '../../components/details/image-video-section';
 import SeasonsInfo from '../../components/details/seasons-info';
 import { useEffect } from 'react';
-import { updateComingFrom } from '../../store/reducers/config-reducer';
+import { updateComingFrom, updateLastViewedImage } from '../../store/reducers/config-reducer';
 
 export default function Details() {
     const details = useSelector(mediaSelector).details;
@@ -20,11 +20,12 @@ export default function Details() {
 
     useEffect(() => {
         dispatch(updateComingFrom(PAGES.DETAILS));
+        dispatch(updateLastViewedImage());
     }, []);
 
 
     return (
-        <div className='flex flex-col gap-5 p-3 px-4'>
+        <div className='flex flex-col gap-5 sm:gap-7 p-3 px-4'>
             <Overview />
             <SeasonsInfo />
             <RevenueDetails />

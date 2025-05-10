@@ -5,6 +5,7 @@ import { MediaType, PAGES } from '../../context/media-context';
 
 interface Config {
     loader: boolean;
+    maxWidth?: number;
     tab: NavigationKeyType;
     background?: string;
     backgroundColor?: string;
@@ -15,7 +16,7 @@ interface Config {
     theme: {
         theme: 'light' | 'dark' | 'system';
         current: 'light' | 'dark';
-    }
+    };
 }
 
 const initialState: Config = {
@@ -51,9 +52,10 @@ const config = createSlice({
             const current = theme === 'system' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme;
             return { ...state, theme: { theme, current } }
         },
+        updateMaxWidth: (state: any, action: PayloadAction<number | undefined>) => ({ ...state, maxWidth: action.payload })
     }
 });
 
 
-export const { updateLoader, updateCurrentTab, updateBackground, updateBackgroundColor, toggleTheme, updateConfigTheme, updateComingFrom, updateLastViewedImage } = config.actions;
+export const { updateLoader, updateMaxWidth, updateCurrentTab, updateBackground, updateBackgroundColor, toggleTheme, updateConfigTheme, updateComingFrom, updateLastViewedImage } = config.actions;
 export default config.reducer;
