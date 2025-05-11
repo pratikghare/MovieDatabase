@@ -11,7 +11,8 @@ export const getMediaDataFromPathName = (path: string): { valid: boolean, id: st
     return { valid: true, id, media: getMediaType(media) };
 }
 
-export const getShortString = (text: string, length: number = 29): string => {
+export const getShortString = (text: string, width: number, length: number = 29): string => {
+    length = width > 125 ? 20 : 29;
     return text.length > length ? (text.substring(0, length - 5).trim() + '...') : text;
 }
 

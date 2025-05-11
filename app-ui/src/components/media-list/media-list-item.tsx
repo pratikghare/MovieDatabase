@@ -32,7 +32,7 @@ export default function MediaListItem({ media, className, isRounded, largeSize }
                 radius={ isRounded ? 'full' : 'sm' }
             />
             <CardFooter onClick={() => onClick(media)} className={'items-center cursor-pointer hover:underline justify-center min-h-5 flex-col bg-black/20 ' + (height > 120 && !isRounded ? classes : 'bg-transparent backdrop-blur-none backdrop-filter-none p-1')} style={{ maxWidth: width }}>
-                <p className='text-xxs text-center p-0 font-bold '>{getShortString(media.name)}</p>
+                <p className='text-xxs text-center p-0 font-bold '>{getShortString(media.name, width)}</p>
 
                 {
                     !!characters.length &&

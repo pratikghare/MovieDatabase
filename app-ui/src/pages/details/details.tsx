@@ -25,7 +25,7 @@ export default function Details() {
 
 
     return (
-        <div className='flex flex-col gap-5 sm:gap-7 p-3 px-4'>
+        <div className='flex flex-col gap-4 sm:gap-7 p-3 px-4'>
             <Overview />
             <SeasonsInfo />
             <RevenueDetails />

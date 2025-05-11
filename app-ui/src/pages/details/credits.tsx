@@ -65,7 +65,7 @@ function CreditBox({ list, title, className, media, total }: { list: Array<Compa
                                                     </h2>
                                                     <p className='flex-1 text-xs'>{item.character}</p>
                                                 </div> :
-                                                <div className='flex flex-col justify-center gap-2 text-xs'>
+                                                <div className='flex flex-col justify-evenly lg:justify-center lg:gap-2 text-xs'>
                                                     <h2 onClick={() => onItemClick(item)} className='text-primary cursor-pointer hover:underline flex-1 text-xs md:text-sm font-bold'>{item.name}</h2>
                                                     <HorizontalScroll offset={FULL_WIDTH_OFFSET} className='text-xs flex items-center'>
                                                         {
