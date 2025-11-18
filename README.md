@@ -4,7 +4,7 @@ Welcome to the Movies Database Application! This app is designed to provide user
 
 ## Demo
 
-Check out the live application here: [Movies Database Application](https://movies-database-application.netlify.app/)
+Check out the live application here: [Movies Database Application](https://themoviesdatabase.vercel.app/)
 
 ## Features
 
